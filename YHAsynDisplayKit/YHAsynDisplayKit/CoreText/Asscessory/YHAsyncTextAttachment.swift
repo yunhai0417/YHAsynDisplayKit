@@ -1,0 +1,119 @@
+//
+//  YHAsyncTextAttachment.swift
+//  YHAsynDisplayKit
+//
+//  Created by 吴云海 on 2020/4/5.
+//  Copyright © 2020 YH. All rights reserved.
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//
+
+import UIKit
+
+public class YHAsyncTextAttachment: NSObject, YHAsyncAttachment {
+    var type: YHAsyncAttachmentType?
+    
+    var size: CGSize?
+    
+    var edgeInsets: UIEdgeInsets?
+    func getEdgeInsets() -> UIEdgeInsets? {
+        guard let baselineFontMetrics = self.baselineFontMetrics else {
+            return self.edgeInsets
+        }
+        guard let size = self.size else {
+            return self.edgeInsets
+        }
+        
+        guard let edgeInsets = self.edgeInsets else {
+            return self.edgeInsets
+        }
+        
+        if self.retriveFontMetricsAutomatically {
+            let lineHeight:CGFloat = YHAsyncFontMetricsGetLineHeight(baselineFontMetrics)
+            let inset:CGFloat = (lineHeight - size.height ) / 2
+            
+            return UIEdgeInsets.init(top: inset, left: edgeInsets.left, bottom: inset, right: edgeInsets.right)
+        }
+        return edgeInsets
+    }
+    
+    func placeholderSize() -> CGSize? {
+        guard let size = self.size else { return nil }
+        
+        guard let edgeInsets = self.edgeInsets else { return nil }
+        
+        return CGSize.init(width: size.width + edgeInsets.left + edgeInsets.right,
+                           height: size.height + edgeInsets.top + edgeInsets.bottom)
+    }
+    
+    var contents: AnyObject!
+    
+    var position: UInt?
+    
+    var length: UInt?
+    
+    var baselineFontMetrics: YHAsyncFontMetrics?
+    
+//MARK event
+    // 文本组件触发事件的target
+    weak var target:AnyObject?
+    // 文本组件触发的事件回调
+    var selector:Selector?
+    // 文本组件是否响应事件，默认responseEvent = （target && selector && target respondSelector:selector）
+    var responseEvent:Bool = false
+    
+    /**
+    *  构建一个文本组件的类方法
+    *
+    * @param contents  文本组件表达的内容、样式
+    * @param type 文本组件类型
+    * @param size  该组件占用大小
+    *
+    */
+    
+    class func textAttachmentWithContents(_ contents:AnyObject?, inType type:YHAsyncAttachmentType, inSize size:CGSize) -> YHAsyncTextAttachment {
+        let att = YHAsyncTextAttachment(type)
+            if let contents = contents {
+                att.contents = contents
+            }
+            att.type = type
+            att.size = size
+        return att
+    }
+    
+    // 我们需要给每个文本组件设定对应的FontMetrics，默认为YES。框架会自动获取各个插入组件的Metrics信息
+    var retriveFontMetricsAutomatically:Bool = true
+    
+    // 框架内部会在合适时机设置文本组件的展示Frame，注意！我们不需要指定该值~
+    var layoutFrame:CGRect?
+    
+    override init() {
+        super.init()
+        self.retriveFontMetricsAutomatically = true
+        self.baselineFontMetrics = YHAsyncFontMetricsZero
+        
+        //设置默认边距=> 距离左边距离
+        self.edgeInsets = UIEdgeInsets.init(top: 0, left: 1, bottom: 0, right: 0)
+    }
+    
+    
+    init(_ type:YHAsyncAttachmentType) {
+        super.init()
+        self.retriveFontMetricsAutomatically = true
+        self.baselineFontMetrics = YHAsyncFontMetricsZero
+        if type == YHAsyncAttachmentType.StaticImage {
+            self.edgeInsets = UIEdgeInsets.init(top: 0, left: 1, bottom: 0, right: 0)
+        } else {
+            self.edgeInsets = UIEdgeInsets.init(top: 0, left: 1, bottom: 0, right: 0)
+        }
+    }
+}

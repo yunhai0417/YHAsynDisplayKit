@@ -1,0 +1,34 @@
+{
+  "name": "YHAsynDisplayKit",
+  "version": "0.0.1",
+  "summary": "YHKit",
+  "homepage": "https://github.com/yunhai0417/YHAsynDisplayKit.git",
+  "license": "MIT",
+  "authors": {
+    "wuyunhai": "363067575@qq.com"
+  },
+  "social_media_url": "",
+  "source": {
+    "git": "https://github.com/yunhai0417/YHAsynDisplayKit.git"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "swift_versions": "5.1.3",
+  "static_framework": true,
+  "requires_arc": true,
+  "exclude_files": "YHAsynDisplayKit/YHAsynDisplayKit/info.plist",
+  "source_files": "YHAsynDisplayKit/YHAsynDisplayKit/**/*.{h,m,swift}",
+  "public_header_files": "YHAsynDisplayKit/YHAsynDisplayKit/**/*.{h}",
+  "frameworks": [
+    "QuartzCore",
+    "UIKit",
+    "CoreGraphics"
+  ],
+  "dependencies": {
+    "SDWebImage": [
+
+    ]
+  },
+  "swift_version": "5.1.3"
+}

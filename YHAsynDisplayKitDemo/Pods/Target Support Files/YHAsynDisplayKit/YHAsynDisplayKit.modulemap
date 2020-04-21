@@ -1,0 +1,6 @@
+framework module YHAsynDisplayKit {
+  umbrella header "YHAsynDisplayKit-umbrella.h"
+
+  export *
+  module * { export * }
+}

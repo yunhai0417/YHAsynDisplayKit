@@ -1,0 +1,25 @@
+PODS:
+  - SDWebImage (5.7.1):
+    - SDWebImage/Core (= 5.7.1)
+  - SDWebImage/Core (5.7.1)
+  - YHAsynDisplayKit (0.0.1):
+    - SDWebImage
+
+DEPENDENCIES:
+  - YHAsynDisplayKit (from `../`)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - SDWebImage
+
+EXTERNAL SOURCES:
+  YHAsynDisplayKit:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  SDWebImage: 5d4cf6afccd9ac1d2ee701ed0c4917cbb1b80536
+  YHAsynDisplayKit: 8632087d2e201967e4acabf4e473f00ea7aa5ad2
+
+PODFILE CHECKSUM: d32348952283d677a167e6d48ab1dce7f87aee93
+
+COCOAPODS: 1.9.0
