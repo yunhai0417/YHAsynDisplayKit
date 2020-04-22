@@ -18,6 +18,6 @@ Pod::Spec.new do |s|
   s.public_header_files = 'YHAsynDisplayKit/YHAsynDisplayKit/**/*.{h}'
   s.frameworks = 'QuartzCore','UIKit','CoreGraphics'
   
-  s.dependency 'SDWebImage'
+  # s.dependency 'SDWebImage','5.1.1'
   
 end

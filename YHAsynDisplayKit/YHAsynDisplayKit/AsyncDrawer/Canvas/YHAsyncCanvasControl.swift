@@ -232,7 +232,7 @@ public class YHAsyncCanvasControl: YHAsyncCanvasView {
     }
     
     // list of all events that have at least one action
-    public func allControlEvents() -> UIControl.Event{
+    fileprivate func allControlEvents() -> UIControl.Event{
         var allEvents = UIControl.Event.init(rawValue: 0)
 //        var allEvents = [UIControl.Event]()
         guard let targetActions = self.targetActions else {
@@ -246,12 +246,14 @@ public class YHAsyncCanvasControl: YHAsyncCanvasView {
         
         return allEvents
     }
+    
     // send all actions associated with events
-    public func sendActionsForControlEvents(_ controlEvents:UIControl.Event) {
+    fileprivate func sendActionsForControlEvents(_ controlEvents:UIControl.Event) {
         self.sendActionsForControlEvents(controlEvents, withEvent: nil)
     }
+    
     // send the action. the first method is called for the event and is a point at which you can observe or override behavior. it is called repeately by the second.
-    public func sendAction(_ action:Selector, to:Any, forEvent:UIEvent?) {
+    fileprivate func sendAction(_ action:Selector, to:Any, forEvent:UIEvent?) {
         UIApplication.shared.sendAction(action, to: to, from: self, for: forEvent)
     }
 
@@ -271,7 +273,7 @@ public class YHAsyncCanvasControl: YHAsyncCanvasView {
         
     }
 
-    func sendActionsForControlEvents(_ inControlEvents:UIControl.Event, withEvent:UIEvent?) {
+    fileprivate func sendActionsForControlEvents(_ inControlEvents:UIControl.Event, withEvent:UIEvent?) {
         guard let targetActions = self.targetActions else {
             return
         }

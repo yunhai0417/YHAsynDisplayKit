@@ -182,7 +182,6 @@
 				60C71676242FA68C0095D8D3 /* Sources */,
 				60C71677242FA68C0095D8D3 /* Frameworks */,
 				60C71678242FA68C0095D8D3 /* Resources */,
-				B38C6F260F95C1678F160F8E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -301,23 +300,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		B38C6F260F95C1678F160F8E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-YHAsynDisplayKitDemo/Pods-YHAsynDisplayKitDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-YHAsynDisplayKitDemo/Pods-YHAsynDisplayKitDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-YHAsynDisplayKitDemo/Pods-YHAsynDisplayKitDemo-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		F4FC654D30493CC549A45FF3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

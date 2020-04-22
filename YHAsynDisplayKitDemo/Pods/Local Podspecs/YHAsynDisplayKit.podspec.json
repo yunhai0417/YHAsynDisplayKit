@@ -25,10 +25,5 @@
     "UIKit",
     "CoreGraphics"
   ],
-  "dependencies": {
-    "SDWebImage": [
-
-    ]
-  },
   "swift_version": "5.1.3"
 }

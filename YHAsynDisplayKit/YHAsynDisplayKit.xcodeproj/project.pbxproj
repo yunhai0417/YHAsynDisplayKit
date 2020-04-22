@@ -13,6 +13,14 @@
 		600A62EF2444715E00AEC167 /* UIBezierPath+DisplayKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600A62EE2444715E00AEC167 /* UIBezierPath+DisplayKit.swift */; };
 		600A62F12444717600AEC167 /* UIDevice+DisplayKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600A62F02444717600AEC167 /* UIDevice+DisplayKit.swift */; };
 		600A62F32444719200AEC167 /* UIFont+DisplayKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600A62F22444719200AEC167 /* UIFont+DisplayKit.swift */; };
+		603C6E35244FDFFA000B339A /* YHAsyncClientData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603C6E34244FDFFA000B339A /* YHAsyncClientData.swift */; };
+		603C6E37244FE8A4000B339A /* YHAsyncBusinessModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603C6E36244FE8A4000B339A /* YHAsyncBusinessModel.swift */; };
+		603C6E39244FE953000B339A /* YHAsyncResultSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603C6E38244FE953000B339A /* YHAsyncResultSet.swift */; };
+		603C6E3B244FEC08000B339A /* YHAsyncBaseEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603C6E3A244FEC08000B339A /* YHAsyncBaseEngine.swift */; };
+		603C6E3E244FF69D000B339A /* YHAsyncVisionObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603C6E3D244FF69D000B339A /* YHAsyncVisionObject.swift */; };
+		603C6E40245011F4000B339A /* YHAsyncBaseCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603C6E3F245011F4000B339A /* YHAsyncBaseCellData.swift */; };
+		603C6E422450120C000B339A /* YHAsyncBaseTBCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603C6E412450120C000B339A /* YHAsyncBaseTBCell.swift */; };
+		603C6E4424501225000B339A /* YHAsyncBaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603C6E4324501225000B339A /* YHAsyncBaseViewModel.swift */; };
 		6056F257244D3BBB00191882 /* YHAsyncMutableAttributedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6056F256244D3BBB00191882 /* YHAsyncMutableAttributedImage.swift */; };
 		60C71661242FA6660095D8D3 /* YHAsynDisplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60C71657242FA6650095D8D3 /* YHAsynDisplayKit.framework */; };
 		60C71666242FA6660095D8D3 /* YHAsynDisplayKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C71665242FA6660095D8D3 /* YHAsynDisplayKitTests.swift */; };
@@ -67,6 +75,14 @@
 		600A62EE2444715E00AEC167 /* UIBezierPath+DisplayKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBezierPath+DisplayKit.swift"; sourceTree = "<group>"; };
 		600A62F02444717600AEC167 /* UIDevice+DisplayKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+DisplayKit.swift"; sourceTree = "<group>"; };
 		600A62F22444719200AEC167 /* UIFont+DisplayKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+DisplayKit.swift"; sourceTree = "<group>"; };
+		603C6E34244FDFFA000B339A /* YHAsyncClientData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncClientData.swift; sourceTree = "<group>"; };
+		603C6E36244FE8A4000B339A /* YHAsyncBusinessModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncBusinessModel.swift; sourceTree = "<group>"; };
+		603C6E38244FE953000B339A /* YHAsyncResultSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncResultSet.swift; sourceTree = "<group>"; };
+		603C6E3A244FEC08000B339A /* YHAsyncBaseEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncBaseEngine.swift; sourceTree = "<group>"; };
+		603C6E3D244FF69D000B339A /* YHAsyncVisionObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncVisionObject.swift; sourceTree = "<group>"; };
+		603C6E3F245011F4000B339A /* YHAsyncBaseCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncBaseCellData.swift; sourceTree = "<group>"; };
+		603C6E412450120C000B339A /* YHAsyncBaseTBCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncBaseTBCell.swift; sourceTree = "<group>"; };
+		603C6E4324501225000B339A /* YHAsyncBaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncBaseViewModel.swift; sourceTree = "<group>"; };
 		6056F256244D3BBB00191882 /* YHAsyncMutableAttributedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncMutableAttributedImage.swift; sourceTree = "<group>"; };
 		60C71657242FA6650095D8D3 /* YHAsynDisplayKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = YHAsynDisplayKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		60C7165A242FA6650095D8D3 /* YHAsynDisplayKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YHAsynDisplayKit.h; sourceTree = "<group>"; };
@@ -147,6 +163,53 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		603C6E30244FDF0F000B339A /* preLayout */ = {
+			isa = PBXGroup;
+			children = (
+				603C6E31244FDF50000B339A /* Model */,
+				603C6E32244FDF58000B339A /* View */,
+				603C6E33244FDF78000B339A /* ViewModel */,
+			);
+			path = preLayout;
+			sourceTree = "<group>";
+		};
+		603C6E31244FDF50000B339A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				603C6E34244FDFFA000B339A /* YHAsyncClientData.swift */,
+				603C6E36244FE8A4000B339A /* YHAsyncBusinessModel.swift */,
+				603C6E38244FE953000B339A /* YHAsyncResultSet.swift */,
+				603C6E3A244FEC08000B339A /* YHAsyncBaseEngine.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		603C6E32244FDF58000B339A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				603C6E412450120C000B339A /* YHAsyncBaseTBCell.swift */,
+				603C6E3C244FF675000B339A /* UIData */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		603C6E33244FDF78000B339A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				603C6E4324501225000B339A /* YHAsyncBaseViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		603C6E3C244FF675000B339A /* UIData */ = {
+			isa = PBXGroup;
+			children = (
+				603C6E3D244FF69D000B339A /* YHAsyncVisionObject.swift */,
+				603C6E3F245011F4000B339A /* YHAsyncBaseCellData.swift */,
+			);
+			path = UIData;
+			sourceTree = "<group>";
+		};
 		6056F255244C473E00191882 /* extensionUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -178,6 +241,7 @@
 		60C71659242FA6650095D8D3 /* YHAsynDisplayKit */ = {
 			isa = PBXGroup;
 			children = (
+				603C6E30244FDF0F000B339A /* preLayout */,
 				6056F255244C473E00191882 /* extensionUI */,
 				600A62EB2444704E00AEC167 /* Utils */,
 				60C716AB242FA8FB0095D8D3 /* AsyncDrawer */,
@@ -450,10 +514,14 @@
 				6056F257244D3BBB00191882 /* YHAsyncMutableAttributedImage.swift in Sources */,
 				60C716BD24338DFE0095D8D3 /* YHAsynContextAssiant.swift in Sources */,
 				60C716C32434ED010095D8D3 /* YHAsyncCanvasControl.swift in Sources */,
+				603C6E35244FDFFA000B339A /* YHAsyncClientData.swift in Sources */,
+				603C6E3B244FEC08000B339A /* YHAsyncBaseEngine.swift in Sources */,
+				603C6E37244FE8A4000B339A /* YHAsyncBusinessModel.swift in Sources */,
 				60C716DF243A2D2A0095D8D3 /* YHAsyncMixedView.swift in Sources */,
 				60C716B2243040690095D8D3 /* YHAsynFontMetrics.swift in Sources */,
 				60C716D524382C420095D8D3 /* YHAsyncTextDrawer+Debug.swift in Sources */,
 				60C716D124382BE60095D8D3 /* YHAsyncTextDrawer.swift in Sources */,
+				603C6E40245011F4000B339A /* YHAsyncBaseCellData.swift in Sources */,
 				60C716C9243828CF0095D8D3 /* YHAsyncTextLayout+Coordinate.swift in Sources */,
 				60C716C7243828B10095D8D3 /* YHAsyncTextLayout.swift in Sources */,
 				60C716ED243A30310095D8D3 /* YHAsyncTextAttachment+Event.swift in Sources */,
@@ -463,18 +531,22 @@
 				60C716D324382C1A0095D8D3 /* YHAsyncTextDrawer+Coordinate.swift in Sources */,
 				600A62F32444719200AEC167 /* UIFont+DisplayKit.swift in Sources */,
 				600A62EF2444715E00AEC167 /* UIBezierPath+DisplayKit.swift in Sources */,
+				603C6E3E244FF69D000B339A /* YHAsyncVisionObject.swift in Sources */,
 				60C716CB243828E20095D8D3 /* YHAsyncTextLayoutFrame.swift in Sources */,
 				600A62E62441BF7600AEC167 /* YHAsyncObjectAssociation.swift in Sources */,
 				600A62ED2444714400AEC167 /* NSObject+DisplayKit.swift in Sources */,
+				603C6E4424501225000B339A /* YHAsyncBaseViewModel.swift in Sources */,
 				60C716E1243A2F990095D8D3 /* NSAttributedString+GCalculateAndDraw.swift in Sources */,
 				60C716CF243829120095D8D3 /* YHAsyncTextLayoutRun.swift in Sources */,
 				60C716E7243A2FE90095D8D3 /* YHAsyncTextParagraphStyle.swift in Sources */,
+				603C6E422450120C000B339A /* YHAsyncBaseTBCell.swift in Sources */,
 				60C716AF242FAA030095D8D3 /* YHAsynDisplayKitMacroConfig.swift in Sources */,
 				600A62EA244443D700AEC167 /* NSAttributedString+YTextAttachment.swift in Sources */,
 				60C716DB2439A7AB0095D8D3 /* YHAsyncAttachment.swift in Sources */,
 				60C716BB24324BB80095D8D3 /* YHAsyncDrawLayer.swift in Sources */,
 				60C716E3243A2FAA0095D8D3 /* NSMutableAttributedString+GTextProperty.swift in Sources */,
 				60C716DD243A1C180095D8D3 /* YHAsyncTextAttachment.swift in Sources */,
+				603C6E39244FE953000B339A /* YHAsyncResultSet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
