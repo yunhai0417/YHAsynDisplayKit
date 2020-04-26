@@ -14,16 +14,27 @@
   "platforms": {
     "ios": "9.0"
   },
-  "swift_versions": "5.1.3",
+  "swift_versions": "5.0",
   "static_framework": true,
   "requires_arc": true,
   "exclude_files": "YHAsynDisplayKit/YHAsynDisplayKit/info.plist",
-  "source_files": "YHAsynDisplayKit/YHAsynDisplayKit/**/*.{h,m,swift}",
-  "public_header_files": "YHAsynDisplayKit/YHAsynDisplayKit/**/*.{h}",
-  "frameworks": [
-    "QuartzCore",
-    "UIKit",
-    "CoreGraphics"
+  "subspecs": [
+    {
+      "name": "Core",
+      "source_files": "YHAsynDisplayKit/YHAsynDisplayKit/**/*.{h,m,swift}",
+      "public_header_files": "YHAsynDisplayKit/YHAsynDisplayKit/**/*.{h}",
+      "frameworks": [
+        "QuartzCore",
+        "UIKit",
+        "CoreGraphics",
+        "CFNetwork"
+      ],
+      "dependencies": {
+        "SDWebImage": [
+
+        ]
+      }
+    }
   ],
-  "swift_version": "5.1.3"
+  "swift_version": "5.0"
 }

@@ -29,6 +29,7 @@ class ViewController: UIViewController {
         self.array.append("高级使用-简单自定义数据渲染")
         self.array.append("高级使用-计算文本宽高及计算")
         self.array.append("基本使用-图片倒角计算")
+        self.array.append("终极使用-美团订单列表")
         self.tableview.reloadData()
     }
 
@@ -50,9 +51,14 @@ extension ViewController :UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let newVc = BaseUseViewController.init()
-        newVc.tempIndex = indexPath.row
-        self.navigationController?.pushViewController(newVc, animated: true)
+        if indexPath.row <= 3 {
+            let newVc = BaseUseViewController.init()
+            newVc.tempIndex = indexPath.row
+            self.navigationController?.pushViewController(newVc, animated: true)
+        } else {
+            
+        }
+        
     }
 }
 

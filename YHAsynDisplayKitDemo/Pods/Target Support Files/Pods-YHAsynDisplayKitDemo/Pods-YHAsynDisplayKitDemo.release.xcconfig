@@ -1,12 +1,13 @@
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/YHAsynDisplayKit"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/YHAsynDisplayKit/YHAsynDisplayKit.framework/Headers"
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_CONFIGURATION_BUILD_DIR}/YHAsynDisplayKit/YHAsynDisplayKit.framework/Headers" -iframework "${PODS_CONFIGURATION_BUILD_DIR}/YHAsynDisplayKit"
-OTHER_LDFLAGS = $(inherited) -ObjC -framework "CoreGraphics" -framework "QuartzCore" -framework "UIKit" -framework "YHAsynDisplayKit"
-OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/SDWebImage" "${PODS_ROOT}/Headers/Public/YHAsynDisplayKit"
+LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage" "${PODS_CONFIGURATION_BUILD_DIR}/YHAsynDisplayKit"
+OTHER_CFLAGS = $(inherited) -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/YHAsynDisplayKit/YHAsynDisplayKit.modulemap" -fmodule-map-file="${PODS_ROOT}/Headers/Public/SDWebImage/SDWebImage.modulemap" -isystem "${PODS_ROOT}/Headers/Public"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"SDWebImage" -l"YHAsynDisplayKit" -framework "CFNetwork" -framework "CoreGraphics" -framework "ImageIO" -framework "QuartzCore" -framework "UIKit"
+OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS -Xcc -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/YHAsynDisplayKit/YHAsynDisplayKit.modulemap" -Xcc -fmodule-map-file="${PODS_ROOT}/Headers/Public/SDWebImage/SDWebImage.modulemap"
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
 PODS_ROOT = ${SRCROOT}/Pods
+SWIFT_INCLUDE_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/YHAsynDisplayKit"
 USE_RECURSIVE_SCRIPT_INPUTS_IN_SCRIPT_PHASES = YES
