@@ -20,7 +20,7 @@
 import UIKit
 
 
-public typealias YHAsyncEngineLoadCompletion = (_ resultSet:YHAsyncResultSet, _ error: NSError) -> Void
+public typealias YHAsyncEngineLoadCompletion = (_ resultSet:YHAsyncResultSet, _ error: NSError?) -> Void
 
 public enum YHAsyncEngineLoadState: NSInteger {
     case unload     = 0    //未载入状态
@@ -34,7 +34,7 @@ public enum YHAsyncEngineLoadState: NSInteger {
 2.网络请求、数据解析
 */
 
-public class YHAsyncBaseEngine: NSObject {
+open class YHAsyncBaseEngine: NSObject {
 
     // 结果集，业务列表数据、是否有下一页、当前处于第几页的封装，适用于流式列表结构
     public var resultSet:YHAsyncResultSet = YHAsyncResultSet()
@@ -48,7 +48,7 @@ public class YHAsyncBaseEngine: NSObject {
     * @param completion 请求完成的回调block,该block返回(YHAsyncResultSet , error)
     */
     
-    public func reloadDataWithParams(_ params:[String:Any]?, completion inCompletion:YHAsyncEngineLoadCompletion?){
+    open func reloadDataWithParams(_ params:[String:Any]?, completion inCompletion:YHAsyncEngineLoadCompletion?){
         // override to subclass
     }
     

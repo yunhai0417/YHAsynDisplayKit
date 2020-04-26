@@ -560,10 +560,10 @@ public class YHAsyncTextLayoutFrame: NSObject{
     func textLayout(_ textLayout:YHAsyncTextLayout?, maximumWidthForTruncatedLine lineRef:CTLine?, atIndex index:UInt) -> CGFloat{
         
         if let delegate = textLayout?.delegate  {
-            if delegate.responds(to: #selector(YHAsyncTextLayoutDelegate.textLayout(_:truncatedLine:atIndex:))) {
+//            if delegate.responds(to: #selector(YHAsyncTextLayoutDelegate.textLayout(_:truncatedLine:atIndex:))) {
                 let width = delegate.textLayout(textLayout, truncatedLine: lineRef, atIndex: index)
                 return width
-            }
+//            }
         }
         
         if let width = textLayout?.size.width {

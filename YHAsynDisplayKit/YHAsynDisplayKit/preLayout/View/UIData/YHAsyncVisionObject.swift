@@ -24,10 +24,10 @@ import CoreGraphics
 /*
 视觉元素的抽象, 在Graver框架中，对所有视觉元素进行抽象，即每个视觉元素都由其位置、大小、内容唯一决定
 */
-class YHAsyncVisionObject: NSObject {
+open class YHAsyncVisionObject: NSObject {
     //视觉元素的位置，大小
-    var visionFrame:CGRect = CGRect.zero
+    public var visionFrame:CGRect = CGRect.zero
     
     // 视觉元素的展示内容，多数情况下，value即是WMMutableAttributedItem
-    var visionValue:YHAsyncMutableAttributedItem?
+    public var visionValue:YHAsyncMutableAttributedItem?
 }

@@ -53,7 +53,7 @@
 		60C716E9243A30070095D8D3 /* YHAsyncMutableAttributedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C716E8243A30070095D8D3 /* YHAsyncMutableAttributedItem.swift */; };
 		60C716EB243A301E0095D8D3 /* YHAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C716EA243A301E0095D8D3 /* YHAsyncImage.swift */; };
 		60C716ED243A30310095D8D3 /* YHAsyncTextAttachment+Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C716EC243A30310095D8D3 /* YHAsyncTextAttachment+Event.swift */; };
-		B3948548F6CB181FE6F9B61B /* Pods_YHAsynDisplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 931F704974362A02EBB12E12 /* Pods_YHAsynDisplayKit.framework */; platformFilter = ios; };
+		B707EB9BDA8DD878329A99CA /* libPods-YHAsynDisplayKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A92B8D5CA8D48A9B9578C23 /* libPods-YHAsynDisplayKit.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +69,7 @@
 /* Begin PBXFileReference section */
 		0AF82DDC5DAAFE0C67A3E276 /* Pods-YHAsynDisplayKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YHAsynDisplayKit.release.xcconfig"; path = "Target Support Files/Pods-YHAsynDisplayKit/Pods-YHAsynDisplayKit.release.xcconfig"; sourceTree = "<group>"; };
 		2876A638873329FCD167231C /* Pods-YHAsynDisplayKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YHAsynDisplayKit.debug.xcconfig"; path = "Target Support Files/Pods-YHAsynDisplayKit/Pods-YHAsynDisplayKit.debug.xcconfig"; sourceTree = "<group>"; };
+		2A92B8D5CA8D48A9B9578C23 /* libPods-YHAsynDisplayKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YHAsynDisplayKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		600A62E52441BF7600AEC167 /* YHAsyncObjectAssociation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncObjectAssociation.swift; sourceTree = "<group>"; };
 		600A62E9244443D700AEC167 /* NSAttributedString+YTextAttachment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+YTextAttachment.swift"; sourceTree = "<group>"; };
 		600A62EC2444714400AEC167 /* NSObject+DisplayKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+DisplayKit.swift"; sourceTree = "<group>"; };
@@ -118,7 +119,6 @@
 		60C716E8243A30070095D8D3 /* YHAsyncMutableAttributedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncMutableAttributedItem.swift; sourceTree = "<group>"; };
 		60C716EA243A301E0095D8D3 /* YHAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncImage.swift; sourceTree = "<group>"; };
 		60C716EC243A30310095D8D3 /* YHAsyncTextAttachment+Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YHAsyncTextAttachment+Event.swift"; sourceTree = "<group>"; };
-		931F704974362A02EBB12E12 /* Pods_YHAsynDisplayKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YHAsynDisplayKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,7 +126,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3948548F6CB181FE6F9B61B /* Pods_YHAsynDisplayKit.framework in Frameworks */,
+				B707EB9BDA8DD878329A99CA /* libPods-YHAsynDisplayKit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,7 +363,7 @@
 		7D91F979F9CE028163A82FD1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				931F704974362A02EBB12E12 /* Pods_YHAsynDisplayKit.framework */,
+				2A92B8D5CA8D48A9B9578C23 /* libPods-YHAsynDisplayKit.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -432,7 +432,7 @@
 				TargetAttributes = {
 					60C71656242FA6650095D8D3 = {
 						CreatedOnToolsVersion = 10.3;
-						LastSwiftMigration = 1030;
+						LastSwiftMigration = 1130;
 					};
 					60C7165F242FA6660095D8D3 = {
 						CreatedOnToolsVersion = 10.3;
@@ -711,6 +711,11 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"SDWebImage\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Yunhai.YHAsynDisplayKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -739,6 +744,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"SDWebImage\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Yunhai.YHAsynDisplayKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";

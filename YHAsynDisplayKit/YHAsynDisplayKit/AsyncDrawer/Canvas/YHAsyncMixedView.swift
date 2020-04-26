@@ -126,8 +126,8 @@ public class YHAsyncMixedView: YHAsyncCanvasControl {
     fileprivate lazy var textDrawer:YHAsyncTextDrawer = {
         let drawer = YHAsyncTextDrawer.init()
             drawer.setFrame(CGRect.zero)
-            drawer.setDelegate(self)
-            drawer.setEventDelegate(self)
+            drawer.delegate = self
+            drawer.eventDelegate = self
         return drawer
     }()
 
@@ -149,7 +149,7 @@ public class YHAsyncMixedView: YHAsyncCanvasControl {
     }
     
     //MARK: - Drawing
-    override func currentDrawingUserInfo() -> [String : Any] {
+    public override func currentDrawingUserInfo() -> [String : Any] {
         var userInfo = [String : Any]()
         let dic = super.currentDrawingUserInfo()
         userInfo.merge(dic) { (current, _) in current }
@@ -165,7 +165,7 @@ public class YHAsyncMixedView: YHAsyncCanvasControl {
         return userInfo
     }
     
-    override func drawInRect(_ rect: CGRect, context: CGContext?, asynchronously: Bool, userInfo: [String : Any]?) -> Bool {
+    public override func drawInRect(_ rect: CGRect, context: CGContext?, asynchronously: Bool, userInfo: [String : Any]?) -> Bool {
         super.drawInRect(rect, context: context, asynchronously: asynchronously, userInfo: userInfo)
         let initialDrawingCount = self.getDrawingCount()
         
@@ -233,7 +233,7 @@ public class YHAsyncMixedView: YHAsyncCanvasControl {
         return true
     }
     
-    override func drawingDidFinishAsynchronously(_ asynchronously: Bool, success: Bool) {
+    public override func drawingDidFinishAsynchronously(_ asynchronously: Bool, success: Bool) {
         if !success {
             return
         }
@@ -306,7 +306,7 @@ extension YHAsyncMixedView {
 // MARK: - YHAsyncTextDrawerDelegate
 
 extension YHAsyncMixedView:YHAsyncTextDrawerDelegate {
-    func textDrawer(_ textDrawer: YHAsyncTextDrawer, attachment replace: YHAsyncTextAttachment, rect frame: CGRect, _ context: CGContext) {
+    public func textDrawer(_ textDrawer: YHAsyncTextDrawer, attachment replace: YHAsyncTextAttachment, rect frame: CGRect, _ context: CGContext) {
         if replace.type != YHAsyncAttachmentType.StaticImage {
             return
         }
@@ -356,12 +356,12 @@ extension YHAsyncMixedView:YHAsyncTextDrawerDelegate {
 }
 
 extension YHAsyncMixedView:YHAsyncTextDrawerEventDelegate {
-    func contextViewForTextDrawer(_ textDrawer: YHAsyncTextDrawer) -> UIView {
+    public func contextViewForTextDrawer(_ textDrawer: YHAsyncTextDrawer) -> UIView {
         
         return self
     }
     
-    func activeRangesForTextDrawer(_ textDrawer: YHAsyncTextDrawer) -> [YHAsyncTextActiveRange]? {
+    public func activeRangesForTextDrawer(_ textDrawer: YHAsyncTextDrawer) -> [YHAsyncTextActiveRange]? {
         var arrayActiveRanges = [YHAsyncTextActiveRange]()
         if let arrayAtts = self.attributedItem?.arrayAttachments {
             for att in arrayAtts {
@@ -373,7 +373,7 @@ extension YHAsyncMixedView:YHAsyncTextDrawerEventDelegate {
         return arrayActiveRanges
     }
     
-    func textDrawer(_ textDrawer: YHAsyncTextDrawer, didPress activeRange: YHAsyncTextActiveRange) {
+    public func textDrawer(_ textDrawer: YHAsyncTextDrawer, didPress activeRange: YHAsyncTextActiveRange) {
         if activeRange.type == YHAsyncActiveRangeType.attach {
             if let att = activeRange.bindingData as? YHAsyncTextAttachment {
                 att.handleEvent(self)
@@ -381,11 +381,11 @@ extension YHAsyncMixedView:YHAsyncTextDrawerEventDelegate {
         }
     }
     
-    func textDrawer(_ textDrawer: YHAsyncTextDrawer, didHighlighted activeRange: YHAsyncTextActiveRange, frame rect: CGRect) {
+    public func textDrawer(_ textDrawer: YHAsyncTextDrawer, didHighlighted activeRange: YHAsyncTextActiveRange, frame rect: CGRect) {
         
     }
     
-    func textDrawer(_ textDrawer: YHAsyncTextDrawer, shouldInteract activeRange: YHAsyncTextActiveRange) -> Bool {
+    public func textDrawer(_ textDrawer: YHAsyncTextDrawer, shouldInteract activeRange: YHAsyncTextActiveRange) -> Bool {
         
         
         return true
@@ -395,7 +395,7 @@ extension YHAsyncMixedView:YHAsyncTextDrawerEventDelegate {
 }
 
 extension YHAsyncMixedView:YHAsyncTextLayoutDelegate {
-    func textLayout(_ textLayout: YHAsyncTextLayout?, truncatedLine: CTLine?, atIndex: UInt) -> CGFloat {
+    public func textLayout(_ textLayout: YHAsyncTextLayout?, truncatedLine: CTLine?, atIndex: UInt) -> CGFloat {
         return YHAsyncTextLayoutMaxSize().imumWidth
     }
 }

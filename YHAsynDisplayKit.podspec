@@ -9,15 +9,18 @@ Pod::Spec.new do |s|
   s.source = {:git => 'https://github.com/yunhai0417/YHAsynDisplayKit.git'}
   
   s.platform = :ios,'9.0'
-  s.swift_version = '5.1.3'
+  s.swift_version = '5.0'
   s.static_framework = true
   s.ios.deployment_target = '9.0'
   s.requires_arc = true
   s.exclude_files = 'YHAsynDisplayKit/YHAsynDisplayKit/info.plist'
-  s.source_files = 'YHAsynDisplayKit/YHAsynDisplayKit/**/*.{h,m,swift}'
-  s.public_header_files = 'YHAsynDisplayKit/YHAsynDisplayKit/**/*.{h}'
-  s.frameworks = 'QuartzCore','UIKit','CoreGraphics'
+  s.subspec 'Core' do |spec|
+    spec.source_files = 'YHAsynDisplayKit/YHAsynDisplayKit/**/*.{h,m,swift}'
+    spec.public_header_files = 'YHAsynDisplayKit/YHAsynDisplayKit/**/*.{h}'
+    spec.frameworks = 'QuartzCore','UIKit','CoreGraphics','CFNetwork'
+    
+    spec.dependency 'SDWebImage' 
+  end
   
-  # s.dependency 'SDWebImage','5.1.1'
   
 end

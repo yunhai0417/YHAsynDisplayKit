@@ -20,7 +20,7 @@
 import UIKit
 
 
-enum YHAsyncAttachmentType:NSInteger {
+public enum YHAsyncAttachmentType:NSInteger {
     case StaticImage = 0
     case Placeholder = 1
     case ApplicationReserved = 0xF000
@@ -30,7 +30,7 @@ enum YHAsyncAttachmentType:NSInteger {
  *  Attachment 定义了一个特殊的attributedString字符，它可以被展示成特殊的大小、样式
  */
 
-protocol YHAsyncAttachment: NSObjectProtocol {
+public protocol YHAsyncAttachment: NSObjectProtocol {
 
     // 定义组件类型，一般文本中插入的图片被标记为WMGAttachmentTypeStaticImage
     var type:YHAsyncAttachmentType? { get set }

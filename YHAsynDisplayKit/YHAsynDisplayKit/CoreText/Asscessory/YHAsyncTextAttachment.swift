@@ -20,12 +20,12 @@
 import UIKit
 
 public class YHAsyncTextAttachment: NSObject, YHAsyncAttachment {
-    var type: YHAsyncAttachmentType?
+    public var type: YHAsyncAttachmentType?
     
-    var size: CGSize?
+    public var size: CGSize?
     
-    var edgeInsets: UIEdgeInsets?
-    func getEdgeInsets() -> UIEdgeInsets? {
+    public var edgeInsets: UIEdgeInsets?
+    public func getEdgeInsets() -> UIEdgeInsets? {
         guard let baselineFontMetrics = self.baselineFontMetrics else {
             return self.edgeInsets
         }
@@ -46,7 +46,7 @@ public class YHAsyncTextAttachment: NSObject, YHAsyncAttachment {
         return edgeInsets
     }
     
-    func placeholderSize() -> CGSize? {
+    public func placeholderSize() -> CGSize? {
         guard let size = self.size else { return nil }
         
         guard let edgeInsets = self.edgeInsets else { return nil }
@@ -55,21 +55,21 @@ public class YHAsyncTextAttachment: NSObject, YHAsyncAttachment {
                            height: size.height + edgeInsets.top + edgeInsets.bottom)
     }
     
-    var contents: AnyObject!
+    public var contents: AnyObject!
     
-    var position: UInt?
+    public var position: UInt?
     
-    var length: UInt?
+    public var length: UInt?
     
-    var baselineFontMetrics: YHAsyncFontMetrics?
+    public var baselineFontMetrics: YHAsyncFontMetrics?
     
 //MARK event
     // 文本组件触发事件的target
-    weak var target:AnyObject?
+    public weak var target:AnyObject?
     // 文本组件触发的事件回调
-    var selector:Selector?
+    public var selector:Selector?
     // 文本组件是否响应事件，默认responseEvent = （target && selector && target respondSelector:selector）
-    var responseEvent:Bool = false
+    public var responseEvent:Bool = false
     
     /**
     *  构建一个文本组件的类方法
@@ -80,7 +80,7 @@ public class YHAsyncTextAttachment: NSObject, YHAsyncAttachment {
     *
     */
     
-    class func textAttachmentWithContents(_ contents:AnyObject?, inType type:YHAsyncAttachmentType, inSize size:CGSize) -> YHAsyncTextAttachment {
+    public class func textAttachmentWithContents(_ contents:AnyObject?, inType type:YHAsyncAttachmentType, inSize size:CGSize) -> YHAsyncTextAttachment {
         let att = YHAsyncTextAttachment(type)
             if let contents = contents {
                 att.contents = contents
@@ -91,10 +91,10 @@ public class YHAsyncTextAttachment: NSObject, YHAsyncAttachment {
     }
     
     // 我们需要给每个文本组件设定对应的FontMetrics，默认为YES。框架会自动获取各个插入组件的Metrics信息
-    var retriveFontMetricsAutomatically:Bool = true
+    public var retriveFontMetricsAutomatically:Bool = true
     
     // 框架内部会在合适时机设置文本组件的展示Frame，注意！我们不需要指定该值~
-    var layoutFrame:CGRect?
+    public var layoutFrame:CGRect?
     
     override init() {
         super.init()

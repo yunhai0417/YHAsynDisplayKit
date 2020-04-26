@@ -127,7 +127,7 @@ extension YHAsyncTextDrawer {
             })
             
             if hit && _eventDelegateHas.shouldInteractWithActiveRange {
-                if let hit1 = _eventDelegate?.textDrawer(self, shouldInteract: activeRange) {
+                if let hit1 = eventDelegate?.textDrawer(self, shouldInteract: activeRange) {
                     hit = hit1
                 }
             }
@@ -149,14 +149,14 @@ extension YHAsyncTextDrawer {
 extension YHAsyncTextDrawer {
     func eventDelegateContextView() -> UIView? {
         if _eventDelegateHas.contextView {
-            return _eventDelegate?.contextViewForTextDrawer(self)
+            return eventDelegate?.contextViewForTextDrawer(self)
         }
         return nil
     }
     
     func eventDelegateActiveRanges() -> [YHAsyncTextActiveRange]? {
         if _eventDelegateHas.activeRanges {
-            return _eventDelegate?.activeRangesForTextDrawer(self)
+            return eventDelegate?.activeRangesForTextDrawer(self)
         }
         
         return nil
@@ -164,7 +164,7 @@ extension YHAsyncTextDrawer {
     
     func eventDelegateDidPressActiveRange(_ activeRange:YHAsyncTextActiveRange) {
         if _eventDelegateHas.didPressActiveRange {
-            _eventDelegate?.textDrawer(self, didPress: activeRange)
+            eventDelegate?.textDrawer(self, didPress: activeRange)
         }
     }
 }

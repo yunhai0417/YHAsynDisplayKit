@@ -24,7 +24,7 @@ import UIKit
 如果业务中已有业务数据模型基类，可直接遵从<YHAsyncClientDataProtocol>协议即可，不再需要此类
 */
 
-public class YHAsyncBusinessModel: NSObject {
+open class YHAsyncBusinessModel: NSObject {
 
     public var cellData: YHAsyncBaseCellData?
 }

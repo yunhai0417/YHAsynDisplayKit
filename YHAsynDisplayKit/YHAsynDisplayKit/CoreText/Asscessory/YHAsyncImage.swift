@@ -19,40 +19,40 @@
 
 import UIKit
 import Foundation
-//import SDWebImage
+import SDWebImage
 
 
 public class YHAsyncImage: NSObject {
 
     // 网络图片的下载URL string
-    var downloadUrl:String?
+    public var downloadUrl:String?
     
     // 本地占位图片名字
-    var placeholderName:String?
+    public var placeholderName:String?
     
     // 肯能是最终展示的本地图片、可能是展示的placeholder图片、也可能是下载的网络图片
-    var image:UIImage?
+    public var image:UIImage?
 
     // 下载图片的size
-    var size:CGSize?
+    public var size:CGSize?
     
     // 对图片的圆角说明
-    var radius:YHAsyncCornerRadius = YHAsyncCornerRadiusZero
+    public var radius:YHAsyncCornerRadius = YHAsyncCornerRadiusZero
     
     // 为图片添加的border宽度
-    var borderWidth:CGFloat = 0
+    public var borderWidth:CGFloat = 0
     
     // 图片的模糊处理
-    var blurPercent:CGFloat = 0
+    public var blurPercent:CGFloat = 0
     
     // 图片展示的内容模式
-    var contentMode:UIView.ContentMode = UIView.ContentMode.center
+    public var contentMode:UIView.ContentMode = UIView.ContentMode.center
     
     // 如果涉及点击效果，代表高亮颜色
-    var highlightColor:UIColor?
+    public var highlightColor:UIColor?
     
     // 如果涉及点击效果，代表高亮展示的图片
-    var highlightImage:UIImage?
+    public var highlightImage:UIImage?
     
     /**
     * 根据指定图片名称创建YHAsyncImage
@@ -61,7 +61,7 @@ public class YHAsyncImage: NSObject {
     *
     */
     
-    class func imageWithNamed(_ imgName:String) -> YHAsyncImage? {
+    public class func imageWithNamed(_ imgName:String) -> YHAsyncImage? {
         if imgName.isEmpty {
             return nil
         }
@@ -78,7 +78,7 @@ public class YHAsyncImage: NSObject {
     * @param image 图片
     *
     */
-    class func imageWithImage(_ image:UIImage?) -> YHAsyncImage? {
+    public class func imageWithImage(_ image:UIImage?) -> YHAsyncImage? {
         if let image = image {
             let ctImage = YHAsyncImage.init()
             ctImage.image = image
@@ -94,7 +94,7 @@ public class YHAsyncImage: NSObject {
     *
     */
     
-    class func imageWithUrl(_ imgUrl:String) -> YHAsyncImage? {
+    public class func imageWithUrl(_ imgUrl:String) -> YHAsyncImage? {
         if imgUrl.isEmpty {
             return nil
         }
@@ -112,56 +112,56 @@ public class YHAsyncImage: NSObject {
     * @param completion 详见SDWebImage
     *
     */
-//    func loadImageWithUrl(_ urlStr:String, inoptions options:SDWebImageOptions, inprogress progress:SDWebImageDownloaderProgressBlock?, inCompleted completed:SDExternalCompletionBlock?) {
-//        guard let url = URL.init(string: urlStr) else {
-//            self.downloadUrl = nil
-//            let error = NSError.init(domain: SDWebImageErrorDomain, code: -1 , userInfo: [NSLocalizedDescriptionKey : "Trying to load a nil url"])
-//            if let completed = completed {
-//                completed(nil, error, SDImageCacheType.none, nil)
-//            }
-//            return
-//        }
-//        
-//        SDWebImageManager.shared.loadImage(with: url, options: options, progress: progress) { (rimage, rdata, rerror, rcacheType, rfinished, rimageUrl) in
-//            guard let size = self.size else { return }
-//            
-//            let scale = UIScreen.main.scale
-//            let imageSize = CGSize.init(width: size.width * scale, height: size.height * scale)
-//            
-//            let contentMode = self.contentMode
-//            let percent:CGFloat = self.blurPercent / 100.0
-//            
-//            
-//            let radius1:YHAsyncCornerRadius = YHAsyncCornerRadiusMake(inTopLeft: self.radius.topLeft * scale,
-//                                                                     inTopRight: self.radius.topRight * scale,
-//                                                                     inBottomLeft: self.radius.bottomLeft * scale,
-//                                                                     inBottomRight: self.radius.bottomRight * scale)
-//            
-//            DispatchQueue.global().async {
-//                // 裁剪处理
-//                var newImage = rimage?.yh_cropImageWithCroppedSize(imageSize, resizeMode: contentMode, interpolationQuality:CGInterpolationQuality.high)
-//                
-//                // 模糊处理
-//                if percent >= 0.01 {
-//                    newImage = newImage?.yh_blurImageWithBlurPercent(percent)
-//                }
-//                
-//                // 圆角处理
-//                if !YHAsyncCornerRadiusEqual(inR: radius1, inL: YHAsyncCornerRadiusZero) {
-//                    newImage = newImage?.yh_roundedImageWithCornerRadius(radius1)
-//                }
-//                
-//                DispatchQueue.main.async {
-//                    self.downloadUrl = nil
-//                    self.image = rimage
-//                    if let completeBlock = completed {
-//                        if rfinished {
-//                            completeBlock(rimage,rerror,rcacheType,rimageUrl)
-//                        }
-//                    }
-//                    
-//                }
-//            }
-//        }
-//    }
+    public func loadImageWithUrl(_ urlStr:String, inoptions options:SDWebImageOptions, inprogress progress:SDWebImageDownloaderProgressBlock?, inCompleted completed:SDExternalCompletionBlock?) {
+        guard let url = URL.init(string: urlStr) else {
+            self.downloadUrl = nil
+            let error = NSError.init(domain: SDWebImageErrorDomain, code: -1 , userInfo: [NSLocalizedDescriptionKey : "Trying to load a nil url"])
+            if let completed = completed {
+                completed(nil, error, SDImageCacheType.none, nil)
+            }
+            return
+        }
+        
+        SDWebImageManager.shared.loadImage(with: url, options: options, progress: progress) { (rimage, rdata, rerror, rcacheType, rfinished, rimageUrl) in
+            guard let size = self.size else { return }
+            
+            let scale = UIScreen.main.scale
+            let imageSize = CGSize.init(width: size.width * scale, height: size.height * scale)
+            
+            let contentMode = self.contentMode
+            let percent:CGFloat = self.blurPercent / 100.0
+            
+            
+            let radius1:YHAsyncCornerRadius = YHAsyncCornerRadiusMake(inTopLeft: self.radius.topLeft * scale,
+                                                                     inTopRight: self.radius.topRight * scale,
+                                                                     inBottomLeft: self.radius.bottomLeft * scale,
+                                                                     inBottomRight: self.radius.bottomRight * scale)
+            
+            DispatchQueue.global().async {
+                // 裁剪处理
+                var newImage = rimage?.yh_cropImageWithCroppedSize(imageSize, resizeMode: contentMode, interpolationQuality:CGInterpolationQuality.high)
+                
+                // 模糊处理
+                if percent >= 0.01 {
+                    newImage = newImage?.yh_blurImageWithBlurPercent(percent)
+                }
+                
+                // 圆角处理
+                if !YHAsyncCornerRadiusEqual(inR: radius1, inL: YHAsyncCornerRadiusZero) {
+                    newImage = newImage?.yh_roundedImageWithCornerRadius(radius1)
+                }
+                
+                DispatchQueue.main.async {
+                    self.downloadUrl = nil
+                    self.image = rimage
+                    if let completeBlock = completed {
+                        if rfinished {
+                            completeBlock(rimage,rerror,rcacheType,rimageUrl)
+                        }
+                    }
+                    
+                }
+            }
+        }
+    }
 }

@@ -33,7 +33,7 @@ public class YHAsyncCanvasControlTargetAction: NSObject {
 }
 
 
-public class YHAsyncCanvasControl: YHAsyncCanvasView {
+open class YHAsyncCanvasControl: YHAsyncCanvasView {
     // how to position content vertically inside control. default is center
     public var contentHorizontalAlignment:UIControl.ContentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center
     // how to position content horizontally inside control. default is center
@@ -159,13 +159,13 @@ public class YHAsyncCanvasControl: YHAsyncCanvasView {
         self.targetActions = nil
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         self.enable = true
         self.isExclusiveTouch = true
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

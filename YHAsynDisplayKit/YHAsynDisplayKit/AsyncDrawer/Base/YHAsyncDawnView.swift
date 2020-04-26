@@ -21,7 +21,7 @@ import UIKit
 
 typealias YHAsyncDrawCallback = (_ drawInBackground:Bool) -> Void
 
-public class YHAsyncDawnView: UIView {
+open class YHAsyncDawnView: UIView {
 
     // 绘制完成后，内容经过此时间的渐变显示出来，默认为 0.0
 //    fileprivate var fadeDuration:TimeInterval = 0.0
@@ -92,7 +92,7 @@ public class YHAsyncDawnView: UIView {
     
     // 绘制次数
 //    private(set) var drawingCount:NSInteger = 0
-    func getDrawingCount() -> NSInteger {
+    public func getDrawingCount() -> NSInteger {
         if let drawingCount = self.drawingLayer?.drawingCount {
             return drawingCount
         }
@@ -162,7 +162,7 @@ public class YHAsyncDawnView: UIView {
      * @return 绘制是否已执行完成。若为 NO，绘制的内容不会被显示
      *
      */
-    func drawInRect(_ rect:CGRect,context:CGContext?,asynchronously:Bool) -> Bool {
+    open func drawInRect(_ rect:CGRect,context:CGContext?,asynchronously:Bool) -> Bool {
         return true
     }
     
@@ -177,7 +177,7 @@ public class YHAsyncDawnView: UIView {
      * @return 绘制是否已执行完成。若为 NO，绘制的内容不会被显示
      */
     
-    func drawInRect(_ rect:CGRect,context:CGContext?,asynchronously:Bool,userInfo:[String:Any]?) -> Bool {
+    open func drawInRect(_ rect:CGRect,context:CGContext?,asynchronously:Bool,userInfo:[String:Any]?) -> Bool {
         
         return self.drawInRect(rect, context: context, asynchronously: asynchronously)
     }
@@ -189,7 +189,7 @@ public class YHAsyncDawnView: UIView {
      * @param asynchronously 当前是否是异步绘制
      */
     
-    func drawingWillStartAsynchronously(_ asynchronously:Bool) {
+    open func drawingWillStartAsynchronously(_ asynchronously:Bool) {
         
     }
     
@@ -202,7 +202,7 @@ public class YHAsyncDawnView: UIView {
      * @discussion 如果在绘制过程中进行一次重绘，会导致首次绘制不成功，第二次绘制成功。
      */
     
-    func drawingDidFinishAsynchronously(_ asynchronously:Bool, success:Bool) {
+    open func drawingDidFinishAsynchronously(_ asynchronously:Bool, success:Bool) {
         
     }
     
@@ -212,7 +212,7 @@ public class YHAsyncDawnView: UIView {
      * @discussion 有时在异步线程配置参数可能导致crash，例如在异步线程访问ivar。可以通过此方法将参数放入字典并传入绘制方法。此方法会在displayLayer:的当前线程调用，一般为主线程。
      */
     
-    func currentDrawingUserInfo() -> [String:Any] {
+    open func currentDrawingUserInfo() -> [String:Any] {
         return [String : Any]()
     }
 //    #pragma mark end - Methods for subclass overriding
@@ -344,7 +344,7 @@ public class YHAsyncDawnView: UIView {
     
     
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.isOpaque = false
@@ -360,7 +360,7 @@ public class YHAsyncDawnView: UIView {
         }
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

@@ -23,7 +23,7 @@ import CoreText
 import CoreGraphics
 
 
-@objc protocol YHAsyncTextDrawerDelegate: NSObjectProtocol {
+public protocol YHAsyncTextDrawerDelegate: NSObjectProtocol {
     
     /**
     *  textAttachment 渲染的回调方法，
@@ -35,10 +35,10 @@ import CoreGraphics
     *  @param context      当前的 CGContext
     */
     
-    @objc func textDrawer(_ textDrawer:YHAsyncTextDrawer, attachment replace:YHAsyncTextAttachment, rect frame:CGRect, _ context:CGContext)
+    func textDrawer(_ textDrawer:YHAsyncTextDrawer, attachment replace:YHAsyncTextAttachment, rect frame:CGRect, _ context:CGContext)
 }
 
-@objc protocol YHAsyncTextDrawerEventDelegate: NSObjectProtocol {
+public protocol YHAsyncTextDrawerEventDelegate: NSObjectProtocol {
     /**
     *  返回 textDrawer 处理事件时所基于的 view，用于确定坐标系等，必须
     *
@@ -47,7 +47,7 @@ import CoreGraphics
     *  @return 处理事件时基于的 view
     */
     
-    @objc func contextViewForTextDrawer(_ textDrawer:YHAsyncTextDrawer) -> UIView
+    func contextViewForTextDrawer(_ textDrawer:YHAsyncTextDrawer) -> UIView
     
     /**
     *  返回定义 textDrawer 可点击区域的数组
@@ -57,7 +57,7 @@ import CoreGraphics
     *  @return 由 (id<WMGTextActiveRange>) 对象组成的数组
     */
     
-    @objc func activeRangesForTextDrawer(_ textDrawer:YHAsyncTextDrawer) -> [YHAsyncTextActiveRange]?
+    func activeRangesForTextDrawer(_ textDrawer:YHAsyncTextDrawer) -> [YHAsyncTextActiveRange]?
     
     /**
     *  响应对一个 activeRange 的点击事件
@@ -66,7 +66,7 @@ import CoreGraphics
     *  @param activeRange  响应的 activeRange
     */
     
-    @objc func textDrawer(_ textDrawer:YHAsyncTextDrawer, didPress activeRange:YHAsyncTextActiveRange)
+    func textDrawer(_ textDrawer:YHAsyncTextDrawer, didPress activeRange:YHAsyncTextActiveRange)
     
     /**
     *  activeRange点击的 高亮事件
@@ -75,7 +75,7 @@ import CoreGraphics
     *  @param activeRange  响应的 activeRange
     */
 
-    @objc func textDrawer(_ textDrawer:YHAsyncTextDrawer, didHighlighted activeRange:YHAsyncTextActiveRange,frame rect:CGRect)
+    func textDrawer(_ textDrawer:YHAsyncTextDrawer, didHighlighted activeRange:YHAsyncTextActiveRange,frame rect:CGRect)
     
     /**
     *  返回 textDrawer 是否要与一个 activeRange 进行交互，如点击操作
@@ -86,14 +86,14 @@ import CoreGraphics
     *  @return 是否与 activeRange 进行交互
     */
     
-    @objc func textDrawer(_ textDrawer:YHAsyncTextDrawer, shouldInteract activeRange:YHAsyncTextActiveRange) -> Bool
+    func textDrawer(_ textDrawer:YHAsyncTextDrawer, shouldInteract activeRange:YHAsyncTextActiveRange) -> Bool
 }
 
 /*
 文本绘制器类是框架核心类，混排图文的绘制、size计算都依赖文本绘制器实现
 */
 
-typealias YHAsyncTextDrawerShouldInterruptBlock = () -> Bool
+public typealias YHAsyncTextDrawerShouldInterruptBlock = () -> Bool
 
 public class YHAsyncTextDrawer: UIResponder {
 
@@ -102,7 +102,7 @@ public class YHAsyncTextDrawer: UIResponder {
     private var drawing:Bool = false
     
     // 文本绘制器的绘制起点和绘制区域的定义，Frame会被拆解成两部分，origin决定绘制起点，size决定绘制区域大小
-    func setFrame(_ frame:CGRect) {
+    public func setFrame(_ frame:CGRect) {
 
         if self.drawing && frame.size.equalTo(self.getTextLayout().size) {
             debugPrint("draw_error")
@@ -118,7 +118,7 @@ public class YHAsyncTextDrawer: UIResponder {
         }
     }
     
-    func getFrame() -> CGRect? {
+    public func getFrame() -> CGRect? {
         guard let drawOrigin = self.drawOrigin else { return nil }
         guard let textLayoutSize = self.textLayout?.size else { return nil }
         return CGRect.init(x: drawOrigin.x, y: drawOrigin.y, width: textLayoutSize.width, height: textLayoutSize.height)
@@ -126,7 +126,7 @@ public class YHAsyncTextDrawer: UIResponder {
     
     // CoreText排版模型封装
     fileprivate var textLayout:YHAsyncTextLayout?
-    func getTextLayout() -> YHAsyncTextLayout {
+    public func getTextLayout() -> YHAsyncTextLayout {
         if let textLayout = self.textLayout {
             return textLayout
         }
@@ -138,36 +138,42 @@ public class YHAsyncTextDrawer: UIResponder {
     
     // 文本绘制器的代理
     fileprivate weak var _delegate:YHAsyncTextDrawerDelegate?
-    func setDelegate(_ delegate:YHAsyncTextDrawerDelegate) {
-        if !delegate.isEqual(_delegate) {
-            _delegate = delegate
-            
-            let selector = #selector(YHAsyncTextDrawerDelegate.textDrawer(_:attachment:rect:_:))
-            _delegateHas.placeAttachment = delegate.responds(to: selector)
-            
+    public var delegate:YHAsyncTextDrawerDelegate? {
+        set {
+            _delegate = newValue
+//            let selector = #selector(YHAsyncTextDrawerDelegate.textDrawer(_:attachment:rect:_:))
+//            _delegateHas.placeAttachment = _delegate?.responds(to: selector) ?? false
+        }
+        get {
+            return _delegate
         }
     }
+    
     // 文本绘制器的事件代理，用以处理混排图文中的可点击响应
-    weak var _eventDelegate:YHAsyncTextDrawerEventDelegate?
-    func setEventDelegate(_ eventDelegate:YHAsyncTextDrawerEventDelegate) {
-        _eventDelegate = eventDelegate
-        
-        let selectorContextView = #selector(YHAsyncTextDrawerEventDelegate.contextViewForTextDrawer(_:))
-        _eventDelegateHas.contextView = eventDelegate.responds(to: selectorContextView)
-        
-        let selectorActiveRanges = #selector(YHAsyncTextDrawerEventDelegate.activeRangesForTextDrawer(_:))
-        _eventDelegateHas.activeRanges = eventDelegate.responds(to: selectorContextView)
-        
-        let selectorDidPressActiveRange = #selector(YHAsyncTextDrawerEventDelegate.textDrawer(_:didPress:))
-        _eventDelegateHas.didPressActiveRange = eventDelegate.responds(to: selectorContextView)
-        
-        let selectorShouldInteractWithActiveRange = #selector(YHAsyncTextDrawerEventDelegate.textDrawer(_:shouldInteract:))
-        _eventDelegateHas.shouldInteractWithActiveRange = eventDelegate.responds(to: selectorContextView)
-        
-        let selectorDidHighlightedActiveRange = #selector(YHAsyncTextDrawerEventDelegate.textDrawer(_:didHighlighted:frame:))
-        _eventDelegateHas.didHighlightedActiveRange = eventDelegate.responds(to: selectorContextView)
-        
+    fileprivate weak var _eventDelegate:YHAsyncTextDrawerEventDelegate?
+    public var eventDelegate:YHAsyncTextDrawerEventDelegate? {
+        set {
+            _eventDelegate = newValue
+//            let selectorContextView = #selector(YHAsyncTextDrawerEventDelegate.contextViewForTextDrawer(_:))
+//            _eventDelegateHas.contextView = _eventDelegate?.responds(to: selectorContextView) ?? false
+//            
+//            let selectorActiveRanges = #selector(YHAsyncTextDrawerEventDelegate.activeRangesForTextDrawer(_:))
+//            _eventDelegateHas.activeRanges = _eventDelegate?.responds(to: selectorActiveRanges) ?? false
+//            
+//            let selectorDidPressActiveRange = #selector(YHAsyncTextDrawerEventDelegate.textDrawer(_:didPress:))
+//            _eventDelegateHas.didPressActiveRange = _eventDelegate?.responds(to: selectorDidPressActiveRange) ?? false
+//            
+//            let selectorShouldInteractWithActiveRange = #selector(YHAsyncTextDrawerEventDelegate.textDrawer(_:shouldInteract:))
+//            _eventDelegateHas.shouldInteractWithActiveRange = _eventDelegate?.responds(to: selectorShouldInteractWithActiveRange) ?? false
+//            
+//            let selectorDidHighlightedActiveRange = #selector(YHAsyncTextDrawerEventDelegate.textDrawer(_:didHighlighted:frame:))
+//            _eventDelegateHas.didHighlightedActiveRange = _eventDelegate?.responds(to: selectorDidHighlightedActiveRange) ?? false
+        }
+        get {
+            return _eventDelegate
+        }
     }
+    
     
     //Event
     // 记录上次touch end时候的timestamp，否则调用2次touch ended
@@ -225,7 +231,8 @@ public class YHAsyncTextDrawer: UIResponder {
     *
     */
     
-    func drawInContext(_ ctx:CGContext, visible visibleRect:CGRect?, attachments replace:Bool, shouldInterrupt interruptBlock:YHAsyncTextDrawerShouldInterruptBlock?) {
+    public func drawInContext(_ inCtx:CGContext?, visible visibleRect:CGRect?, attachments replace:Bool, shouldInterrupt interruptBlock:YHAsyncTextDrawerShouldInterruptBlock?) {
+        guard let ctx = inCtx else { return }
         self.drawing = true
         
         let textLayout = self.getTextLayout()

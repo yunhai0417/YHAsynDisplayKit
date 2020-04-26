@@ -28,7 +28,7 @@ struct YHAsyncTextLayoutFlags {
     var needsLayout:Bool = true
 }
 
-@objc protocol YHAsyncTextLayoutDelegate: NSObjectProtocol {
+public protocol YHAsyncTextLayoutDelegate: NSObjectProtocol {
     /**
      * 当发生截断时，获取截断行的高度
      *
@@ -37,7 +37,7 @@ struct YHAsyncTextLayoutFlags {
      * @param index 截断行的行索引号
      *
      */
-    @objc func textLayout(_ textLayout:YHAsyncTextLayout?, truncatedLine:CTLine?, atIndex:UInt) -> CGFloat
+    func textLayout(_ textLayout:YHAsyncTextLayout?, truncatedLine:CTLine?, atIndex:UInt) -> CGFloat
 }
 
 /*
@@ -46,7 +46,7 @@ struct YHAsyncTextLayoutFlags {
 public class YHAsyncTextLayout: NSObject {
     // 待排版的AttributedString
     fileprivate var _attributedString:NSAttributedString?
-    var attributedString:NSAttributedString? {
+    public var attributedString:NSAttributedString? {
         set {
             if _attributedString != newValue {
                 YHSynchoronized(token: self) {
@@ -61,7 +61,7 @@ public class YHAsyncTextLayout: NSObject {
     }
     // 可排版区域的size
     fileprivate var _size:CGSize = CGSize.zero
-    var size:CGSize {
+    public var size:CGSize {
         set {
             if !_size.equalTo(newValue) {
                 _size = newValue
@@ -74,7 +74,7 @@ public class YHAsyncTextLayout: NSObject {
     }
     // 最大排版行数，默认为0即不限制排版行数
     fileprivate var _maximumNumberOfLines:UInt = 0
-    var maximumNumberOfLines:UInt {
+    public var maximumNumberOfLines:UInt {
         set {
             if _maximumNumberOfLines != newValue {
                 _maximumNumberOfLines = newValue
@@ -87,7 +87,7 @@ public class YHAsyncTextLayout: NSObject {
     }
     
     // 是否自动获取 baselineFontMetrics，如果为 YES，将第一行的 fontMetrics 作为 baselineFontMetrics
-    var retriveFontMetricsAutomatically:Bool = false
+    public var retriveFontMetricsAutomatically:Bool = false
     // 待排版的AttributedString的基线FontMetrics，当retriveFontMetricsAutomatically=YES时，该值框架内部会自动获取
     fileprivate var _baselineFontMetrics:YHAsyncFontMetrics?
     var baselineFontMetrics:YHAsyncFontMetrics? {
@@ -106,7 +106,7 @@ public class YHAsyncTextLayout: NSObject {
     // 如果发生截断，由truncationString指定截断显示内容，默认"..."
     var truncationString:NSAttributedString?
     // 排版模型的代理
-    weak var delegate:YHAsyncTextLayoutDelegate?
+    public weak var delegate:YHAsyncTextLayoutDelegate?
     
     private var _flags:YHAsyncTextLayoutFlags = YHAsyncTextLayoutFlags()
     

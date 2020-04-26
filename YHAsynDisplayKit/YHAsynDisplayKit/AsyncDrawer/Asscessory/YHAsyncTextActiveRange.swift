@@ -36,7 +36,7 @@ protocol YHAsyncActiveRange:NSObjectProtocol {
     var bindingData: NSObject? { get set }
 }
 
-class YHAsyncTextActiveRange: NSObject, YHAsyncActiveRange {
+public class YHAsyncTextActiveRange: NSObject, YHAsyncActiveRange {
     var type: YHAsyncActiveRangeType?
     
     var range: NSRange?

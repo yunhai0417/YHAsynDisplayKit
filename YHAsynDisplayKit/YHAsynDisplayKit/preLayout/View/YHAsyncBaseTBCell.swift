@@ -22,7 +22,7 @@ import Foundation
 import CoreGraphics
 
 
-public class YHAsyncBaseTBCell: UITableViewCell {
+open class YHAsyncBaseTBCell: UITableViewCell {
     // 视图背景视图
     public lazy var bgView:UIView = {
         let bgView = UIView.init(frame: CGRect.zero)
@@ -83,7 +83,7 @@ public class YHAsyncBaseTBCell: UITableViewCell {
         self.accessibilityIdentifier = YHAsyncBaseTBCell.self.reuseIdentifier()
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
