@@ -258,10 +258,7 @@ public class YHAsyncMixedView: YHAsyncCanvasControl {
         self.lock.unlock()
     }
     
-}
-
-//MARK: - Event Handing
-extension YHAsyncMixedView {
+    //MARK: - Event Handing
     func shouldDisableGestureRecognizerInLocation(_ location:CGPoint) -> Bool {
         guard let arrayAtts = self.attributedItem?.arrayAttachments else {
             return false
@@ -302,6 +299,8 @@ extension YHAsyncMixedView {
         super.touchesCancelled(touches, with: event)
     }
 }
+
+
 
 // MARK: - YHAsyncTextDrawerDelegate
 
@@ -396,6 +395,6 @@ extension YHAsyncMixedView:YHAsyncTextDrawerEventDelegate {
 
 extension YHAsyncMixedView:YHAsyncTextLayoutDelegate {
     public func textLayout(_ textLayout: YHAsyncTextLayout?, truncatedLine: CTLine?, atIndex: UInt) -> CGFloat {
-        return YHAsyncTextLayoutMaxSize().imumWidth
+        return YHAsyncTextLayoutMaxSize.imumWidth
     }
 }

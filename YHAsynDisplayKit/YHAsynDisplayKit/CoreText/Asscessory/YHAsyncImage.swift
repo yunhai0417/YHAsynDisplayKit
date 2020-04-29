@@ -164,4 +164,18 @@ public class YHAsyncImage: NSObject {
             }
         }
     }
+    
+    /**
+    * 根据 url 到内存里查找
+    * @param url 图片的url
+    * @return 缓存结果，没有就返回 nil
+    */
+    public func queryCacheImageWithUrl(_ str:String) -> UIImage? {
+        guard let url = URL.init(string: str) else { return nil }
+        let key = SDWebImageManager.shared.cacheKey(for: url)
+        
+        let image = SDImageCache.shared.imageFromCache(forKey: key)
+        
+        return image
+    }
 }

@@ -19,7 +19,7 @@
 
 import Foundation
 
-enum YHAsyncActiveRangeType:NSInteger {
+public enum YHAsyncActiveRangeType:NSInteger {
     case unKnow = 0
     case uRL    = 1
     case email  = 2
@@ -28,7 +28,7 @@ enum YHAsyncActiveRangeType:NSInteger {
     case text   = 5
 }
 
-protocol YHAsyncActiveRange:NSObjectProtocol {
+public protocol YHAsyncActiveRange:NSObjectProtocol {
     var type: YHAsyncActiveRangeType? { get set }
     var range: NSRange? { get set }
     var text: String? { get set }
@@ -37,13 +37,13 @@ protocol YHAsyncActiveRange:NSObjectProtocol {
 }
 
 public class YHAsyncTextActiveRange: NSObject, YHAsyncActiveRange {
-    var type: YHAsyncActiveRangeType?
+    public var type: YHAsyncActiveRangeType?
     
-    var range: NSRange?
+    public var range: NSRange?
     
-    var text: String?
+    public var text: String?
     
-    var bindingData: NSObject?
+    public var bindingData: NSObject?
     
     /**
      * 创建一个激活区，框架内部使用
@@ -54,7 +54,7 @@ public class YHAsyncTextActiveRange: NSObject, YHAsyncActiveRange {
      *
      * @return 激活区
      */
-    class func activeRangeInstance(_ inrange:NSRange, intype:YHAsyncActiveRangeType, intext:String) -> YHAsyncTextActiveRange {
+    public class func activeRangeInstance(_ inrange:NSRange, intype:YHAsyncActiveRangeType, intext:String) -> YHAsyncTextActiveRange {
         let textRange = YHAsyncTextActiveRange.init()
         textRange.type  = intype
         textRange.range = inrange

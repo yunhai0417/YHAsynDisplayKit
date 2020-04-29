@@ -19,9 +19,9 @@
 
 import UIKit
 
-struct YHAsyncTextLayoutMaxSize {
-    let imumWidth:CGFloat = 2000
-    let imumHeight:CGFloat = 10000000
+public struct YHAsyncTextLayoutMaxSize {
+    public static let imumWidth:CGFloat = 2000
+    public static let imumHeight:CGFloat = 10000000
 }
 
 struct YHAsyncTextLayoutFlags {

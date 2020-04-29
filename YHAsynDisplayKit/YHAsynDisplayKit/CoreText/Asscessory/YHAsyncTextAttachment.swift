@@ -71,6 +71,15 @@ public class YHAsyncTextAttachment: NSObject, YHAsyncAttachment {
     // 文本组件是否响应事件，默认responseEvent = （target && selector && target respondSelector:selector）
     public var responseEvent:Bool = false
     
+    // 给 attachment 绑定的自定义信息
+    public var userInfo:AnyObject?
+    
+    // userInfo 绑定的优先级
+    public var userInfoPriority:NSInteger = 0
+    
+    // event 绑定的优先级
+    public var eventPriority:NSInteger = 0
+    
     /**
     *  构建一个文本组件的类方法
     *
@@ -114,6 +123,36 @@ public class YHAsyncTextAttachment: NSObject, YHAsyncAttachment {
             self.edgeInsets = UIEdgeInsets.init(top: 0, left: 1, bottom: 0, right: 0)
         } else {
             self.edgeInsets = UIEdgeInsets.init(top: 0, left: 1, bottom: 0, right: 0)
+        }
+    }
+    
+    /**
+    *  给一个文本组件添加事件
+    *
+    * @param target 事件执行者
+    * @param action 事件行为
+    * @param controlEvents 事件类型
+    *
+    */
+    public func addTarget(_ target:AnyObject?, inAction action:Selector?, forControlEvents controlEvents:UIControl.Event) {
+        self.target = target
+        self.selector = action
+        
+        self.responseEvent = false
+        if let target = target , let action = action {
+            self.responseEvent = target.responds(to: action)
+        }
+    }
+    
+    /**
+    *  处理事件，框架内部使用
+    */
+    
+    public func handleEvent(_ sender:AnyObject?) {
+        if let target = self.target , let action = self.selector {
+            if target.responds(to: action) {
+                target.perform(action, with: selector)
+            }
         }
     }
 }

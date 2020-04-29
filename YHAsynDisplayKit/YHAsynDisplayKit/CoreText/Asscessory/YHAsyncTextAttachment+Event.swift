@@ -20,34 +20,6 @@
 import UIKit
 
 extension YHAsyncTextAttachment {
-    /**
-    *  给一个文本组件添加事件
-    *
-    * @param target 事件执行者
-    * @param action 事件行为
-    * @param controlEvents 事件类型
-    *
-    */
-    func addTarget(_ target:AnyObject?, inAction action:Selector?, forControlEvents controlEvents:UIControl.Event) {
-        self.target = target
-        self.selector = action
-        
-        self.responseEvent = false
-        if let target = target , let action = action {
-            self.responseEvent = target.responds(to: action)
-        }
-    }
     
-    /**
-    *  处理事件，框架内部使用
-    */
-    
-    func handleEvent(_ sender:AnyObject) {
-        if let target = self.target , let action = self.selector {
-            if target.responds(to: action) {
-                target.perform(action, with: selector)
-            }
-        }
-    }
 }
 

@@ -32,7 +32,7 @@ public class YHAsyncCanvasControlTargetAction: NSObject {
     }
 }
 
-
+//@objcMembers
 open class YHAsyncCanvasControl: YHAsyncCanvasView {
     // how to position content vertically inside control. default is center
     public var contentHorizontalAlignment:UIControl.ContentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center
@@ -257,19 +257,19 @@ open class YHAsyncCanvasControl: YHAsyncCanvasView {
         UIApplication.shared.sendAction(action, to: to, from: self, for: forEvent)
     }
 
-    func beginTrackingWithTouch(_ touch:UITouch, withEvent:UIEvent?) -> Bool {
+    open func beginTrackingWithTouch(_ touch:UITouch, withEvent:UIEvent?) -> Bool {
         return true
     }
     
-    func continueTrackingWithTouch(_ touch:UITouch, withEvent:UIEvent?) -> Bool {
+    open func continueTrackingWithTouch(_ touch:UITouch, withEvent:UIEvent?) -> Bool {
         return true
     }
 
-    func endTrackingWithTouch(_ touch:UITouch, withEvent:UIEvent?) {
+    open func endTrackingWithTouch(_ touch:UITouch, withEvent:UIEvent?) {
         
     }
 
-    func cancelTrackingWithEvent(_ event:UIEvent?) {
+    open func cancelTrackingWithEvent(_ event:UIEvent?) {
         
     }
 
@@ -293,7 +293,7 @@ open class YHAsyncCanvasControl: YHAsyncCanvasView {
     }
     
     //override
-    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         self.isTouchInside = true
         self.isTracking = self.beginTrackingWithTouch(touch, withEvent: event)
@@ -309,7 +309,7 @@ open class YHAsyncCanvasControl: YHAsyncCanvasView {
         }
     }
     
-    override public func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override open func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.highlighted = false
         if self.isTracking {
             self.cancelTrackingWithEvent(event)
@@ -320,7 +320,7 @@ open class YHAsyncCanvasControl: YHAsyncCanvasView {
         self.isTracking = false
     }
     
-    override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         self.isTouchInside = self.point(inside: touch.location(in: self), with: event)
         
@@ -341,7 +341,7 @@ open class YHAsyncCanvasControl: YHAsyncCanvasView {
 
     }
     
-    override public func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         let wasTouchInside:Bool = self.isTouchInside
 

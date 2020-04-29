@@ -451,8 +451,8 @@ extension NSString {
 
 //#pragma mark - Draw at Points
 extension NSString {
-    func yh_drawAtPoint(_ point:CGPoint, withFont font:UIFont) -> CGSize? {
-        return self.yh_drawAtPoint(point, withFont: font, forWidth:YHAsyncTextLayoutMaxSize().imumWidth, lineBreakMode: NSLineBreakMode.byWordWrapping)
+    public func yh_drawAtPoint(_ point:CGPoint, withFont font:UIFont) -> CGSize? {
+        return self.yh_drawAtPoint(point, withFont: font, forWidth:YHAsyncTextLayoutMaxSize.imumWidth, lineBreakMode: NSLineBreakMode.byWordWrapping)
     }
     
     func yh_drawAtPoint(_ point:CGPoint, withFont font:UIFont,forWidth width:CGFloat, lineBreakMode mode:NSLineBreakMode) -> CGSize? {

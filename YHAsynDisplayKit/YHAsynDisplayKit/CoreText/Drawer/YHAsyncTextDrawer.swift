@@ -182,9 +182,9 @@ public class YHAsyncTextDrawer: UIResponder {
     var _eventDelegateHas = YHAsyncTextDrawerEventDelegateHas()
     var _touchesBeginPoint:CGPoint?
     // 正在响应点击的激活区，每一个可点击区域都被定义成了激活区
-    weak var pressingActiveRange:YHAsyncTextActiveRange?
+    public weak var pressingActiveRange:YHAsyncTextActiveRange?
     // 已保存的点击激活区
-    weak var savedPressingActiveRange:YHAsyncTextActiveRange?
+    public weak var savedPressingActiveRange:YHAsyncTextActiveRange?
     
     /**
     *  文本绘制器的基本绘制方法，绘制到当前上下文中
@@ -445,6 +445,81 @@ public class YHAsyncTextDrawer: UIResponder {
         }
     }
     
-//    #pragma mark - Event Handle
+    //MARK: - Event Handle
+    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let contextView = self.eventDelegateContextView() else { return }
+        guard let location = touches.first?.location(in: contextView) else { return }
+        guard let drawOrigin = drawOrigin else { return }
+        let layoutLocation = self.convertPointToLayout(location, drawOrigin)
+        
+        if let activeRanges = self.eventDelegateActiveRanges() {
+            if let activeRange = self.rangeInRanges(activeRanges, forLayoutLocation: layoutLocation) {
+                self.pressingActiveRange = activeRange
+                contextView.setNeedsDisplay()
+            }
+        }
+        
+        _touchesBeginPoint = location
+    }
+    
+    override public func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let contextView = self.eventDelegateContextView() else { return }
+        let respondingRadius:CGFloat = 50
+        guard let location = touches.first?.location(in: contextView) else { return }
+
+        guard let touchesBeginPoint = _touchesBeginPoint else { return }
+        let movedDistance:CGFloat = CGFloat(sqrt(pow((location.x - touchesBeginPoint.x), 2.0) + pow((location.y - touchesBeginPoint.y), 2.0)))
+        
+        let response = movedDistance <= respondingRadius
+        if let pressingActiveRange = self.pressingActiveRange {
+            if !response {
+                self.savedPressingActiveRange = self.pressingActiveRange
+                self.pressingActiveRange = nil
+                
+                contextView.setNeedsDisplay()
+            }
+        }
+        
+        if let savedPressingActiveRange = self.savedPressingActiveRange {
+            if response {
+                self.pressingActiveRange = self.savedPressingActiveRange
+                self.savedPressingActiveRange = nil
+                
+                contextView.setNeedsDisplay()
+            }
+        }
+    }
+    
+    override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if _lastTouchEndedTimeStamp != event?.timestamp {
+            self.savedPressingActiveRange = nil
+            if let timestamp = event?.timestamp {
+                _lastTouchEndedTimeStamp = timestamp
+            }
+            if let pressingActiveRange = self.pressingActiveRange {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                    self.eventDelegateDidPressActiveRange(pressingActiveRange)
+                }
+            }
+            
+            _touchesBeginPoint = CGPoint.zero
+            
+            // 若用户点击速度过快，hitRange高亮状态还未绘制又取消高亮会导致没有高亮效果
+            // 故延迟执行
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                self.pressingActiveRange = nil
+                self.eventDelegateContextView()?.setNeedsDisplay()
+            }
+        }
+    }
+    
+    override public func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.savedPressingActiveRange = nil
+        if let _ = self.pressingActiveRange {
+            self.pressingActiveRange = nil
+            self.eventDelegateContextView()?.setNeedsDisplay()
+        }
+    }
+    
     
 }
