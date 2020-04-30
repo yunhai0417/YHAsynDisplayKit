@@ -20,6 +20,8 @@
 import UIKit
 import Foundation
 
+public typealias attributeCallBack = () -> Void
+
 public struct YHAsyncMutableAttributedItemFlags {
     var needsRebuild:Bool = true
 }
@@ -54,14 +56,19 @@ public class YHAsyncMutableAttributedItem: NSObject {
     //MARK: - func
     /**
     * 根据Text创建一个AttributedItem
-    *
     * @param text 文本
     * @return WMMutableAttributedItem
+    * 如果输入nil 返回一个"" 空字符串创建
     */
     
-    public class func itemWithText(_ text:String) -> YHAsyncMutableAttributedItem {
-        let item = YHAsyncMutableAttributedItem.init(text)
-        return item
+    public class func itemWithText(_ inText:String?) -> YHAsyncMutableAttributedItem {
+        if let text = inText {
+            let item = YHAsyncMutableAttributedItem.init(text)
+            return item
+        }
+        
+        return YHAsyncMutableAttributedItem.init("")
+        
     }
     
     /**
@@ -166,7 +173,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     * @param alignment 对齐方式
     */
     
-    func setAlignment(_ alignment:YHAsyncTextAlignment) {
+    public func setAlignment(_ alignment:YHAsyncTextAlignment) {
         self.setNeedsRebuild()
         self.textStorage?.yh_setAlignment(alignment)
     }
@@ -179,7 +186,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     *
     */
     
-    func setAlignment(_ alignment:YHAsyncTextAlignment, lineBreakMode mode:NSLineBreakMode) {
+    public func setAlignment(_ alignment:YHAsyncTextAlignment, lineBreakMode mode:NSLineBreakMode) {
         self.setNeedsRebuild()
         self.textStorage?.yh_setAlignment(alignment, lineBreakMode: mode)
     }
@@ -192,7 +199,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     * @param lineheight 行高
     *
     */
-    func setAlignment(_ alignment:YHAsyncTextAlignment, lineBreakMode mode:NSLineBreakMode, lineHeight height:CGFloat) {
+    public func setAlignment(_ alignment:YHAsyncTextAlignment, lineBreakMode mode:NSLineBreakMode, lineHeight height:CGFloat) {
         self.setNeedsRebuild()
         self.textStorage?.yh_setAlignment(alignment, lineBreakMode: mode, lineHeight: height)
     }
@@ -215,7 +222,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     *
     */
     
-    func setTextLigature(_ textLigature:YHAsyncTextLigature) {
+    public func setTextLigature(_ textLigature:YHAsyncTextLigature) {
         self.setNeedsRebuild()
         self.textStorage?.yh_setTextLigature(textLigature)
     }
@@ -227,7 +234,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     *
     */
     
-    func setUnderlineStyle(_ underlineStyle:YHAsyncTextUnderlineStyle) {
+    public func setUnderlineStyle(_ underlineStyle:YHAsyncTextUnderlineStyle) {
         self.setNeedsRebuild()
         self.textStorage?.yh_setUnderlineStyle(underlineStyle)
     }
@@ -238,7 +245,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     * @param strikeThroughStyle 删除线风格
     *
     */
-    func setStrikeThroughStyle(_ strikeThroughStyle:YHAsyncTextStrikeThroughStyle) {
+    public func setStrikeThroughStyle(_ strikeThroughStyle:YHAsyncTextStrikeThroughStyle) {
         self.setNeedsRebuild()
         self.textStorage?.yh_setStrikeThroughStyle(strikeThroughStyle)
     }
@@ -286,6 +293,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     * @return WMMutableAttributedItem
     *
     */
+    @discardableResult
     public func appendAttributedItem(_ item:YHAsyncMutableAttributedItem) -> YHAsyncMutableAttributedItem {
         if let resultString = item.resultString {
             if let arrayAttachments = item.arrayAttachments {
@@ -430,6 +438,8 @@ public class YHAsyncMutableAttributedItem: NSObject {
     * @return WMMutableAttributedItem
     *
     */
+    
+    @discardableResult
     public func appendImageWithImage(_ image:UIImage?, inSize size:CGSize = CGSize(width: 11, height: 11)) -> YHAsyncMutableAttributedItem {
         let att = YHAsyncTextAttachment.textAttachmentWithContents(image, inType: YHAsyncAttachmentType.StaticImage, inSize: size)
         
@@ -447,6 +457,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     * @return WMMutableAttributedItem
     *
     */
+    @discardableResult
     public func appendImageWithImage(_ image:UIImage?, inSize size:CGSize = CGSize(width: 11, height: 11), imageEdge inEdgeInsets:UIEdgeInsets?) -> YHAsyncMutableAttributedItem {
         let att = YHAsyncTextAttachment.textAttachmentWithContents(image, inType: YHAsyncAttachmentType.StaticImage, inSize: size)
         if let edge = inEdgeInsets {
@@ -464,7 +475,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     * @return WMMutableAttributedItem
     *
     */
-    
+    @discardableResult
     public func appendWhiteSpaceWithWidth(_ width:CGFloat) -> YHAsyncMutableAttributedItem {
         let att = YHAsyncTextAttachment.textAttachmentWithContents(nil, inType: YHAsyncAttachmentType.Placeholder, inSize: CGSize.init(width: width, height: 1))
         
@@ -479,7 +490,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     * @return WMMutableAttributedItem
     *
     */
-    
+    @discardableResult
     public func appendAttachment(_ att:YHAsyncTextAttachment) -> YHAsyncMutableAttributedItem {
         if att.type == YHAsyncAttachmentType.StaticImage
             || att.type == YHAsyncAttachmentType.Placeholder {
@@ -497,7 +508,86 @@ public class YHAsyncMutableAttributedItem: NSObject {
         }
         return self
     }
+    
+    /**
+    *  给 Item 绑定自定义信息,点击事件触发后会把信息回抛,优先级默认为0
+    *
+    * @param userInfo 自定义信息
+    *
+    */
+    
+    public func setUserInfo(_ userInfo:AnyObject?) {
+        self.setUserInfo(userInfo, priority: 0)
+    }
+    
+    /**
+    *  给 Item 绑定自定义信息,点击事件触发后会把信息回抛
+    *
+    * @param userInfo 自定义信息
+    * @param priority userInfo的优先级,数字越小优先级越高
+    */
+    public func setUserInfo(_ inUserInfo:AnyObject?, priority inPriority:NSInteger) {
+        guard let userInfo = inUserInfo else { return }
+        guard let arrayAttachments = self.arrayAttachments else { return }
+        for attachMent in arrayAttachments {
+            if inPriority <= attachMent.userInfoPriority {
+                attachMent.userInfo = inUserInfo
+                attachMent.userInfoPriority = inPriority
+            }
+        }
+    }
+    
+    /**
+    *  给一个文本组件添加事件,优先级默认为0
+    *
+    * @param target 事件执行者
+    * @param action 事件行为
+    * @param controlEvents 事件类型
+    *
+    */
+    
+    public func addTarget(_ target:AnyObject, action inAction:Selector, forControlEvents controlEvents:UIControl.Event) {
+        self.addTarget(target, action: inAction, forControlEvents: controlEvents, priority: 0)
+    }
+    
+    /**
+    *  给一个文本组件添加事件
+    *
+    * @param target 事件执行者
+    * @param action 事件行为
+    * @param controlEvents 事件类型
+    * @param priority 相应事件的优先级,数字越小优先级约高
+    */
+    
+    public func addTarget(_ target:AnyObject, action inAction:Selector, forControlEvents controlEvents:UIControl.Event, priority inpriority:NSInteger) {
+        if target.responds(to: inAction) {
+            guard let arrayAttachments = self.arrayAttachments else { return }
+            for attachMent in arrayAttachments {
+                if inpriority <= attachMent.eventPriority {
+                    attachMent.eventPriority = inpriority
+                    attachMent.addTarget(target, inAction: inAction, forControlEvents: controlEvents)
+                }
+            }
+        }
+    }
+    
+    
+    /**
+    *  给一个文本组件添加点击回调
+    *
+    * @param callBack 点击事件执行回调
+    *
+    */
+    
+    public func registerClickBlock(_ inCallBack:attributeCallBack?) {
+        guard let callBack = inCallBack  else { return }
+        guard let arrayAttachments = self.arrayAttachments else { return }
+        for attachMent in arrayAttachments {
+            attachMent.registerClickBlock(inCallBack)
+        }
+    }
 }
+
 
 
 extension YHAsyncMutableAttributedItem {

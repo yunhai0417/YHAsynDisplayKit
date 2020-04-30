@@ -26,7 +26,7 @@ public enum YHAsyncCellSeparatorLineStyle: NSInteger {
     case nonePadding    = 3   //双侧无空白
 }
 
-public class YHAsyncBaseCellData: NSObject {
+open class YHAsyncBaseCellData: NSObject {
     // cell宽度
     public var cellWidth:CGFloat = 0
         
@@ -43,7 +43,7 @@ public class YHAsyncBaseCellData: NSObject {
         
     // 根据该属性值反射UI数据对应的视图Class，子类可以通过覆盖方式指定，默认取当前类同名对应的Cell
     // 例如: YHAsyncListCellData -> YHAsyncListCell
-    public func getCurrentClass() -> String {
+    open func getCurrentClass() -> String {
         let name = type(of: self)
         return "\(name)"
     //        return "YHAsyncBaseTBCell"

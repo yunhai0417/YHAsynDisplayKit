@@ -41,38 +41,7 @@ open class YHAsyncBaseTBCell: UITableViewCell {
     
     
     // 视图展示的排版数据
-    fileprivate var _cellData:YHAsyncBaseCellData?
-    public var cellData:YHAsyncBaseCellData? {
-        /**
-        * 为视图设置排版数据
-        * @param cellData  视图排版数据
-        */
-        set {
-            _cellData = newValue
-            if let newCellData = newValue {
-                self.bgView.frame = CGRect.init(x: 0, y: 0, width: newCellData.cellWidth, height: newCellData.cellHeight)
-                self.separatorLine.isHidden = newCellData.separatorStyle == .none
-                self.contentView.bringSubviewToFront(self.separatorLine)
-                
-                let height:CGFloat = 1 / UIScreen.main.scale
-                
-                if newCellData.separatorStyle == .leftPadding {
-                    self.separatorLine.frame = CGRect.init(x: 15, y: newCellData.cellHeight -  height, width: newCellData.cellWidth - 15, height: height)
-                } else if newCellData.separatorStyle == .rightPadding {
-                    self.separatorLine.frame = CGRect.init(x: 0, y: newCellData.cellHeight -  height, width: newCellData.cellWidth - 15, height: height)
-                } else if newCellData.separatorStyle == .nonePadding {
-                    self.separatorLine.frame = CGRect.init(x: 0, y: newCellData.cellHeight -  height, width: newCellData.cellWidth , height: height)
-                }
-                
-            } else {
-                self.bgView.frame = CGRect.zero
-                self.separatorLine.isHidden = true
-            }
-        }
-        get {
-            return _cellData
-        }
-    }
+    public var cellData:YHAsyncBaseCellData?
     
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -89,5 +58,32 @@ open class YHAsyncBaseTBCell: UITableViewCell {
     
     class func reuseIdentifier() -> String {
         return NSStringFromClass(self)
+    }
+    
+    /**
+    * 为视图设置排版数据
+    * @param cellData  视图排版数据
+    */
+    open func setupCellData(_ inCellData:YHAsyncBaseCellData?) {
+        if let newCellData = inCellData {
+            self.bgView.frame = CGRect.init(x: 0, y: 0, width: newCellData.cellWidth, height: newCellData.cellHeight)
+            self.separatorLine.isHidden = newCellData.separatorStyle == .none
+            self.contentView.bringSubviewToFront(self.separatorLine)
+            
+            let height:CGFloat = 1 / UIScreen.main.scale
+            
+            if newCellData.separatorStyle == .leftPadding {
+                self.separatorLine.frame = CGRect.init(x: 15, y: newCellData.cellHeight -  height, width: newCellData.cellWidth - 15, height: height)
+            } else if newCellData.separatorStyle == .rightPadding {
+                self.separatorLine.frame = CGRect.init(x: 0, y: newCellData.cellHeight -  height, width: newCellData.cellWidth - 15, height: height)
+            } else if newCellData.separatorStyle == .nonePadding {
+                self.separatorLine.frame = CGRect.init(x: 0, y: newCellData.cellHeight -  height, width: newCellData.cellWidth , height: height)
+            }
+            
+        } else {
+            self.bgView.frame = CGRect.zero
+            self.separatorLine.isHidden = true
+        }
+        self.cellData = inCellData
     }
 }

@@ -30,7 +30,7 @@ var YHAsyncCachedFontMetricsList = [YHAsyncFontMetrics]()
 
 //MARK: -YHAsyncFontMetrics static func
 
-func YHAsyncFontMetricsCreateMake(_ inascent:CGFloat, indescent descent:CGFloat, inleading leading:CGFloat) -> YHAsyncFontMetrics {
+public func YHAsyncFontMetricsCreateMake(_ inascent:CGFloat, indescent descent:CGFloat, inleading leading:CGFloat) -> YHAsyncFontMetrics {
     var metrics = YHAsyncFontMetrics.init()
     metrics.ascent = inascent
     metrics.descent = descent
@@ -38,7 +38,7 @@ func YHAsyncFontMetricsCreateMake(_ inascent:CGFloat, indescent descent:CGFloat,
     return metrics
 }
 
-func YHAsyncFontMetricsCreateMake(_ uifont:UIFont?) -> YHAsyncFontMetrics {
+public func YHAsyncFontMetricsCreateMake(_ uifont:UIFont?) -> YHAsyncFontMetrics {
     var metrics = YHAsyncFontMetricsZero
     
     if let tfont = uifont  {
@@ -50,7 +50,7 @@ func YHAsyncFontMetricsCreateMake(_ uifont:UIFont?) -> YHAsyncFontMetrics {
     return metrics
 }
 
-func YHAsyncFontMetricsCreateMake(_ ctfont:CTFont) -> YHAsyncFontMetrics {
+public func YHAsyncFontMetricsCreateMake(_ ctfont:CTFont) -> YHAsyncFontMetrics {
     var metrics = YHAsyncFontMetrics.init()
     metrics.ascent = abs(CTFontGetAscent(ctfont))
     metrics.descent = abs(CTFontGetDescent(ctfont))
@@ -58,7 +58,7 @@ func YHAsyncFontMetricsCreateMake(_ ctfont:CTFont) -> YHAsyncFontMetrics {
     return metrics
 }
 
-func YHAsyncFontMetricsCreateMakeWithLineHeight(_ metrics:YHAsyncFontMetrics, targetLineHeight:CGFloat) -> YHAsyncFontMetrics {
+public func YHAsyncFontMetricsCreateMakeWithLineHeight(_ metrics:YHAsyncFontMetrics, targetLineHeight:CGFloat) -> YHAsyncFontMetrics {
     
     var newMetrics = YHAsyncFontMetrics.init()
     newMetrics.ascent = targetLineHeight - metrics.descent - metrics.leading
@@ -69,11 +69,11 @@ func YHAsyncFontMetricsCreateMakeWithLineHeight(_ metrics:YHAsyncFontMetrics, ta
 }
 
 // 计算字体高度
-func YHAsyncFontMetricsGetLineHeight(_ metrics:YHAsyncFontMetrics) -> CGFloat {
+public func YHAsyncFontMetricsGetLineHeight(_ metrics:YHAsyncFontMetrics) -> CGFloat {
     return CGFloat(ceilf(Float(metrics.ascent + metrics.descent + metrics.leading)))
 }
 
-func YHAsyncFontMetricsEqual(_ metricsLeft:YHAsyncFontMetrics?, inMetricsRight metricsRight:YHAsyncFontMetrics?) -> Bool {
+public func YHAsyncFontMetricsEqual(_ metricsLeft:YHAsyncFontMetrics?, inMetricsRight metricsRight:YHAsyncFontMetrics?) -> Bool {
     guard let metrics1 = metricsLeft else {
         return false
     }
@@ -86,7 +86,7 @@ func YHAsyncFontMetricsEqual(_ metricsLeft:YHAsyncFontMetrics?, inMetricsRight m
         && metrics1.leading == metrics2.leading
 }
 
-func YHAsyncFontDefaultCreateMake(_ pointSize:CGFloat) -> YHAsyncFontMetrics {
+public func YHAsyncFontDefaultCreateMake(_ pointSize:CGFloat) -> YHAsyncFontMetrics {
     if pointSize < 8 || pointSize > 20 {
         let font:UIFont = UIFont.systemFont(ofSize: pointSize)
         return YHAsyncFontMetricsCreateMake(font)

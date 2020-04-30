@@ -7,7 +7,13 @@
 //
 
 import UIKit
+import YHAsynDisplayKit
 
-class DemoOrderCellData: NSObject {
-
+class DemoOrderCellData: YHAsyncBaseCellData {
+    var textDrawerDatas:[YHAsyncVisionObject] = [YHAsyncVisionObject]()
+    
+    override func getCurrentClass() -> String {
+        return "DemoOrderCellData"
+    }
+    
 }

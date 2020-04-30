@@ -46,7 +46,7 @@ public struct YHAsyncListState: OptionSet {
 
 let specificKey = DispatchSpecificKey<String>()
 
-public class YHAsyncBaseViewModel: NSObject {
+open class YHAsyncBaseViewModel: NSObject {
     // 预排版结果，该数组内装的对象均为排版结果
     // 对于该数组的增删改查务必要使用WMGBaseViewModel (Operation)中的方式由业务数据驱动
     // 排版模型和业务模型的关联关系如下图所示:
@@ -81,7 +81,59 @@ public class YHAsyncBaseViewModel: NSObject {
         preLayoutQueue?.setSpecific(key: specificKey, value: specificKeyValue)
     }
 
+    //MARK:- 网络请求 同样是对engine层面同名方法的封装
+    /**
+    * 根据指定参数对业务数据进行重载
+    * 我们把网络请求、磁盘等本地数据读取均定义到数据层。
+    * 按此逻辑，该重载方法多数场景下代表着网络请求，当然也会包含读取本地磁盘等形式的数据
+    * @param params 请求参数
+    * @param completion 请求完成的回调,当实质性的数据重载请求完成之后，预排版内部会根据业务数据进行UI排版操作
+    */
+    
+    open func reloadDataWithParams(_ params:[String:Any]?, completion inCompletion:YHAsyncPreLayoutCompletionBlock?) {
+        self.error = nil
+        self.asyncSafeInvoke {
+            self.engine?.reloadDataWithParams(params, completion: { [weak self] (resultSet, inError) in
+                self?.error = inError
+                self?.hanleNetWorkResult(resultSet, error: inError, completion: inCompletion)
+            })
+        }
+    }
+    
+    /**
+    * 根据指定参数对业务数据进行增量加载，即我们常说的后项刷新
+    * 我们把网络请求、磁盘等本地数据读取均定义到数据层。
+    * 按此逻辑，该重载方法多数场景下代表着网络请求，当然也会包含读取本地磁盘等形式的数据
+    * 请求完成的block回调arrayLayouts，即排版数据, 是当前整体业务数据List的排版结果
+    * 注意，不仅仅是本次loadmore回来的数据，但是上次或者原有的业务数据并不会进行重新排版
+    * @param params 请求参数
+    * @param completion 请求完成的回调,当实质性的数据重载请求完成之后，预排版内部会根据新增业务数据进行UI排版操作
+    */
+    
+    open func loadMoreDataWithParams(_ params:[String:Any]?, completion inCompletion:YHAsyncPreLayoutCompletionBlock?) {
+        self.asyncSafeInvoke {
+            self.engine?.loadMoreDataWithParams(params, completion: { [weak self](resultSet, inError) in
+                self?.hanleNetWorkResult(resultSet, error: inError, completion: inCompletion)
+            })
+        }
+    }
+    
+    /**
+    * 将本地逻辑产生的一条数据插入到整体业务数据池中
+    * @param params 请求参数
+    * @param index 插入位置
+    * @param completion 请求完成的回调
+    */
+    
+    open func insertDataWithParams(_ params:[String:Any]?, withIndex index:NSInteger, completion inCompletion:YHAsyncPreLayoutCompletionBlock?){
+        self.asyncSafeInvoke {
+            self.engine?.insertDataWithParams(params, completion: {[weak self](resultSet, inError) in
+                self?.hanleNetWorkResult(resultSet, error: inError, completion: inCompletion)
+            })
+        }
+    }
 }
+
 
 //MARK: - private functions
 extension YHAsyncBaseViewModel {
@@ -299,59 +351,7 @@ extension YHAsyncBaseViewModel {
     }
 }
 
-//MARK:- 网络请求 同样是对engine层面同名方法的封装
-extension YHAsyncBaseViewModel {
-    /**
-    * 根据指定参数对业务数据进行重载
-    * 我们把网络请求、磁盘等本地数据读取均定义到数据层。
-    * 按此逻辑，该重载方法多数场景下代表着网络请求，当然也会包含读取本地磁盘等形式的数据
-    * @param params 请求参数
-    * @param completion 请求完成的回调,当实质性的数据重载请求完成之后，预排版内部会根据业务数据进行UI排版操作
-    */
-    
-    public func reloadDataWithParams(_ params:[String:Any]?, completion inCompletion:YHAsyncPreLayoutCompletionBlock?) {
-        self.error = nil
-        self.asyncSafeInvoke {
-            self.engine?.reloadDataWithParams(params, completion: { [weak self] (resultSet, inError) in
-                self?.error = inError
-                self?.hanleNetWorkResult(resultSet, error: inError, completion: inCompletion)
-            })
-        }
-    }
-    
-    /**
-    * 根据指定参数对业务数据进行增量加载，即我们常说的后项刷新
-    * 我们把网络请求、磁盘等本地数据读取均定义到数据层。
-    * 按此逻辑，该重载方法多数场景下代表着网络请求，当然也会包含读取本地磁盘等形式的数据
-    * 请求完成的block回调arrayLayouts，即排版数据, 是当前整体业务数据List的排版结果
-    * 注意，不仅仅是本次loadmore回来的数据，但是上次或者原有的业务数据并不会进行重新排版
-    * @param params 请求参数
-    * @param completion 请求完成的回调,当实质性的数据重载请求完成之后，预排版内部会根据新增业务数据进行UI排版操作
-    */
-    
-    public func loadMoreDataWithParams(_ params:[String:Any]?, completion inCompletion:YHAsyncPreLayoutCompletionBlock?) {
-        self.asyncSafeInvoke {
-            self.engine?.loadMoreDataWithParams(params, completion: { [weak self](resultSet, inError) in
-                self?.hanleNetWorkResult(resultSet, error: inError, completion: inCompletion)
-            })
-        }
-    }
-    
-    /**
-    * 将本地逻辑产生的一条数据插入到整体业务数据池中
-    * @param params 请求参数
-    * @param index 插入位置
-    * @param completion 请求完成的回调
-    */
-    
-    public func insertDataWithParams(_ params:[String:Any]?, withIndex index:NSInteger, completion inCompletion:YHAsyncPreLayoutCompletionBlock?){
-        self.asyncSafeInvoke {
-            self.engine?.insertDataWithParams(params, completion: {[weak self](resultSet, inError) in
-                self?.hanleNetWorkResult(resultSet, error: inError, completion: inCompletion)
-            })
-        }
-    }
-}
+
 
 
 

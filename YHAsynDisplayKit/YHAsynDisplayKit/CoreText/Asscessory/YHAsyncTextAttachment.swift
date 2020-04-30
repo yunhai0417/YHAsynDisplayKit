@@ -20,6 +20,8 @@
 import UIKit
 
 public class YHAsyncTextAttachment: NSObject, YHAsyncAttachment {
+    public var callBacks = [attributeCallBack]()
+    
     public var type: YHAsyncAttachmentType?
     
     public var size: CGSize?
@@ -145,6 +147,18 @@ public class YHAsyncTextAttachment: NSObject, YHAsyncAttachment {
     }
     
     /**
+    *  给一个文本组件添加点击回调
+    *
+    * @param callBack 点击事件执行回调
+    *
+    */
+    public func registerClickBlock(_ incallBack:attributeCallBack?) {
+        if let callBack = incallBack {
+            self.callBacks.append(callBack)
+        }
+    }
+    
+    /**
     *  处理事件，框架内部使用
     */
     
@@ -153,6 +167,10 @@ public class YHAsyncTextAttachment: NSObject, YHAsyncAttachment {
             if target.responds(to: action) {
                 target.perform(action, with: selector)
             }
+        }
+        
+        for callBack in self.callBacks {
+            callBack()
         }
     }
 }
