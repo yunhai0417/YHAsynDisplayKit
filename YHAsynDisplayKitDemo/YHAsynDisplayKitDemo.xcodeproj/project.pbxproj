@@ -11,10 +11,10 @@
 		600A62F52448AC3500AEC167 /* BaseUseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600A62F42448AC3500AEC167 /* BaseUseViewController.swift */; };
 		603C6E4D24516971000B339A /* orderlist.json in Resources */ = {isa = PBXBuildFile; fileRef = 603C6E4A24516971000B339A /* orderlist.json */; };
 		6056F254244AE29700191882 /* story_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6056F253244AE29700191882 /* story_icon.png */; };
-		6056F259245D3EA000191882 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6056F258245D3EA000191882 /* Media.xcassets */; };
 		6056F25F245D402500191882 /* assert.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6056F25E245D402500191882 /* assert.xcassets */; };
 		6056F262245D409700191882 /* icon_arrow_store@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6056F260245D409700191882 /* icon_arrow_store@3x.png */; };
 		6056F263245D409700191882 /* icon_arrow_store@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6056F261245D409700191882 /* icon_arrow_store@2x.png */; };
+		6056F267245F2F6200191882 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6056F266245F2F6200191882 /* Media.xcassets */; };
 		60C30D352452E6620083B248 /* DemoOrderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C30D342452E6620083B248 /* DemoOrderListCell.swift */; };
 		60C30D372452E6780083B248 /* DemoOrderListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C30D362452E6780083B248 /* DemoOrderListViewController.swift */; };
 		60C30D392452E6980083B248 /* DemoOrderCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C30D382452E6980083B248 /* DemoOrderCellData.swift */; };
@@ -53,10 +53,10 @@
 		600A62F42448AC3500AEC167 /* BaseUseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUseViewController.swift; sourceTree = "<group>"; };
 		603C6E4A24516971000B339A /* orderlist.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = orderlist.json; sourceTree = "<group>"; };
 		6056F253244AE29700191882 /* story_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = story_icon.png; sourceTree = "<group>"; };
-		6056F258245D3EA000191882 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		6056F25E245D402500191882 /* assert.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = assert.xcassets; sourceTree = "<group>"; };
 		6056F260245D409700191882 /* icon_arrow_store@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_arrow_store@3x.png"; sourceTree = "<group>"; };
 		6056F261245D409700191882 /* icon_arrow_store@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_arrow_store@2x.png"; sourceTree = "<group>"; };
+		6056F266245F2F6200191882 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		60C30D342452E6620083B248 /* DemoOrderListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoOrderListCell.swift; sourceTree = "<group>"; };
 		60C30D362452E6780083B248 /* DemoOrderListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoOrderListViewController.swift; sourceTree = "<group>"; };
 		60C30D382452E6980083B248 /* DemoOrderCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoOrderCellData.swift; sourceTree = "<group>"; };
@@ -168,7 +168,6 @@
 		60C71671242FA68C0095D8D3 = {
 			isa = PBXGroup;
 			children = (
-				6056F25E245D402500191882 /* assert.xcassets */,
 				60C7167C242FA68C0095D8D3 /* YHAsynDisplayKitDemo */,
 				60C71691242FA68D0095D8D3 /* YHAsynDisplayKitDemoTests */,
 				60C7169C242FA68D0095D8D3 /* YHAsynDisplayKitDemoUITests */,
@@ -191,6 +190,7 @@
 		60C7167C242FA68C0095D8D3 /* YHAsynDisplayKitDemo */ = {
 			isa = PBXGroup;
 			children = (
+				6056F25E245D402500191882 /* assert.xcassets */,
 				60C30D40245562270083B248 /* List */,
 				603C6E45245130D9000B339A /* OrderList */,
 				6056F251244AE26500191882 /* DemonViewController */,
@@ -203,7 +203,7 @@
 				60C30D482455995D0083B248 /* YHAsyncObject.h */,
 				60C30D492455995D0083B248 /* YHAsyncObject.m */,
 				60C30D472455995C0083B248 /* YHAsynDisplayKitDemo-Bridging-Header.h */,
-				6056F258245D3EA000191882 /* Media.xcassets */,
+				6056F266245F2F6200191882 /* Media.xcassets */,
 			);
 			path = YHAsynDisplayKitDemo;
 			sourceTree = "<group>";
@@ -351,9 +351,9 @@
 			files = (
 				6056F262245D409700191882 /* icon_arrow_store@3x.png in Resources */,
 				60C71688242FA68D0095D8D3 /* LaunchScreen.storyboard in Resources */,
+				6056F267245F2F6200191882 /* Media.xcassets in Resources */,
 				6056F25F245D402500191882 /* assert.xcassets in Resources */,
 				6056F263245D409700191882 /* icon_arrow_store@2x.png in Resources */,
-				6056F259245D3EA000191882 /* Media.xcassets in Resources */,
 				603C6E4D24516971000B339A /* orderlist.json in Resources */,
 				6056F254244AE29700191882 /* story_icon.png in Resources */,
 				60C71683242FA68C0095D8D3 /* Main.storyboard in Resources */,
