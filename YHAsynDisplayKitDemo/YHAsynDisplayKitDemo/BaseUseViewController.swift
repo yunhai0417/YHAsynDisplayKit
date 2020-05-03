@@ -48,17 +48,17 @@ class BaseUseViewController: UIViewController {
         
         let item = YHAsyncMutableAttributedItem.itemWithText("")
         
-        let text1 = YHAsyncMutableAttributedItem.itemWithText("YHAsyncDisplayKit 是一种高效的UI渲染框架")
-        text1.setFont(UIFont.systemFont(ofSize: 12))
-        text1.setColor(UIColor.orange)
+//        let text1 = YHAsyncMutableAttributedItem.itemWithText("YHAsyncDisplayKit 是一种高效的UI渲染框架")
+//        text1.setFont(UIFont.systemFont(ofSize: 12))
+//        text1.setColor(UIColor.orange)
 
-        _ = item.appendAttributedItem(text1)
+//        _ = item.appendAttributedItem(text1)
+//
+//        let text2 = YHAsyncMutableAttributedItem.itemWithText("🐉 大佬 大佬 YHAsyncDisplayKit 龙哥 666 vの")
+//        text2.setFont(UIFont.systemFont(ofSize: 30))
+//        text2.setColor(UIColor.blue)
 
-        let text2 = YHAsyncMutableAttributedItem.itemWithText("🐉 大佬 大佬 YHAsyncDisplayKit 龙哥 666 vの")
-        text2.setFont(UIFont.systemFont(ofSize: 30))
-        text2.setColor(UIColor.blue)
-
-        _ = item.appendAttributedItem(text2)
+//        _ = item.appendAttributedItem(text2)
         
 //        let text3 = YHAsyncMutableAttributedItem.itemWithImageName("story_icon", inSize: CGSize.init(width: 18, height: 18))
         _ = item.appendImageWithName("story_icon", inSize: CGSize.init(width: 18, height: 18))

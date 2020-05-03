@@ -154,20 +154,6 @@ public class YHAsyncTextDrawer: UIResponder {
     public var eventDelegate:YHAsyncTextDrawerEventDelegate? {
         set {
             _eventDelegate = newValue
-//            let selectorContextView = #selector(YHAsyncTextDrawerEventDelegate.contextViewForTextDrawer(_:))
-//            _eventDelegateHas.contextView = _eventDelegate?.responds(to: selectorContextView) ?? false
-//            
-//            let selectorActiveRanges = #selector(YHAsyncTextDrawerEventDelegate.activeRangesForTextDrawer(_:))
-//            _eventDelegateHas.activeRanges = _eventDelegate?.responds(to: selectorActiveRanges) ?? false
-//            
-//            let selectorDidPressActiveRange = #selector(YHAsyncTextDrawerEventDelegate.textDrawer(_:didPress:))
-//            _eventDelegateHas.didPressActiveRange = _eventDelegate?.responds(to: selectorDidPressActiveRange) ?? false
-//            
-//            let selectorShouldInteractWithActiveRange = #selector(YHAsyncTextDrawerEventDelegate.textDrawer(_:shouldInteract:))
-//            _eventDelegateHas.shouldInteractWithActiveRange = _eventDelegate?.responds(to: selectorShouldInteractWithActiveRange) ?? false
-//            
-//            let selectorDidHighlightedActiveRange = #selector(YHAsyncTextDrawerEventDelegate.textDrawer(_:didHighlighted:frame:))
-//            _eventDelegateHas.didHighlightedActiveRange = _eventDelegate?.responds(to: selectorDidHighlightedActiveRange) ?? false
         }
         get {
             return _eventDelegate
@@ -419,7 +405,11 @@ public class YHAsyncTextDrawer: UIResponder {
                             UIGraphicsPopContext()
                         }
                     }
+
                 }
+                
+                var image1 = UIGraphicsGetImageFromCurrentImageContext()
+
             }
             if let shouldInterrupt = shouldInterrupt {
                 if shouldInterrupt() {

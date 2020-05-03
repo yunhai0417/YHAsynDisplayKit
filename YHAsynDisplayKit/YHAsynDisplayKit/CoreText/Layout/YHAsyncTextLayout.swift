@@ -152,7 +152,7 @@ public class YHAsyncTextLayout: NSObject {
         let path = CGMutablePath()
         
         path.addRect(CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height))
-        
+
         //range: 设置多大就显示多少字符。设置为0时，完整显示
         let ctFrame = CTFramesetterCreateFrame(framesetter, CFRange(location: 0, length: 0), path, nil)
         

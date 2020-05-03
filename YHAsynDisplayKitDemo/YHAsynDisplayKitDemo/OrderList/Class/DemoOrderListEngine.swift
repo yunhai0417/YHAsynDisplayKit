@@ -40,13 +40,14 @@ class DemoOrderListEngine: YHAsyncBaseEngine {
 
     fileprivate func readLocalFileWithName(_ name:String) -> NSDictionary? {
         guard let path = Bundle.main.path(forResource: name, ofType: "json") else { return nil }
-        if let url = URL(string: path) {
-            if let data = try? Data(contentsOf:url) {
-                if let jsonObj:NSDictionary = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {
-                    return jsonObj
-                }
+        guard let urlString = path.addingPercentEncoding(withAllowedCharacters: CharacterSet.init(charactersIn: "#%^{}\"[]|\\<> ").inverted) else { return nil }
+            
+        if let data = NSData.init(contentsOfFile: urlString){
+            if let jsonObj:NSDictionary = try? JSONSerialization.jsonObject(with: data as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {
+                return jsonObj
             }
         }
+        
         return nil
     }
 }

@@ -10,6 +10,14 @@ import UIKit
 import YHAsynDisplayKit
 
 class DemoOrderListViewModel: YHAsyncBaseViewModel {
+    override func refreshCellDataWithMetaData(_ item: YHAsyncBusinessModel) -> YHAsyncBaseCellData? {
+        guard let orderItem = item as? DemoOrderModel else {
+            return nil
+        }
+        return self.refreshCellDataWithMetaData(orderItem)
+    }
+    
+    
     func refreshCellDataWithMetaData(_ orderItem:DemoOrderModel) -> YHAsyncBaseCellData {
         let cellData = DemoOrderCellData.init()
         
@@ -24,13 +32,13 @@ class DemoOrderListViewModel: YHAsyncBaseViewModel {
                 imageAttachment.baselineFontMetrics = YHAsyncFontMetricsCreateMakeWithLineHeight(YHAsyncFontMetricsCreateMake(UIFont.systemFont(ofSize: 11)), targetLineHeight: floor(imageAttachment.size?.height ?? 0))
             }
         }
-        
+
         let poiImageDrawObject = YHAsyncVisionObject.init()
         poiImageDrawObject.visionFrame = CGRect.init(x: 15, y: 15, width: 35, height: 35)
         poiImageDrawObject.visionValue = poiImageAttributeItem
-        
+
         cellData.textDrawerDatas.append(poiImageDrawObject)
-        
+
         //商家名称
         let titleAttributeItem = YHAsyncMutableAttributedItem.itemWithText(orderItem.poiName)
         titleAttributeItem.setFont(UIFont.systemFont(ofSize: 15))
@@ -46,28 +54,32 @@ class DemoOrderListViewModel: YHAsyncBaseViewModel {
         
         //商家箭头
         let titleArrowAttributedItem = YHAsyncMutableAttributedItem.itemWithImageName("icon_arrow_store", inSize: CGSize.init(width: 10, height: 18))
+        titleArrowAttributedItem.setFont(UIFont.systemFont(ofSize: 12))
         
         let titleArrowDrawObject = YHAsyncVisionObject.init()
         titleArrowDrawObject.visionValue = titleArrowAttributedItem
         let titleArrowOriginX = titleDrawObject.visionFrame.size.width + titleDrawObject.visionFrame.origin.x
         let titleArrowOriginY = titleDrawObject.visionFrame.origin.y
-        titleArrowDrawObject.visionFrame = CGRect.init(x: titleArrowOriginX, y: titleArrowOriginY, width: 10, height: 18)
+        if let size = titleArrowAttributedItem.resultString?.attributedSize() {
+            titleArrowDrawObject.visionFrame = CGRect.init(x: titleArrowOriginX, y: titleArrowOriginY, width: 11, height: 26)
+        }
+        
         
         cellData.textDrawerDatas.append(titleArrowDrawObject)
         
         //订单状态
         let statusAttributedItem = YHAsyncMutableAttributedItem.itemWithText(orderItem.statusDescription)
         statusAttributedItem.setFont(UIFont.systemFont(ofSize: 15))
-        
+
         let statusDrawObject = YHAsyncVisionObject.init()
         statusDrawObject.visionValue = statusAttributedItem
-        
+
         if let statusSize = statusAttributedItem.resultString?.attributedSize() {
             let originx = cellData.cellWidth - statusSize.width - 15
             statusDrawObject.visionFrame = CGRect.init(x: originx, y: 24, width: statusSize.width, height: statusSize.height)
         }
         cellData.textDrawerDatas.append(statusDrawObject)
-        
+
         //满减信息
         let activityListAttributedItem = YHAsyncMutableAttributedItem.itemWithText(nil)
         activityListAttributedItem.setFont(UIFont.systemFont(ofSize: 10))
@@ -93,8 +105,9 @@ class DemoOrderListViewModel: YHAsyncBaseViewModel {
         let activityOriginX = titleDrawObject.visionFrame.origin.x
         let activityOriginY = titleDrawObject.visionFrame.origin.y + titleDrawObject.visionFrame.size.height + 4
         
-        activityListObject.visionFrame = CGRect.init(x: activityOriginX, y: activityOriginY, width: 200, height: 15)
+        activityListObject.visionFrame = CGRect.init(x: activityOriginX, y: activityOriginY, width: 275, height: 26)
         cellData.textDrawerDatas.append(activityListObject)
+        
         
         //分隔线
         let lineAttributedItem = YHAsyncMutableAttributedItem.itemWithText(nil)
@@ -102,12 +115,13 @@ class DemoOrderListViewModel: YHAsyncBaseViewModel {
         lineAttributedItem.appendImageWithImage(lineImage, inSize: CGSize.init(width: cellData.cellWidth - 75, height: 0.5))
         
         
+        
         let lineDrawObject = YHAsyncVisionObject.init()
-        lineDrawObject.visionValue = activityListAttributedItem
+        lineDrawObject.visionValue = lineAttributedItem
         let lineOriginX = titleDrawObject.visionFrame.origin.x
         let lineOriginY = activityListObject.visionFrame.origin.y + activityListObject.visionFrame.size.height + 5
         
-        lineDrawObject.visionFrame = CGRect.init(x: lineOriginX, y: lineOriginY, width: cellData.cellWidth - 75, height: 15)
+        lineDrawObject.visionFrame = CGRect.init(x: lineOriginX, y: lineOriginY, width: cellData.cellWidth - 75 + 1, height: 26)
         
         //食物
         let foodInfo = orderItem.productList.first
@@ -131,8 +145,9 @@ class DemoOrderListViewModel: YHAsyncBaseViewModel {
         foodDrawObject.visionFrame = CGRect.init(x: titleDrawObject.visionFrame.origin.x,
                                                  y: lineDrawObject.visionFrame.origin.y + lineDrawObject.visionFrame.size.height + 18,
                                                  width: cellData.cellWidth - titleDrawObject.visionFrame.origin.x,
-                                                 height: totalPriceSize.height)
+                                                 height: totalPriceSize.height + 7)
         cellData.textDrawerDatas.append(foodDrawObject)
+        
         
         //按钮列表
         let buttonListAttributedItem = YHAsyncMutableAttributedItem.itemWithText(nil)
@@ -162,7 +177,7 @@ class DemoOrderListViewModel: YHAsyncBaseViewModel {
             buttonAttributedItem.setUserInfo(buttonInfo.title as AnyObject?)
             
             if let owner = self.owner {
-                buttonAttributedItem.addTarget(owner, action: #selector(buttonDidClick(_:)), forControlEvents: UIControl.Event.touchUpInside)
+                buttonAttributedItem.addTarget(self, action: #selector(buttonDidClick(_:)), forControlEvents: UIControl.Event.touchUpInside)
             }
         }
         
@@ -185,6 +200,6 @@ class DemoOrderListViewModel: YHAsyncBaseViewModel {
     }
 
     @objc func buttonDidClick(_ userInfo:AnyObject?) {
-        
+        print("buttonDidClick")
     }
 }

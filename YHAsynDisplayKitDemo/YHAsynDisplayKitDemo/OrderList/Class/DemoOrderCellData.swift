@@ -13,7 +13,7 @@ class DemoOrderCellData: YHAsyncBaseCellData {
     var textDrawerDatas:[YHAsyncVisionObject] = [YHAsyncVisionObject]()
     
     override func getCurrentClass() -> String {
-        return "DemoOrderCellData"
+        return "DemoOrderListCell"
     }
     
 }

@@ -13,7 +13,7 @@ class YHAsyncListTextView: YHAsyncCanvasControl {
     fileprivate var _drawerDates:[YHAsyncVisionObject] = [YHAsyncVisionObject]()
     public var drawerDates:[YHAsyncVisionObject] {
         set {
-            if _drawerDates == newValue {
+            if _drawerDates != newValue {
                 _drawerDates = newValue
                 self.setNeedsDisplay()
             }
@@ -79,7 +79,7 @@ class YHAsyncListTextView: YHAsyncCanvasControl {
         // 三个点： 锁重入、for循环遍历移除元素、多线程同步访问共享数据区
         var i:Int = 0
         while i < self.arrayAttachMents.count {
-            if i >= 0 {
+            if i >= 0 && i < self.arrayAttachMents.count {
                 let attachment = self.arrayAttachMents[i]
                 if attachment.type == YHAsyncAttachmentType.StaticImage {
                     guard let asyncImage = attachment.contents as? YHAsyncImage else { continue }
@@ -232,7 +232,7 @@ extension YHAsyncListTextView: YHAsyncTextDrawerEventDelegate {
     
     func textDrawer(_ textDrawer: YHAsyncTextDrawer, shouldInteract activeRange: YHAsyncTextActiveRange) -> Bool {
         
-        return false
+        return true
     }
     
     

@@ -92,7 +92,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     
     public class func itemWithImageName(_ imgName:String, inSize size:CGSize) -> YHAsyncMutableAttributedItem {
         let item = YHAsyncMutableAttributedItem.init("")
-        item.appendImageWithUrl(imgName, inSize: size)
+        item.appendImageWithName(imgName, inSize: size)
         return item
     }
     

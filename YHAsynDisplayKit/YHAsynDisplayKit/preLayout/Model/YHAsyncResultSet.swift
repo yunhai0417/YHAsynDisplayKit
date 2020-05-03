@@ -22,16 +22,16 @@ import UIKit
 public class YHAsyncResultSet: NSObject {
     
     // 列表业务数据
-    var businessItems = [YHAsyncBusinessModel]()
+    public var businessItems = [YHAsyncBusinessModel]()
     
     // 当涉及分页机制时，其代表总页数
-    var pageSize:NSInteger = 0
+    public var pageSize:NSInteger = 0
     
     // 表示当前处于第几页
-    var currentPage:NSInteger = 0
+    public var currentPage:NSInteger = 0
     
     // 表示是否还有分页数据, 通常情况下  hasMore = (currentPage = pageSize - 1) > 0
-    var hasMore:Bool = false
+    public var hasMore:Bool = false
     
     /**
      * 重置所有业务数据，一般情况下由预排版内部负责调用

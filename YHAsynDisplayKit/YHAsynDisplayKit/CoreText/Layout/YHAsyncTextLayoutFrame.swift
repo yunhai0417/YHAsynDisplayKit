@@ -231,7 +231,7 @@ public class YHAsyncTextLayoutFrame: NSObject{
             
             // 一共只有一行
             if containsEndIndex && containsStartIndex {
-                if containsEndIndex != containsStartIndex {
+                if containsEndIndex == containsStartIndex {
                     let startOffset = layoutLine.offsetXForCharacterAtIndex(characterStartIndex)
                     let endOffset = layoutLine.offsetXForCharacterAtIndex(characterEndIndex)
                     var rect = lineRect
@@ -241,7 +241,7 @@ public class YHAsyncTextLayoutFrame: NSObject{
                     block(rect, NSRange.init(location: characterStartIndex, length: characterEndIndex - characterStartIndex),
                           &stop)
                 }
-                
+                stop = true
                 
             // 多行时的第一行
             } else if containsStartIndex {

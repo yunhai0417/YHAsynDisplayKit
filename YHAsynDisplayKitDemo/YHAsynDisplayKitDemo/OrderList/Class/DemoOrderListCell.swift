@@ -17,7 +17,7 @@ class DemoOrderListCell: YHAsyncBaseTBCell {
         self.backgroundColor = UIColor.clear
         let orderContentView = YHAsyncListTextView.init(frame: CGRect.init(x: 10, y: 5, width: 0, height: 0))
         orderContentView.cornerRadius = 5
-        orderContentView.backgroundColor = UIColor.white
+        orderContentView.backgroundColor = UIColor.yellow
         self.contentView.addSubview(orderContentView)
         self.orderContentView = orderContentView
     }
@@ -28,6 +28,7 @@ class DemoOrderListCell: YHAsyncBaseTBCell {
     
 
     func setupCellData(_ inCellData: DemoOrderCellData?) {
+        super.setupCellData(inCellData)
         self.orderContentView?.frame = CGRect.init(x: 10, y: 5, width: cellData?.cellWidth ?? 0, height: cellData?.cellHeight ?? 0)
         if let textDrawerDatas = inCellData?.textDrawerDatas {
             self.orderContentView?.drawerDates = textDrawerDatas

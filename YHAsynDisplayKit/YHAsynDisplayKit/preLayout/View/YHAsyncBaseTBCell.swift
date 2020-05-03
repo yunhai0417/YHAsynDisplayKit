@@ -61,7 +61,7 @@ open class YHAsyncBaseTBCell: UITableViewCell {
     }
     
     /**
-    * 为视图设置排版数据
+    * 为视图设置排版数据,添加分割线
     * @param cellData  视图排版数据
     */
     open func setupCellData(_ inCellData:YHAsyncBaseCellData?) {

@@ -3,16 +3,18 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		544222F567C6A7FA34F36550 /* libPods-YHAsynDisplayKitDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71AE86F2810FD968B532FC01 /* libPods-YHAsynDisplayKitDemo.a */; };
 		600A62F52448AC3500AEC167 /* BaseUseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600A62F42448AC3500AEC167 /* BaseUseViewController.swift */; };
-		603C6E4B24516971000B339A /* icon_arrow_store@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 603C6E4824516971000B339A /* icon_arrow_store@2x.png */; };
-		603C6E4C24516971000B339A /* icon_arrow_store@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 603C6E4924516971000B339A /* icon_arrow_store@3x.png */; };
 		603C6E4D24516971000B339A /* orderlist.json in Resources */ = {isa = PBXBuildFile; fileRef = 603C6E4A24516971000B339A /* orderlist.json */; };
 		6056F254244AE29700191882 /* story_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6056F253244AE29700191882 /* story_icon.png */; };
+		6056F259245D3EA000191882 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6056F258245D3EA000191882 /* Media.xcassets */; };
+		6056F25F245D402500191882 /* assert.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6056F25E245D402500191882 /* assert.xcassets */; };
+		6056F262245D409700191882 /* icon_arrow_store@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6056F260245D409700191882 /* icon_arrow_store@3x.png */; };
+		6056F263245D409700191882 /* icon_arrow_store@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6056F261245D409700191882 /* icon_arrow_store@2x.png */; };
 		60C30D352452E6620083B248 /* DemoOrderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C30D342452E6620083B248 /* DemoOrderListCell.swift */; };
 		60C30D372452E6780083B248 /* DemoOrderListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C30D362452E6780083B248 /* DemoOrderListViewController.swift */; };
 		60C30D392452E6980083B248 /* DemoOrderCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C30D382452E6980083B248 /* DemoOrderCellData.swift */; };
@@ -24,7 +26,6 @@
 		60C7167E242FA68C0095D8D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C7167D242FA68C0095D8D3 /* AppDelegate.swift */; };
 		60C71680242FA68C0095D8D3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C7167F242FA68C0095D8D3 /* ViewController.swift */; };
 		60C71683242FA68C0095D8D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60C71681242FA68C0095D8D3 /* Main.storyboard */; };
-		60C71685242FA68D0095D8D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60C71684242FA68D0095D8D3 /* Assets.xcassets */; };
 		60C71688242FA68D0095D8D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60C71686242FA68D0095D8D3 /* LaunchScreen.storyboard */; };
 		60C71693242FA68D0095D8D3 /* YHAsynDisplayKitDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C71692242FA68D0095D8D3 /* YHAsynDisplayKitDemoTests.swift */; };
 		60C7169E242FA68D0095D8D3 /* YHAsynDisplayKitDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C7169D242FA68D0095D8D3 /* YHAsynDisplayKitDemoUITests.swift */; };
@@ -50,10 +51,12 @@
 /* Begin PBXFileReference section */
 		4B9E66166D84D4CE338BF69D /* Pods-YHAsynDisplayKitDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YHAsynDisplayKitDemo.debug.xcconfig"; path = "Target Support Files/Pods-YHAsynDisplayKitDemo/Pods-YHAsynDisplayKitDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		600A62F42448AC3500AEC167 /* BaseUseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUseViewController.swift; sourceTree = "<group>"; };
-		603C6E4824516971000B339A /* icon_arrow_store@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_arrow_store@2x.png"; sourceTree = "<group>"; };
-		603C6E4924516971000B339A /* icon_arrow_store@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_arrow_store@3x.png"; sourceTree = "<group>"; };
 		603C6E4A24516971000B339A /* orderlist.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = orderlist.json; sourceTree = "<group>"; };
 		6056F253244AE29700191882 /* story_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = story_icon.png; sourceTree = "<group>"; };
+		6056F258245D3EA000191882 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		6056F25E245D402500191882 /* assert.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = assert.xcassets; sourceTree = "<group>"; };
+		6056F260245D409700191882 /* icon_arrow_store@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_arrow_store@3x.png"; sourceTree = "<group>"; };
+		6056F261245D409700191882 /* icon_arrow_store@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_arrow_store@2x.png"; sourceTree = "<group>"; };
 		60C30D342452E6620083B248 /* DemoOrderListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoOrderListCell.swift; sourceTree = "<group>"; };
 		60C30D362452E6780083B248 /* DemoOrderListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoOrderListViewController.swift; sourceTree = "<group>"; };
 		60C30D382452E6980083B248 /* DemoOrderCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoOrderCellData.swift; sourceTree = "<group>"; };
@@ -68,7 +71,6 @@
 		60C7167D242FA68C0095D8D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		60C7167F242FA68C0095D8D3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		60C71682242FA68C0095D8D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		60C71684242FA68D0095D8D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		60C71687242FA68D0095D8D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		60C71689242FA68D0095D8D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		60C7168E242FA68D0095D8D3 /* YHAsynDisplayKitDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YHAsynDisplayKitDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,8 +121,8 @@
 		603C6E46245130E6000B339A /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				603C6E4824516971000B339A /* icon_arrow_store@2x.png */,
-				603C6E4924516971000B339A /* icon_arrow_store@3x.png */,
+				6056F261245D409700191882 /* icon_arrow_store@2x.png */,
+				6056F260245D409700191882 /* icon_arrow_store@3x.png */,
 				603C6E4A24516971000B339A /* orderlist.json */,
 			);
 			path = Resource;
@@ -166,6 +168,7 @@
 		60C71671242FA68C0095D8D3 = {
 			isa = PBXGroup;
 			children = (
+				6056F25E245D402500191882 /* assert.xcassets */,
 				60C7167C242FA68C0095D8D3 /* YHAsynDisplayKitDemo */,
 				60C71691242FA68D0095D8D3 /* YHAsynDisplayKitDemoTests */,
 				60C7169C242FA68D0095D8D3 /* YHAsynDisplayKitDemoUITests */,
@@ -194,13 +197,13 @@
 				60C7167D242FA68C0095D8D3 /* AppDelegate.swift */,
 				60C7167F242FA68C0095D8D3 /* ViewController.swift */,
 				60C71681242FA68C0095D8D3 /* Main.storyboard */,
-				60C71684242FA68D0095D8D3 /* Assets.xcassets */,
 				60C71686242FA68D0095D8D3 /* LaunchScreen.storyboard */,
 				60C71689242FA68D0095D8D3 /* Info.plist */,
 				600A62F42448AC3500AEC167 /* BaseUseViewController.swift */,
 				60C30D482455995D0083B248 /* YHAsyncObject.h */,
 				60C30D492455995D0083B248 /* YHAsyncObject.m */,
 				60C30D472455995C0083B248 /* YHAsynDisplayKitDemo-Bridging-Header.h */,
+				6056F258245D3EA000191882 /* Media.xcassets */,
 			);
 			path = YHAsynDisplayKitDemo;
 			sourceTree = "<group>";
@@ -346,11 +349,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				603C6E4C24516971000B339A /* icon_arrow_store@3x.png in Resources */,
+				6056F262245D409700191882 /* icon_arrow_store@3x.png in Resources */,
 				60C71688242FA68D0095D8D3 /* LaunchScreen.storyboard in Resources */,
-				603C6E4B24516971000B339A /* icon_arrow_store@2x.png in Resources */,
+				6056F25F245D402500191882 /* assert.xcassets in Resources */,
+				6056F263245D409700191882 /* icon_arrow_store@2x.png in Resources */,
+				6056F259245D3EA000191882 /* Media.xcassets in Resources */,
 				603C6E4D24516971000B339A /* orderlist.json in Resources */,
-				60C71685242FA68D0095D8D3 /* Assets.xcassets in Resources */,
 				6056F254244AE29700191882 /* story_icon.png in Resources */,
 				60C71683242FA68C0095D8D3 /* Main.storyboard in Resources */,
 			);
@@ -591,6 +595,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = NO;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = CQ44W28Q5W;
 				INFOPLIST_FILE = YHAsynDisplayKitDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -614,6 +619,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = NO;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = CQ44W28Q5W;
 				INFOPLIST_FILE = YHAsynDisplayKitDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

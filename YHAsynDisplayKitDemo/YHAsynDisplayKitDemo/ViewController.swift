@@ -56,7 +56,9 @@ extension ViewController :UITableViewDelegate, UITableViewDataSource {
             newVc.tempIndex = indexPath.row
             self.navigationController?.pushViewController(newVc, animated: true)
         } else {
-            
+            let newVc = DemoOrderListViewController.init()
+            self.navigationController?.pushViewController(newVc, animated: true)
+
         }
         
     }

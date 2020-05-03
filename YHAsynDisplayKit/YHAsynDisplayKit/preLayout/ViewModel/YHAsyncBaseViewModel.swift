@@ -132,6 +132,67 @@ open class YHAsyncBaseViewModel: NSObject {
             })
         }
     }
+    
+    
+    
+    /**
+    * 同步刷新方法，该方法会根据BaseModel的list刷新出最新的UI数据
+    * 该方法是线程安全的
+    * @param resultSet 网络返回结果的一层包装
+    */
+    
+    public func syncRefreshModelWithResultSet(_ inResultSet:YHAsyncResultSet?) {
+        guard let resultSet = inResultSet else { return }
+        self.safeInvoke {
+            var layouts = [YHAsyncBaseCellData]()
+            self.prefreshModelWithResultSet(resultSet, correspondingLayouts: &layouts)
+            
+            self.arrayLayouts.removeAll()
+            
+            if layouts.count > 0 {
+                self.arrayLayouts.append(contentsOf: layouts)
+            }
+        }
+    }
+    
+    /**
+    * 异步刷新方法，该方法会根据BaseModel的list刷新出最新的UI数据
+    * 异步刷新完成的回调block,该block返回刷新完成的UI数据和Error.
+    * 该方法是线程安全的
+    * @param resultSet 网络返回结果的一层包装
+    * @param completion 结果以block方式回调, block回调两个参数即是该类的两个只读变量arrayLayouts和error
+    */
+    
+    public func asyncRefreshModelWithResultSet(_ resultSet:YHAsyncResultSet, completion inCompletion:YHAsyncPreLayoutCompletionBlock?) {
+        self.asyncSafeInvoke {
+            var layouts = [YHAsyncBaseCellData]()
+            self.prefreshModelWithResultSet(resultSet, correspondingLayouts: &layouts)
+            
+            DispatchQueue.main.async {
+                self.arrayLayouts.removeAll()
+                if layouts.count > 0 {
+                    self.arrayLayouts.append(contentsOf: layouts)
+                }
+                if let completion = inCompletion {
+                    completion(self.arrayLayouts, nil)
+                }
+            }
+        }
+    }
+    
+    /**
+    * UI数据生成的单元方法，该方法会根据业务数据模型刷新出其对应的UI数据
+    * 一般情况下，我们需要通过子类集成的方式覆写该方法实现
+    * 注意：该方法会在多线程环境调用，注意保证线程安全
+    * @param item 一条业务数据，这里的WMGBusinessModel是网络数据模型的一个抽象类,可根据业务实际进行改造.
+    * @return WMGBaseCellData 列表场景下的抽象UI数据，亦即排版模型
+    */
+
+    open func refreshCellDataWithMetaData(_ item:YHAsyncBusinessModel) -> YHAsyncBaseCellData? {
+        // override to subclass
+        let cellData = YHAsyncBaseCellData.init()
+        return cellData
+    }
 }
 
 
@@ -145,15 +206,15 @@ extension YHAsyncBaseViewModel {
         var resultLayouts = [YHAsyncBaseCellData]()
         
         for businessItem in resultSet.businessItems {
-            //创建缓存
-            if let _ = businessItem.cellData {
-                let cellDataTmp = self.refreshCellDataWithMetaData(businessItem)
-                cellDataTmp.metaData = businessItem
-                businessItem.cellData = cellDataTmp
-            } else {
-                continue
+            //生成视图数据
+            if businessItem.cellData == nil {
+                //创建缓存
+                let cellData = self.refreshCellDataWithMetaData(businessItem)
+                cellData?.metaData = businessItem
+                businessItem.cellData = cellData
             }
             
+            //入队
             if let cellData = businessItem.cellData {
                 resultLayouts.append(cellData)
             }
@@ -199,65 +260,11 @@ extension YHAsyncBaseViewModel {
     }
 }
 
- //MARK: - public functions
+ //MARK: - public functions 数据刷新
 extension YHAsyncBaseViewModel {
-    /**
-    * 同步刷新方法，该方法会根据BaseModel的list刷新出最新的UI数据
-    * 该方法是线程安全的
-    * @param resultSet 网络返回结果的一层包装
-    */
     
-    func syncRefreshModelWithResultSet(_ resultSet:YHAsyncResultSet) {
-        self.safeInvoke {
-            var layouts = [YHAsyncBaseCellData]()
-            self.prefreshModelWithResultSet(resultSet, correspondingLayouts: &layouts)
-            
-            self.arrayLayouts.removeAll()
-            
-            if layouts.count > 0 {
-                self.arrayLayouts.append(contentsOf: layouts)
-            }
-        }
-    }
     
-    /**
-    * 异步刷新方法，该方法会根据BaseModel的list刷新出最新的UI数据
-    * 异步刷新完成的回调block,该block返回刷新完成的UI数据和Error.
-    * 该方法是线程安全的
-    * @param resultSet 网络返回结果的一层包装
-    * @param completion 结果以block方式回调, block回调两个参数即是该类的两个只读变量arrayLayouts和error
-    */
     
-    func asyncRefreshModelWithResultSet(_ resultSet:YHAsyncResultSet, completion inCompletion:YHAsyncPreLayoutCompletionBlock?) {
-        self.asyncSafeInvoke {
-            var layouts = [YHAsyncBaseCellData]()
-            self.prefreshModelWithResultSet(resultSet, correspondingLayouts: &layouts)
-            
-            DispatchQueue.main.async {
-                self.arrayLayouts.removeAll()
-                if layouts.count > 0 {
-                    self.arrayLayouts.append(contentsOf: layouts)
-                }
-                if let completion = inCompletion {
-                    completion(self.arrayLayouts, nil)
-                }
-            }
-        }
-    }
-    
-    /**
-    * UI数据生成的单元方法，该方法会根据业务数据模型刷新出其对应的UI数据
-    * 一般情况下，我们需要通过子类集成的方式覆写该方法实现
-    * 注意：该方法会在多线程环境调用，注意保证线程安全
-    * @param item 一条业务数据，这里的WMGBusinessModel是网络数据模型的一个抽象类,可根据业务实际进行改造.
-    * @return WMGBaseCellData 列表场景下的抽象UI数据，亦即排版模型
-    */
-
-    func refreshCellDataWithMetaData(_ item:YHAsyncBusinessModel) -> YHAsyncBaseCellData {
-        // override to subclass
-        let cellData = YHAsyncBaseCellData.init()
-        return cellData
-    }
 }
 
 //MARK:- 增删改查 实际上是对Engine的对应封装,区别在于由ViewModel操控线程安全
