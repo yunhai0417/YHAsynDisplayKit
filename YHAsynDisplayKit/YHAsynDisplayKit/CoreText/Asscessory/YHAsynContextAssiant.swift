@@ -21,6 +21,7 @@ import Foundation
 import CoreText
 import CoreGraphics
 
+//MARK: Context绘制补充方法
 public struct YHAsynContextAssiant {
     /**
      * 为上下文添加圆角区域

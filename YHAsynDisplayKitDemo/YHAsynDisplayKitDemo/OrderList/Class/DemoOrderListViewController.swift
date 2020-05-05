@@ -29,7 +29,7 @@ class DemoOrderListViewController: UIViewController , UITableViewDelegate, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        YHAsyncTextDrawer.enableDebugMode()
+//        YHAsyncTextDrawer.enableDebugMode()
         
         self.navigationController?.title = "订单列表"
         self.view.addSubview(self.tableView)
@@ -60,6 +60,7 @@ class DemoOrderListViewController: UIViewController , UITableViewDelegate, UITab
         if let cell = tableView.dequeueReusableCell(withIdentifier: cellData.getCurrentClass(),for: indexPath) as? DemoOrderListCell {
             cell.selectionStyle = .none
             cell.setupCellData(cellData)
+            return cell
         }
         
         

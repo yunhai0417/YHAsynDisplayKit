@@ -1,4 +1,4 @@
-framework module Pods_YHAsynDisplayKit {
+module Pods_YHAsynDisplayKit {
   umbrella header "Pods-YHAsynDisplayKit-umbrella.h"
 
   export *

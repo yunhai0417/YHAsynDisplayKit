@@ -44,8 +44,11 @@ class BaseUseViewController: UIViewController {
     }
     
     fileprivate func baseUseFunction() {
-        YHAsyncTextDrawer.enableDebugMode()
+//        YHAsyncTextDrawer.enableDebugMode()
         
+        let manager = YHAsyncAttributeManager<YHAsyncMixedView>.sharedInstance()
+        let item1 = manager.createAttributeItem()
+        let item2 = manager.createAttributeItem()
         let item = YHAsyncMutableAttributedItem.itemWithText("")
         
 //        let text1 = YHAsyncMutableAttributedItem.itemWithText("YHAsyncDisplayKit 是一种高效的UI渲染框架")
@@ -65,6 +68,8 @@ class BaseUseViewController: UIViewController {
         _ = item.appendImageWithName("story_icon", inSize: CGSize.init(width: 30, height: 30))
 //        item.appendImageWithUrl("story_icon", inSize: CGSize.init(width: 18, height: 18))
 //        _ = item.appendAttributedItem(text3)
+        
+        
         
         let view = YHAsyncMixedView.init(frame: CGRect.zero)
         view.attributedItem = item

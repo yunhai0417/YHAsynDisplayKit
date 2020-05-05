@@ -19,7 +19,7 @@
 
 import UIKit
 
-public class YHAsyncTextAttachment: NSObject, YHAsyncAttachment {
+public class YHAsyncTextAttachment: NSObject, YHAsyncAttachmentProtocol {
     public var callBacks = [attributeCallBack]()
     
     public var type: YHAsyncAttachmentType?
@@ -101,7 +101,7 @@ public class YHAsyncTextAttachment: NSObject, YHAsyncAttachment {
         return att
     }
     
-    // 我们需要给每个文本组件设定对应的FontMetrics，默认为YES。框架会自动获取各个插入组件的Metrics信息
+    //我们需要给每个文本组件设定对应的FontMetrics，默认为YES。框架会自动获取各个插入组件的Metrics信息
     public var retriveFontMetricsAutomatically:Bool = true
     
     // 框架内部会在合适时机设置文本组件的展示Frame，注意！我们不需要指定该值~

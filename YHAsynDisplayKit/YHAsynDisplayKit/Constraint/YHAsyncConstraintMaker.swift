@@ -1,8 +1,8 @@
 //
-//  YHAsyncTextAttachment+Event.swift
+//  YHAsyncConstraintMaker.swift
 //  YHAsynDisplayKit
 //
-//  Created by 吴云海 on 2020/4/5.
+//  Created by 吴云海 on 2020/5/5.
 //  Copyright © 2020 YH. All rights reserved.
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -19,7 +19,13 @@
 
 import UIKit
 
-extension YHAsyncTextAttachment {
+//MARK: AttributeItem 视觉元素 约束组件
+public class YHAsyncConstraintMaker: NSObject {
+    //top
+    //left
+    //bottom
+    //right
+    //width
+    //height
     
 }
-

@@ -51,6 +51,12 @@ extension ViewController :UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            let newVc = AdvanceViewController.init()
+            self.navigationController?.pushViewController(newVc, animated: true)
+            return
+        }
+        
         if indexPath.row <= 3 {
             let newVc = BaseUseViewController.init()
             newVc.tempIndex = indexPath.row

@@ -408,7 +408,7 @@ public class YHAsyncTextDrawer: UIResponder {
 
                 }
                 
-                var image1 = UIGraphicsGetImageFromCurrentImageContext()
+                //var image1 = UIGraphicsGetImageFromCurrentImageContext()
 
             }
             if let shouldInterrupt = shouldInterrupt {

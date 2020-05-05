@@ -17,11 +17,13 @@ workspace 'YHAsynDisplayKitDemo'
 target 'YHAsynDisplayKitDemo' do
     project 'YHAsynDisplayKitDemo'
     pod 'YHAsynDisplayKit', :path => '../'
+    pod 'SnapKit'
 end
 
 target 'YHAsynDisplayKit' do
     project '../YHAsynDisplayKit/YHAsynDisplayKit'
     pod 'SDWebImage', :modular_headers => true
+    
 end
 
 

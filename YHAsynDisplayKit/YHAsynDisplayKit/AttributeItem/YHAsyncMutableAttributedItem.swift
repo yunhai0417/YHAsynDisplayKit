@@ -28,7 +28,11 @@ public struct YHAsyncMutableAttributedItemFlags {
 
 public class YHAsyncMutableAttributedItem: NSObject {
     fileprivate var itemFlags = YHAsyncMutableAttributedItemFlags()
-    fileprivate var textStorage:NSMutableAttributedString?
+    //保存文案属性
+    fileprivate lazy var textStorage:NSMutableAttributedString = {
+        let textStorage = NSMutableAttributedString.init()
+        return textStorage
+    }()
     // 视觉元素对应的resultString
     fileprivate var _resultString:NSAttributedString?
     public var resultString:NSAttributedString? {
@@ -54,6 +58,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     
     
     //MARK: - func
+    
     /**
     * 根据Text创建一个AttributedItem
     * @param text 文本
@@ -98,21 +103,22 @@ public class YHAsyncMutableAttributedItem: NSObject {
     
     /**
     * 根据指定text初始化
-    *
     * @param text 文本
     * @return WMMutableAttributedItem
     */
     public init(_ text:String) {
         super.init()
         self.textStorage = NSMutableAttributedString.init(string: text)
-        self.textStorage?.yh_setFont(UIFont.systemFont(ofSize: 11))
+        self.textStorage.yh_setFont(UIFont.systemFont(ofSize: 11))
         
-        let attributedColor = UIColor(red:((CGFloat)((0x666666 & 0xFF0000) >> 16)) / 255.0,
-                                         green: ((CGFloat)((0x666666 & 0xFF00) >> 8)) / 255.0,
-                                         blue: ((CGFloat)(0x666666 & 0xFF)) / 255.0,
-                                         alpha: 1.0)
+        let attributedColor = YHAsyncColorManager.achieveColor(0x666666)
+            
+//            UIColor(red:((CGFloat)((0x666666 & 0xFF0000) >> 16)) / 255.0,
+//                                         green: ((CGFloat)((0x666666 & 0xFF00) >> 8)) / 255.0,
+//                                         blue: ((CGFloat)(0x666666 & 0xFF)) / 255.0,
+//                                         alpha: 1.0)
         
-        self.textStorage?.yh_setColor(attributedColor)
+        self.textStorage.yh_setColor(attributedColor)
         
         self.resultString = nil
         
@@ -129,7 +135,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     
     public func setFont(_ font:UIFont) {
         self.setNeedsRebuild()
-        self.textStorage?.yh_setFont(font)
+        self.textStorage.yh_setFont(font)
     }
     
     /**
@@ -142,7 +148,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     
     public func setFontSize(_ size:CGFloat, fontWeight weight:CGFloat, boldDisplay display:Bool) {
         self.setNeedsRebuild()
-        self.textStorage?.yh_setFontSize(size, fontWeight: weight, boldDisplay: display)
+        self.textStorage.yh_setFontSize(size, fontWeight: weight, boldDisplay: display)
     }
     
     /**
@@ -153,7 +159,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     
     public func setCTFont(_ ctFont:CTFont) {
         self.setNeedsRebuild()
-        self.textStorage?.yh_setCTFont(ctFont)
+        self.textStorage.yh_setCTFont(ctFont)
     }
     
     /**
@@ -164,7 +170,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     
     public func setColor(_ color:UIColor) {
         self.setNeedsRebuild()
-        self.textStorage?.yh_setColor(color)
+        self.textStorage.yh_setColor(color)
     }
     
     /**
@@ -175,7 +181,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     
     public func setAlignment(_ alignment:YHAsyncTextAlignment) {
         self.setNeedsRebuild()
-        self.textStorage?.yh_setAlignment(alignment)
+        self.textStorage.yh_setAlignment(alignment)
     }
     
     /**
@@ -188,7 +194,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     
     public func setAlignment(_ alignment:YHAsyncTextAlignment, lineBreakMode mode:NSLineBreakMode) {
         self.setNeedsRebuild()
-        self.textStorage?.yh_setAlignment(alignment, lineBreakMode: mode)
+        self.textStorage.yh_setAlignment(alignment, lineBreakMode: mode)
     }
     
     /**
@@ -201,7 +207,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     */
     public func setAlignment(_ alignment:YHAsyncTextAlignment, lineBreakMode mode:NSLineBreakMode, lineHeight height:CGFloat) {
         self.setNeedsRebuild()
-        self.textStorage?.yh_setAlignment(alignment, lineBreakMode: mode, lineHeight: height)
+        self.textStorage.yh_setAlignment(alignment, lineBreakMode: mode, lineHeight: height)
     }
     
     /**
@@ -212,7 +218,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     */
     public func setKerning(_ kern:CGFloat) {
         self.setNeedsRebuild()
-        self.textStorage?.yh_setKerning(kern)
+        self.textStorage.yh_setKerning(kern)
     }
     
     /**
@@ -224,7 +230,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     
     public func setTextLigature(_ textLigature:YHAsyncTextLigature) {
         self.setNeedsRebuild()
-        self.textStorage?.yh_setTextLigature(textLigature)
+        self.textStorage.yh_setTextLigature(textLigature)
     }
     
     /**
@@ -236,7 +242,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     
     public func setUnderlineStyle(_ underlineStyle:YHAsyncTextUnderlineStyle) {
         self.setNeedsRebuild()
-        self.textStorage?.yh_setUnderlineStyle(underlineStyle)
+        self.textStorage.yh_setUnderlineStyle(underlineStyle)
     }
     
     /**
@@ -247,7 +253,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     */
     public func setStrikeThroughStyle(_ strikeThroughStyle:YHAsyncTextStrikeThroughStyle) {
         self.setNeedsRebuild()
-        self.textStorage?.yh_setStrikeThroughStyle(strikeThroughStyle)
+        self.textStorage.yh_setStrikeThroughStyle(strikeThroughStyle)
     }
     
     /**
@@ -270,7 +276,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     
     public func setTextParagraphStyle(_ paragraphStyle:YHAsyncTextParagraphStyle, fontSize size:CGFloat) {
         self.setNeedsRebuild()
-        self.textStorage?.yh_setTextParagraphStyle(paragraphStyle, fontSize: size)
+        self.textStorage.yh_setTextParagraphStyle(paragraphStyle, fontSize: size)
     }
     
     /**
@@ -298,13 +304,14 @@ public class YHAsyncMutableAttributedItem: NSObject {
         if let resultString = item.resultString {
             if let arrayAttachments = item.arrayAttachments {
                 for attachment in arrayAttachments {
-                    if let position = attachment.position, let length = self.textStorage?.length {
+                    let length = self.textStorage.length
+                    if let position = attachment.position {
                         attachment.position = position + UInt(length)
                         self.arrayAttachments?.append(attachment)
                     }
                 }
             }
-            self.textStorage?.append(resultString)
+            self.textStorage.append(resultString)
             self.setNeedsRebuild()
         }
         
@@ -320,10 +327,11 @@ public class YHAsyncMutableAttributedItem: NSObject {
     
     public func appendSeparatorLine() -> YHAsyncMutableAttributedItem {
         
-        let color = UIColor(red:((CGFloat)((0xc4c4c4 & 0xFF0000) >> 16)) / 255.0,
-                            green: ((CGFloat)((0xc4c4c4 & 0xFF00) >> 8)) / 255.0,
-                            blue: ((CGFloat)(0xc4c4c4 & 0xFF)) / 255.0,
-                            alpha: 1.0)
+        let color = YHAsyncColorManager.achieveColor(0xc4c4c4)
+//            UIColor(red:((CGFloat)((0xc4c4c4 & 0xFF0000) >> 16)) / 255.0,
+//                            green: ((CGFloat)((0xc4c4c4 & 0xFF00) >> 8)) / 255.0,
+//                            blue: ((CGFloat)(0xc4c4c4 & 0xFF)) / 255.0,
+//                            alpha: 1.0)
         
         return self.appendSeparatorLineWithColor(color)
     }
@@ -384,21 +392,19 @@ public class YHAsyncMutableAttributedItem: NSObject {
     * @return WMMutableAttributedItem
     *
     */
-    
+    @discardableResult
     public func appendImageWithUrl(_ imgUrl:String, inPlaceholder placeholder:String) ->YHAsyncMutableAttributedItem {
         return self.appendImageWithUrl(imgUrl, inSize: CGSize.init(width: 11, height: 11), inPlaceholder: placeholder)
     }
     
     /**
     * 拼接指定Url的图片
-    *
     * @param imgUrl 图片Url
     * @param size 图片size
     * @param placeholder 占位图
-    *
     * @return WMMutableAttributedItem
-    *
     */
+    @discardableResult
     public func appendImageWithUrl(_ imgUrl:String, inSize size:CGSize ,inPlaceholder placeholder:String) ->YHAsyncMutableAttributedItem {
         if imgUrl.isEmpty && placeholder.isEmpty {
             return self
@@ -423,6 +429,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
     * @return WMMutableAttributedItem
     *
     */
+    @discardableResult
     public func appendImageWithName(_ imgName:String, inSize size:CGSize = CGSize(width: 11, height: 11)) -> YHAsyncMutableAttributedItem? {
         
         let image = UIImage.init(named: imgName)
@@ -495,7 +502,8 @@ public class YHAsyncMutableAttributedItem: NSObject {
         if att.type == YHAsyncAttachmentType.StaticImage
             || att.type == YHAsyncAttachmentType.Placeholder {
             att.position = 0
-            if let position = att.position , let length = self.textStorage?.length {
+            let length = self.textStorage.length
+            if let position = att.position   {
                 att.position = position + UInt(length)
             }
             att.length = 1
@@ -503,7 +511,7 @@ public class YHAsyncMutableAttributedItem: NSObject {
         self.setNeedsRebuild()
         
         if let str = NSAttributedString.yh_attributedStringWithTextAttachment(att) {
-            self.textStorage?.append(str)
+            self.textStorage.append(str)
             self.arrayAttachments?.append(att)
         }
         return self
@@ -603,7 +611,7 @@ extension YHAsyncMutableAttributedItem {
     
     fileprivate func rebuild() {
         self.itemFlags.needsRebuild = false
-        guard let textStorage = self.textStorage else { return }
+        let textStorage = self.textStorage
         
         if textStorage.length == 0 {
             return
