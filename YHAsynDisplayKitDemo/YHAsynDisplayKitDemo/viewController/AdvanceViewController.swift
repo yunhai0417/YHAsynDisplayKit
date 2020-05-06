@@ -59,8 +59,19 @@ class AdvanceViewController: UIViewController {
                 
                 
         dispalyManager.insertAttributeItem(text)
-                
+        
+        
+        
         let canvasView = dispalyManager.achieveCurrentCanvasView()
+        
+        text.snp.makeConstraints { maker in
+            maker.top.equalTo(canvasView).offset(10)
+            maker.left.equalTo(canvasView).offset(10)
+            maker.height.equalTo(CGFloat(20))
+            maker.width.equalTo(CGFloat(100))
+        }
+        
+        
         self.view.addSubview(canvasView)
                 
         //        canvasView.snp.makeConstraints { make in
