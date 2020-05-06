@@ -21,11 +21,60 @@ import UIKit
 
 //MARK: AttributeItem 视觉元素 约束组件
 public class YHAsyncConstraintMaker: NSObject {
-    //top
-    //left
-    //bottom
-    //right
-    //width
-    //height
     
+    public var left:YHAsyncConstraintMakerExtendable {
+        return self.makeExtendableWithAttributes(.left)
+    }
+    
+    public var top:YHAsyncConstraintMakerExtendable {
+        return self.makeExtendableWithAttributes(.top)
+    }
+    
+    public var bottom:YHAsyncConstraintMakerExtendable {
+        return self.makeExtendableWithAttributes(.bottom)
+    }
+    
+    public var right:YHAsyncConstraintMakerExtendable {
+        return self.makeExtendableWithAttributes(.right)
+    }
+    
+    public var height:YHAsyncConstraintMakerExtendable {
+        return self.makeExtendableWithAttributes(.height)
+    }
+    
+    public var width:YHAsyncConstraintMakerExtendable {
+        return self.makeExtendableWithAttributes(.width)
+    }
+    
+    var constraintItems = [YHAsyncConstraintItem]()
+    //添加内容
+    func makeExtendableWithAttributes(_ attributes:YHAsyncConstraintAttributes) -> YHAsyncConstraintMakerExtendable {
+        let item = YHAsyncConstraintItem.init(target: self.target, attributes: attributes)
+        constraintItems.append(item)
+        return YHAsyncConstraintMakerExtendable(item)
+    }
+    
+    static func makeConstraints(_ item:YHAsyncMutableAttributedItem?, clouse:(_ make:YHAsyncConstraintMaker) -> Void) {
+        guard let item = item else { return }
+        let maker = YHAsyncConstraintMaker.init(item)
+        clouse(maker)
+        
+        for constraintItem in maker.constraintItems {
+            if let amount = constraintItem.editable?.amount {
+                print("amount = \(amount)")
+            }
+            
+            if let related = constraintItem.editable?.related {
+                print("related = \(related)")
+            }
+        }
+    }
+    
+    var target:AnyObject?
+    
+    public init(_ item:YHAsyncMutableAttributedItem) {
+        super.init()
+        self.target = item
+    }
+
 }

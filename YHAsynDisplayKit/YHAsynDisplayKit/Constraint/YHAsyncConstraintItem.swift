@@ -8,6 +8,13 @@
 
 import UIKit
 
-class YHAsyncConstraintItem: NSObject {
-
+public final class YHAsyncConstraintItem {
+    weak var target: AnyObject?
+    var attributes: YHAsyncConstraintAttributes?
+    var editable:YHAsyncConstraintMakerEditable?
+    
+    init(target: AnyObject?, attributes: YHAsyncConstraintAttributes) {
+        self.target = target
+        self.attributes = attributes
+    }
 }

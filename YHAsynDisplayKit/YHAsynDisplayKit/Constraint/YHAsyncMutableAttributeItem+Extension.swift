@@ -8,6 +8,9 @@
 
 import UIKit
 
-class YHAsyncMutableAttributeItem_Extension: NSObject {
-
+extension YHAsyncMutableAttributedItem {
+    public var snp: YHAsyncConstraintAttributeItemDSL {
+        return YHAsyncConstraintAttributeItemDSL(attributeItem: self)
+    }
 }
+

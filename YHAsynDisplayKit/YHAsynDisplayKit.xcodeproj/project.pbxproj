@@ -21,10 +21,16 @@
 		603C6E40245011F4000B339A /* YHAsyncBaseCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603C6E3F245011F4000B339A /* YHAsyncBaseCellData.swift */; };
 		603C6E422450120C000B339A /* YHAsyncBaseTBCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603C6E412450120C000B339A /* YHAsyncBaseTBCell.swift */; };
 		603C6E4424501225000B339A /* YHAsyncBaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603C6E4324501225000B339A /* YHAsyncBaseViewModel.swift */; };
+		603D40F724629B920094F745 /* YHAsyncConstraintMakerExtendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D40F624629B920094F745 /* YHAsyncConstraintMakerExtendable.swift */; };
+		603D40F92462BD0A0094F745 /* YHAsyncConstraintRelatableTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D40F82462BD0A0094F745 /* YHAsyncConstraintRelatableTarget.swift */; };
 		6056F257244D3BBB00191882 /* YHAsyncMutableAttributedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6056F256244D3BBB00191882 /* YHAsyncMutableAttributedImage.swift */; };
 		6056F26A245FBF6600191882 /* YHAsyncAttributeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6056F269245FBF6600191882 /* YHAsyncAttributeManager.swift */; };
 		6056F26C245FED7600191882 /* YHAsyncColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6056F26B245FED7600191882 /* YHAsyncColorManager.swift */; };
 		6056F26F24613C5100191882 /* YHAsyncConstraintMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6056F26E24613C5100191882 /* YHAsyncConstraintMaker.swift */; };
+		60B7EA602462661600B43318 /* YHAsyncConstraintAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B7EA5F2462661600B43318 /* YHAsyncConstraintAttributes.swift */; };
+		60B7EA642462843300B43318 /* YHAsyncConstraintDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B7EA632462843300B43318 /* YHAsyncConstraintDSL.swift */; };
+		60B7EA66246285B200B43318 /* YHAsyncConstraintItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B7EA65246285B200B43318 /* YHAsyncConstraintItem.swift */; };
+		60B7EA682462877B00B43318 /* YHAsyncMutableAttributeItem+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B7EA672462877B00B43318 /* YHAsyncMutableAttributeItem+Extension.swift */; };
 		60C71661242FA6660095D8D3 /* YHAsynDisplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60C71657242FA6650095D8D3 /* YHAsynDisplayKit.framework */; };
 		60C71666242FA6660095D8D3 /* YHAsynDisplayKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C71665242FA6660095D8D3 /* YHAsynDisplayKitTests.swift */; };
 		60C71668242FA6660095D8D3 /* YHAsynDisplayKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 60C7165A242FA6650095D8D3 /* YHAsynDisplayKit.h */; platformFilter = ios; settings = {ATTRIBUTES = (Public, ); }; };
@@ -85,10 +91,16 @@
 		603C6E3F245011F4000B339A /* YHAsyncBaseCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncBaseCellData.swift; sourceTree = "<group>"; };
 		603C6E412450120C000B339A /* YHAsyncBaseTBCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncBaseTBCell.swift; sourceTree = "<group>"; };
 		603C6E4324501225000B339A /* YHAsyncBaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncBaseViewModel.swift; sourceTree = "<group>"; };
+		603D40F624629B920094F745 /* YHAsyncConstraintMakerExtendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncConstraintMakerExtendable.swift; sourceTree = "<group>"; };
+		603D40F82462BD0A0094F745 /* YHAsyncConstraintRelatableTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncConstraintRelatableTarget.swift; sourceTree = "<group>"; };
 		6056F256244D3BBB00191882 /* YHAsyncMutableAttributedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncMutableAttributedImage.swift; sourceTree = "<group>"; };
 		6056F269245FBF6600191882 /* YHAsyncAttributeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncAttributeManager.swift; sourceTree = "<group>"; };
 		6056F26B245FED7600191882 /* YHAsyncColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncColorManager.swift; sourceTree = "<group>"; };
 		6056F26E24613C5100191882 /* YHAsyncConstraintMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncConstraintMaker.swift; sourceTree = "<group>"; };
+		60B7EA5F2462661600B43318 /* YHAsyncConstraintAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncConstraintAttributes.swift; sourceTree = "<group>"; };
+		60B7EA632462843300B43318 /* YHAsyncConstraintDSL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncConstraintDSL.swift; sourceTree = "<group>"; };
+		60B7EA65246285B200B43318 /* YHAsyncConstraintItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncConstraintItem.swift; sourceTree = "<group>"; };
+		60B7EA672462877B00B43318 /* YHAsyncMutableAttributeItem+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YHAsyncMutableAttributeItem+Extension.swift"; sourceTree = "<group>"; };
 		60C71657242FA6650095D8D3 /* YHAsynDisplayKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = YHAsynDisplayKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		60C7165A242FA6650095D8D3 /* YHAsynDisplayKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YHAsynDisplayKit.h; sourceTree = "<group>"; };
 		60C7165B242FA6650095D8D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -233,6 +245,12 @@
 			isa = PBXGroup;
 			children = (
 				6056F26E24613C5100191882 /* YHAsyncConstraintMaker.swift */,
+				60B7EA5F2462661600B43318 /* YHAsyncConstraintAttributes.swift */,
+				60B7EA632462843300B43318 /* YHAsyncConstraintDSL.swift */,
+				60B7EA65246285B200B43318 /* YHAsyncConstraintItem.swift */,
+				60B7EA672462877B00B43318 /* YHAsyncMutableAttributeItem+Extension.swift */,
+				603D40F624629B920094F745 /* YHAsyncConstraintMakerExtendable.swift */,
+				603D40F82462BD0A0094F745 /* YHAsyncConstraintRelatableTarget.swift */,
 			);
 			path = Constraint;
 			sourceTree = "<group>";
@@ -532,7 +550,10 @@
 				600A62F12444717600AEC167 /* UIDevice+DisplayKit.swift in Sources */,
 				60C716BF243418CC0095D8D3 /* YHAsyncDawnView.swift in Sources */,
 				6056F257244D3BBB00191882 /* YHAsyncMutableAttributedImage.swift in Sources */,
+				603D40F724629B920094F745 /* YHAsyncConstraintMakerExtendable.swift in Sources */,
 				60C716BD24338DFE0095D8D3 /* YHAsynContextAssiant.swift in Sources */,
+				60B7EA682462877B00B43318 /* YHAsyncMutableAttributeItem+Extension.swift in Sources */,
+				60B7EA66246285B200B43318 /* YHAsyncConstraintItem.swift in Sources */,
 				60C716C32434ED010095D8D3 /* YHAsyncCanvasControl.swift in Sources */,
 				603C6E35244FDFFA000B339A /* YHAsyncClientData.swift in Sources */,
 				603C6E3B244FEC08000B339A /* YHAsyncBaseEngine.swift in Sources */,
@@ -548,12 +569,15 @@
 				60C716D724382DBF0095D8D3 /* YHAsyncTextDrawer+Event.swift in Sources */,
 				60C716E9243A30070095D8D3 /* YHAsyncMutableAttributedItem.swift in Sources */,
 				60C716D324382C1A0095D8D3 /* YHAsyncTextDrawer+Coordinate.swift in Sources */,
+				603D40F92462BD0A0094F745 /* YHAsyncConstraintRelatableTarget.swift in Sources */,
 				600A62F32444719200AEC167 /* UIFont+DisplayKit.swift in Sources */,
 				600A62EF2444715E00AEC167 /* UIBezierPath+DisplayKit.swift in Sources */,
+				60B7EA602462661600B43318 /* YHAsyncConstraintAttributes.swift in Sources */,
 				603C6E3E244FF69D000B339A /* YHAsyncVisionObject.swift in Sources */,
 				60C716CB243828E20095D8D3 /* YHAsyncTextLayoutFrame.swift in Sources */,
 				600A62E62441BF7600AEC167 /* YHAsyncObjectAssociation.swift in Sources */,
 				600A62ED2444714400AEC167 /* NSObject+DisplayKit.swift in Sources */,
+				60B7EA642462843300B43318 /* YHAsyncConstraintDSL.swift in Sources */,
 				603C6E4424501225000B339A /* YHAsyncBaseViewModel.swift in Sources */,
 				60C716E1243A2F990095D8D3 /* NSAttributedString+GCalculateAndDraw.swift in Sources */,
 				60C716CF243829120095D8D3 /* YHAsyncTextLayoutRun.swift in Sources */,
