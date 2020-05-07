@@ -38,27 +38,6 @@ extension UIView: YHAsyncConstraintRelatableTarget {
 extension YHAsyncMutableAttributedItem: YHAsyncConstraintRelatableTarget {
 }
 
-extension YHAsyncConstraintRelatableTarget {
-    func constraintRelatableTargetValueFor(_ item:YHAsyncConstraintRelatableTarget) -> CGFloat{
-        if let value = self as? CGFloat {
-            return value
-        }
-        
-        if let value = self as? Float {
-            return CGFloat(value)
-        }
-        
-        if let value = self as? Double {
-            return CGFloat(value)
-        }
-        
-        if let value = self as? Int {
-            return CGFloat(value)
-        }
-        
-        if let value = self as? UInt {
-            return CGFloat(value)
-        }
-        return 0
-    }
+extension YHAsyncConstraintItem: YHAsyncConstraintRelatableTarget {
 }
+

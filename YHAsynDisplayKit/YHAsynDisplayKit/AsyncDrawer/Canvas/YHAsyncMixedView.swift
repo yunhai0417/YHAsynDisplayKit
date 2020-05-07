@@ -42,6 +42,18 @@ struct YHAsyncMixedViewKey {
 
 public class YHAsyncMixedView: YHAsyncCanvasControl {
 
+    fileprivate var _drawerDates:[YHAsyncVisionObject] = [YHAsyncVisionObject]()
+    public var drawerDates:[YHAsyncVisionObject] {
+        set {
+            if _drawerDates != newValue {
+                _drawerDates = newValue
+                self.setNeedsDisplay()
+            }
+        }
+        get {
+            return _drawerDates
+        }
+    }
     
     // 水平对齐方式
     fileprivate var _horizontalAlignment:YHAsyncTextHorizontalAlignment = YHAsyncTextHorizontalAlignment.left
@@ -238,24 +250,29 @@ public class YHAsyncMixedView: YHAsyncCanvasControl {
             return
         }
         self.lock.lock()
-        // 三个点： 锁重入、for循环遍历移除元素、多线程同步访问共享数据区
-        for attachment in self.arrayAttachments {
-            if attachment.type == YHAsyncAttachmentType.StaticImage {
-                if let gimage = attachment.contents as? YHAsyncImage {
-                    //                    [gImage wmg_loadImageWithUrl:gImage.downloadUrl options:0 progress:NULL completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-                    //
-                    //                        [_lock lock];
-                    //                        if ([_arrayAttachments containsObject:att]) {
-                    //                            [_arrayAttachments removeObject:att];
-                    //                            i--;
-                    //                            [self setNeedsDisplay];
-                    //                        }
-                    //                        [_lock unlock];
-                    //                    }];
+        var i:Int = 0
+        while i < self.arrayAttachments.count {
+            if i >= 0 && i < self.arrayAttachments.count {
+                let attachment = self.arrayAttachments[i]
+                if attachment.type == YHAsyncAttachmentType.StaticImage {
+                    guard let asyncImage = attachment.contents as? YHAsyncImage else { continue }
+                    // TODO: 图片下载流程
+                    guard let downLoadUrl = asyncImage.downloadUrl else { continue }
+                    asyncImage.loadImageWithUrl(downLoadUrl, inoptions: [], inprogress: nil) { [weak self] (image, error, cacheType, imageURL) in
+                        self?.lock.lock()
+                        if self?.arrayAttachments.contains(attachment) ?? false {
+                            self?.arrayAttachments.remove(at: i)
+                            i = i - 1
+                            self?.setNeedsDisplay()
+                        }
+                        self?.lock.unlock()
+                    }
                 }
             }
+            i = i + 1
         }
         self.lock.unlock()
+        
     }
     
     //MARK: - Event Handing

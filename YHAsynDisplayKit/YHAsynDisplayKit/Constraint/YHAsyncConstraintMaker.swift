@@ -22,55 +22,56 @@ import UIKit
 //MARK: AttributeItem 视觉元素 约束组件
 public class YHAsyncConstraintMaker: NSObject {
     
-    public var left:YHAsyncConstraintMakerExtendable {
+    public var left:YHAsyncConstraintItem {
         return self.makeExtendableWithAttributes(.left)
     }
     
-    public var top:YHAsyncConstraintMakerExtendable {
+    public var top:YHAsyncConstraintItem {
         return self.makeExtendableWithAttributes(.top)
     }
     
-    public var bottom:YHAsyncConstraintMakerExtendable {
+    public var bottom:YHAsyncConstraintItem {
         return self.makeExtendableWithAttributes(.bottom)
     }
     
-    public var right:YHAsyncConstraintMakerExtendable {
+    public var right:YHAsyncConstraintItem {
         return self.makeExtendableWithAttributes(.right)
     }
     
-    public var height:YHAsyncConstraintMakerExtendable {
+    public var height:YHAsyncConstraintItem {
         return self.makeExtendableWithAttributes(.height)
     }
     
-    public var width:YHAsyncConstraintMakerExtendable {
+    public var width:YHAsyncConstraintItem {
         return self.makeExtendableWithAttributes(.width)
     }
     
     var constraintItems = [YHAsyncConstraintItem]()
     //添加内容
-    func makeExtendableWithAttributes(_ attributes:YHAsyncConstraintAttributes) -> YHAsyncConstraintMakerExtendable {
-        let item = YHAsyncConstraintItem.init(target: self.target, attributes: attributes)
-        constraintItems.append(item)
-        return YHAsyncConstraintMakerExtendable(item)
+    func makeExtendableWithAttributes(_ attributes:YHAsyncConstraintAttributes) -> YHAsyncConstraintItem {
+        let item = YHAsyncConstraintItem(inTarget: self.target, inAttributes: attributes)
+        self.constraintItems.append(item)
+        return item
     }
     
     static func makeConstraints(_ item:YHAsyncMutableAttributedItem?, clouse:(_ make:YHAsyncConstraintMaker) -> Void) {
         guard let item = item else { return }
-        let maker = YHAsyncConstraintMaker.init(item)
+        let maker = YHAsyncConstraintMaker(item)
         clouse(maker)
         
         for constraintItem in maker.constraintItems {
-            if let amount = constraintItem.editable?.amount {
-                print("amount = \(amount)")
+            if let attributes = constraintItem.attributes?.rawValue {
+                print("attributes = \(attributes)" )
             }
+            print("constraintItem.amount = \(constraintItem.amount)")
+            print("constraintItem.relateItem = \(constraintItem.relateItem)")
             
-            if let related = constraintItem.editable?.related {
-                print("related = \(related)")
-            }
         }
+        
+        maker.target?.relatedConstraintItems = maker.constraintItems
     }
     
-    var target:AnyObject?
+    weak var target:YHAsyncMutableAttributedItem?
     
     public init(_ item:YHAsyncMutableAttributedItem) {
         super.init()

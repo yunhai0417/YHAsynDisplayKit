@@ -33,47 +33,47 @@ public protocol YHAsyncConstraintBasicAttributeDSL: YHAsyncConstraintDSL {
 extension YHAsyncConstraintBasicAttributeDSL {
     //MARK: Basic
     public var left: YHAsyncConstraintItem {
-        return YHAsyncConstraintItem(target: self.target, attributes: YHAsyncConstraintAttributes.left)
+        return YHAsyncConstraintItem(inRelateTarget: self.target, inAttributes: YHAsyncConstraintAttributes.left)
     }
     
     public var top: YHAsyncConstraintItem {
-        return YHAsyncConstraintItem(target: self.target, attributes: YHAsyncConstraintAttributes.top)
+        return YHAsyncConstraintItem(inRelateTarget: self.target, inAttributes: YHAsyncConstraintAttributes.top)
     }
     
     public var right: YHAsyncConstraintItem {
-        return YHAsyncConstraintItem(target: self.target, attributes: YHAsyncConstraintAttributes.right)
+        return YHAsyncConstraintItem(inRelateTarget: self.target, inAttributes: YHAsyncConstraintAttributes.right)
     }
     
     public var bottom: YHAsyncConstraintItem {
-        return YHAsyncConstraintItem(target: self.target, attributes: YHAsyncConstraintAttributes.bottom)
+        return YHAsyncConstraintItem(inRelateTarget: self.target, inAttributes: YHAsyncConstraintAttributes.bottom)
     }
     
     public var leading: YHAsyncConstraintItem {
-        return YHAsyncConstraintItem(target: self.target, attributes: YHAsyncConstraintAttributes.leading)
+        return YHAsyncConstraintItem(inRelateTarget: self.target, inAttributes: YHAsyncConstraintAttributes.leading)
     }
     
     public var trailing: YHAsyncConstraintItem {
-        return YHAsyncConstraintItem(target: self.target, attributes: YHAsyncConstraintAttributes.trailing)
+        return YHAsyncConstraintItem(inRelateTarget: self.target, inAttributes: YHAsyncConstraintAttributes.trailing)
     }
     
     public var width: YHAsyncConstraintItem {
-        return YHAsyncConstraintItem(target: self.target, attributes: YHAsyncConstraintAttributes.width)
+        return YHAsyncConstraintItem(inRelateTarget: self.target, inAttributes: YHAsyncConstraintAttributes.width)
     }
     
     public var height: YHAsyncConstraintItem {
-        return YHAsyncConstraintItem(target: self.target, attributes: YHAsyncConstraintAttributes.height)
+        return YHAsyncConstraintItem(inRelateTarget: self.target, inAttributes: YHAsyncConstraintAttributes.height)
     }
     
     public var centerX: YHAsyncConstraintItem {
-        return YHAsyncConstraintItem(target: self.target, attributes: YHAsyncConstraintAttributes.centerX)
+        return YHAsyncConstraintItem(inRelateTarget: self.target, inAttributes: YHAsyncConstraintAttributes.centerX)
     }
     
     public var centerY: YHAsyncConstraintItem {
-        return YHAsyncConstraintItem(target: self.target, attributes: YHAsyncConstraintAttributes.centerY)
+        return YHAsyncConstraintItem(inRelateTarget: self.target, inAttributes: YHAsyncConstraintAttributes.centerY)
     }
     
     public var size: YHAsyncConstraintItem {
-        return YHAsyncConstraintItem(target: self.target, attributes: YHAsyncConstraintAttributes.size)
+        return YHAsyncConstraintItem(inRelateTarget: self.target, inAttributes: YHAsyncConstraintAttributes.size)
     }
     
 }
@@ -98,7 +98,7 @@ public struct YHAsyncConstraintAttributeItemDSL: YHAsyncConstraintAttributeDSL {
     }
     
     //MARK: 添加约束
-    public func makeConstraints(_ clouse:(_ make:YHAsyncConstraintMaker) -> Void) {
+    public func makeConstraints(_ clouse: (_ make:YHAsyncConstraintMaker) -> Void) {
         YHAsyncConstraintMaker.makeConstraints(self.targetItem, clouse: clouse)
     }
 }
