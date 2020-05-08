@@ -9,7 +9,7 @@
 import UIKit
 import YHAsynDisplayKit
 
-class YHAsyncListTextView: YHAsyncCanvasControl {
+public class YHAsyncListTextView: YHAsyncCanvasControl {
     fileprivate var _drawerDates:[YHAsyncVisionObject] = [YHAsyncVisionObject]()
     public var drawerDates:[YHAsyncVisionObject] {
         set {
@@ -35,7 +35,7 @@ class YHAsyncListTextView: YHAsyncCanvasControl {
         return text
     }()
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
@@ -50,14 +50,13 @@ class YHAsyncListTextView: YHAsyncCanvasControl {
     }
     
     //MARK: - override
-    override func drawInRect(_ rect: CGRect, context: CGContext?, asynchronously: Bool, userInfo: [String : Any]?) -> Bool {
+    public override func drawInRect(_ rect: CGRect, context: CGContext?, asynchronously: Bool, userInfo: [String : Any]?) -> Bool {
+        print("YHAsyncListTextView drawInRect")
         _ = super.drawInRect(rect, context: context, asynchronously: asynchronously, userInfo: userInfo)
         
         let initialDrawingCount = self.getDrawingCount()
         
-        if self.drawerDates.count <= 0 {
-            return true
-        }
+        print("YHAsyncListTextView drawerDates")
         
         for visiObject in self.drawerDates {
             self.textDrawer.setFrame(visiObject.visionFrame)
@@ -71,7 +70,7 @@ class YHAsyncListTextView: YHAsyncCanvasControl {
         
     }
     
-    override func drawingDidFinishAsynchronously(_ asynchronously: Bool, success: Bool) {
+    override public func drawingDidFinishAsynchronously(_ asynchronously: Bool, success: Bool) {
         if !success {
             return
         }
@@ -101,7 +100,7 @@ class YHAsyncListTextView: YHAsyncCanvasControl {
         self.lock.unlock()
     }
     //MARK: - Event Handling
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let location = touches.first?.location(in: self) {
             for (_,objc) in self.drawerDates.enumerated() {
                 let visionFrame = objc.visionFrame
@@ -119,31 +118,31 @@ class YHAsyncListTextView: YHAsyncCanvasControl {
         }
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.textDrawer.touchesEnded(touches, with: event)
         super.touchesEnded(touches, with: event)
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.textDrawer.touchesMoved(touches, with: event)
         if self.textDrawer.pressingActiveRange == nil {
             super.touchesMoved(touches, with: event)
         }
     }
     
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.textDrawer.touchesCancelled(touches, with: event)
         super.touchesCancelled(touches, with: event)
     }
     
-    override func beginTrackingWithTouch(_ touch: UITouch, withEvent: UIEvent?) -> Bool {
+    override public func beginTrackingWithTouch(_ touch: UITouch, withEvent: UIEvent?) -> Bool {
         return false
     }
 }
 
 //MARK:- YHAsyncTextDrawerDelegate
 extension YHAsyncListTextView: YHAsyncTextDrawerDelegate {
-    func textDrawer(_ textDrawer: YHAsyncTextDrawer, attachment replace: YHAsyncTextAttachment, rect frame: CGRect, _ context: CGContext) {
+    public func textDrawer(_ textDrawer: YHAsyncTextDrawer, attachment replace: YHAsyncTextAttachment, rect frame: CGRect, _ context: CGContext) {
         if replace.type == YHAsyncAttachmentType.StaticImage {
             if let content = replace.contents as? String {
                 UIGraphicsPushContext(context)
@@ -200,12 +199,12 @@ extension YHAsyncListTextView: YHAsyncTextDrawerDelegate {
 
 // MARK: - YHAsyncTextDrawerEventDelegate
 extension YHAsyncListTextView: YHAsyncTextDrawerEventDelegate {
-    func contextViewForTextDrawer(_ textDrawer: YHAsyncTextDrawer) -> UIView {
+    public func contextViewForTextDrawer(_ textDrawer: YHAsyncTextDrawer) -> UIView {
         
         return self
     }
     
-    func activeRangesForTextDrawer(_ textDrawer: YHAsyncTextDrawer) -> [YHAsyncTextActiveRange]? {
+    public func activeRangesForTextDrawer(_ textDrawer: YHAsyncTextDrawer) -> [YHAsyncTextActiveRange]? {
         var arrayActiveRanges = [YHAsyncTextActiveRange]()
         if let arrayAttachments = self.clickItem?.arrayAttachments {
             for attachment in arrayAttachments {
@@ -218,7 +217,7 @@ extension YHAsyncListTextView: YHAsyncTextDrawerEventDelegate {
         return arrayActiveRanges
     }
     
-    func textDrawer(_ textDrawer: YHAsyncTextDrawer, didPress activeRange: YHAsyncTextActiveRange) {
+    public func textDrawer(_ textDrawer: YHAsyncTextDrawer, didPress activeRange: YHAsyncTextActiveRange) {
         if activeRange.type == YHAsyncActiveRangeType.attach {
             if let attachment = activeRange.bindingData as? YHAsyncTextAttachment{
                 attachment.handleEvent(attachment.userInfo )
@@ -226,11 +225,11 @@ extension YHAsyncListTextView: YHAsyncTextDrawerEventDelegate {
         }
     }
     
-    func textDrawer(_ textDrawer: YHAsyncTextDrawer, didHighlighted activeRange: YHAsyncTextActiveRange, frame rect: CGRect) {
+    public func textDrawer(_ textDrawer: YHAsyncTextDrawer, didHighlighted activeRange: YHAsyncTextActiveRange, frame rect: CGRect) {
         
     }
     
-    func textDrawer(_ textDrawer: YHAsyncTextDrawer, shouldInteract activeRange: YHAsyncTextActiveRange) -> Bool {
+    public func textDrawer(_ textDrawer: YHAsyncTextDrawer, shouldInteract activeRange: YHAsyncTextActiveRange) -> Bool {
         
         return true
     }
@@ -241,7 +240,7 @@ extension YHAsyncListTextView: YHAsyncTextDrawerEventDelegate {
 
 //MARK: - YHAsyncTextLayoutDelegate
 extension YHAsyncListTextView :YHAsyncTextLayoutDelegate {
-    func textLayout(_ textLayout: YHAsyncTextLayout?, truncatedLine: CTLine?, atIndex: UInt) -> CGFloat {
+    public func textLayout(_ textLayout: YHAsyncTextLayout?, truncatedLine: CTLine?, atIndex: UInt) -> CGFloat {
         return YHAsyncTextLayoutMaxSize.imumWidth
     }
     

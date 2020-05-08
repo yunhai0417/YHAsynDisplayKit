@@ -13,20 +13,21 @@ import SnapKit
 
 class AdvanceViewController: UIViewController {
     
-    fileprivate var displayManager:YHAsyncAttributeManager<YHAsyncMixedView>?
+    fileprivate var displayManager:YHAsyncAttributeManager<YHAsyncListTextView>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         
-        self.testFunc1()
+//        self.testFunc1()
+        self.testfunc2()
         
         
     }
     
     //MARK: 基础功能测试
     func testFunc1() {
-        self.displayManager = YHAsyncAttributeManager<YHAsyncMixedView>.sharedInstance()
+//        self.displayManager = YHAsyncAttributeManager<YHAsyncListTextView>.sharedInstance()
         guard let dispalyManager = self.displayManager else { return }
                 
         let text1 = YHAsyncMutableAttributedImage.itemWithText("YHAsync")
@@ -81,5 +82,39 @@ class AdvanceViewController: UIViewController {
         //        }
         let size = dispalyManager.bindAttributeWithCanvasView()
         canvasView.frame = CGRect.init(x: 100, y: 100, width: size.width, height: size.height)
+    }
+    
+    func testfunc2() {
+        self.displayManager = YHAsyncAttributeManager<YHAsyncListTextView>.sharedInstance()
+        guard let dispalyManager = self.displayManager else { return }
+        
+        let poiImageAttributeItem = dispalyManager.createAttributeItem()
+        let poiPic = "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3985045178,3448045350&fm=26&gp=0.jpg"
+        let imageAttributeItem = poiImageAttributeItem.appendImageWithUrl(poiPic, inSize: CGSize.init(width: 100, height: 100))
+        if let imageAttachment = imageAttributeItem.arrayAttachments?.first {
+            imageAttachment.baselineFontMetrics = YHAsyncFontMetricsCreateMakeWithLineHeight(YHAsyncFontMetricsCreateMake(UIFont.systemFont(ofSize: 11)), targetLineHeight: floor(imageAttachment.size?.height ?? 0))
+        }
+        
+        let canvasView = dispalyManager.achieveCurrentCanvasView()
+        canvasView.backgroundColor = UIColor.yellow
+        dispalyManager.insertAttributeItem(poiImageAttributeItem)
+        
+        poiImageAttributeItem.snp.makeConstraints { maker in
+            maker.top.equalTo(canvasView).offset(50)
+            maker.left.equalTo(canvasView).offset(50)
+            maker.width.equalTo(100)
+            maker.height.equalTo(100)
+        }
+        
+//        dispalyManager.bindAttributeWithCanvasView()
+
+//        let poiImageDrawObject = YHAsyncVisionObject.init()
+//        poiImageDrawObject.visionFrame = CGRect.init(x: 15, y: 15, width: 70, height: 70)
+//        poiImageDrawObject.visionValue = poiImageAttributeItem
+        
+        self.view.addSubview(canvasView)
+        
+        let size = dispalyManager.bindAttributeWithCanvasView()
+        canvasView.frame = CGRect.init(x: 20, y: 100, width: 200, height: 200)
     }
 }

@@ -60,12 +60,9 @@ public class YHAsyncConstraintMaker: NSObject {
         clouse(maker)
         
         for constraintItem in maker.constraintItems {
-            if let attributes = constraintItem.attributes?.rawValue {
-                print("attributes = \(attributes)" )
-            }
+            print("constraintItem.attributes.rawValue = \(constraintItem.attributes.rawValue)" )
             print("constraintItem.amount = \(constraintItem.amount)")
             print("constraintItem.relateItem = \(constraintItem.relateItem)")
-            
         }
         
         maker.target?.relatedConstraintItems = maker.constraintItems

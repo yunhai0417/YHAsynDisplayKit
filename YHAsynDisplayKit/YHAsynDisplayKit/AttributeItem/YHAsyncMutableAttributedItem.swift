@@ -27,6 +27,9 @@ public struct YHAsyncMutableAttributedItemFlags {
 }
 
 public class YHAsyncMutableAttributedItem: NSObject {
+    //依赖结果frame -> 直接放置到 YHAsyncVisionObject.visibleFrame
+    public var relatedConstraintRect:CGRect = CGRect.zero
+    
     fileprivate var itemFlags = YHAsyncMutableAttributedItemFlags()
     //保存文案属性
     fileprivate lazy var textStorage:NSMutableAttributedString = {

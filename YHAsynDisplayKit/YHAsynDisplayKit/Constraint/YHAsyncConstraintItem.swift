@@ -10,7 +10,7 @@ import UIKit
 
 public final class YHAsyncConstraintItem {
     weak var target: AnyObject?                  //当前对象
-    var attributes: YHAsyncConstraintAttributes?                    //关联类型
+    var attributes: YHAsyncConstraintAttributes = .none             //关联类型
     var relateItem: YHAsyncConstraintItem?                          //关联对象
     var amount: CGFloat = 0                                         //关联数据
     var relateAttributes:YHAsyncConstraintAttributes?               //关联约束
@@ -30,7 +30,7 @@ public final class YHAsyncConstraintItem {
     public func relatedTo(_ other:YHAsyncConstraintRelatableTarget, file inFile:String, line inline:UInt) -> YHAsyncConstraintItem {
         if let other = other as? YHAsyncConstraintItem {
             self.relateItem = other
-        } else if let other = other as? UIView {
+        } else if let other = other as? YHAsyncCanvasControl {
             self.relateItem = YHAsyncConstraintItem(inTarget: other, inAttributes: YHAsyncConstraintAttributes.none)
         } else if let other = other as? YHAsyncMutableAttributedItem {
             self.relateItem = YHAsyncConstraintItem(inTarget: other, inAttributes: YHAsyncConstraintAttributes.none)
@@ -49,9 +49,8 @@ public final class YHAsyncConstraintItem {
     }
     
     @discardableResult
-    public func offset(_ amount:CGFloat) -> YHAsyncConstraintItem {
-        self.amount = amount
-        return self
+    public func offset(_ amount:CGFloat) {
+        self.relateItem?.amount = amount
     }
     
     func constraintRelatableTargetValueFor(_ item:YHAsyncConstraintRelatableTarget) {

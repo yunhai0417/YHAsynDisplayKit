@@ -56,7 +56,7 @@ public class YHAsyncAttributeManager<T:YHAsyncCanvasControl>: NSObject {
      * 2.展示设置，优先按照父控件的size设置内容视觉元素的最终绘制，如果未指定宽度按照屏幕宽度绘制
      */
     lazy var canvasDrawerView:YHAsyncCanvasControl = {
-        let mixView = YHAsyncMixedView.init(frame: CGRect.zero)
+        let mixView = YHAsyncListTextView.init(frame: CGRect.zero)
         return mixView
     }()
     
@@ -88,11 +88,187 @@ public class YHAsyncAttributeManager<T:YHAsyncCanvasControl>: NSObject {
     }
     
     //MARK: 绘制方法-> 绑定视觉元素到绘制视图中
-    public func bindAttributeWithCanvasView() -> CGSize {
+    public func bindAttributeWithCanvasView() -> CGSize{
+        self.computeAttributeItemListFrame()
+        
+        var drawerDates = [YHAsyncVisionObject]()
+        
+        for item in self.attributeItemDic.values {
+            drawerDates.append(item.achieveVisionObject())
+        }
+        
+        if let listView = self.canvasDrawerView as? YHAsyncListTextView {
+            
+            listView.drawerDates = drawerDates
+            return CGSize.zero
+        }
+        
         if let mixedView = self.canvasDrawerView as? YHAsyncMixedView {
             mixedView.attributedItem = self.attributeItemList.first
         }
-//        self.canvasDrawerView.setNeedsDisplay()
         return self.attributeItemList[0].resultString?.attributedSize() ?? CGSize.zero
+    }
+    
+    
+    fileprivate var attributeItemDic = [Int:YHAsyncMutableAttributedItem]()
+    //MARK: 计算AttributeItem 相对约束
+    fileprivate func computeAttributeItemListFrame() {
+        for item in self.attributeItemList {
+            let itemId = item.hashValue
+            if let _ = attributeItemDic[itemId] {
+                continue
+            }
+            self.computeAttributeItemFrame(item)
+        }
+    }
+    
+    fileprivate func computeAttributeItemFrame(_ item:YHAsyncMutableAttributedItem) {
+        guard var relatedConstraintItems = item.relatedConstraintItems else { return }
+        var frame = CGRect.zero
+        
+        for constraintItem in relatedConstraintItems.sorted(by: { $0.attributes.rawValue > $1.attributes.rawValue })
+        {
+            if constraintItem.attributes == .width {
+                var width = constraintItem.amount
+                if let relateItem = constraintItem.relateItem {
+                    if relateItem.attributes == .width || relateItem.attributes == .height {
+                        width = relateItem.amount
+                    }
+                }
+                frame.size.width = width
+            }
+            
+            if constraintItem.attributes == .height {
+                var height = constraintItem.amount
+                if let relateItem = constraintItem.relateItem {
+                    if relateItem.attributes == .width || relateItem.attributes == .height {
+                        height = relateItem.amount
+                    }
+                }
+                frame.size.height = height
+            }
+            
+            if constraintItem.attributes == .top {
+                var top:CGFloat = 0
+                if let relateItem = constraintItem.relateItem {
+                    if let view = relateItem.target as? YHAsyncCanvasControl {
+                        top = relateItem.amount
+                    }
+                    
+                    if let attributeItem = relateItem.target as? YHAsyncMutableAttributedItem {
+                        
+                        if let _ = self.attributeItemDic[attributeItem.hashValue] {
+                        } else {
+                            self.computeAttributeItemFrame(attributeItem)
+                        }
+                        
+                        top = relateItem.amount
+                        if relateItem.attributes == .top {
+                            top = top + attributeItem.relatedConstraintRect.origin.y
+                        }
+                        
+                        if relateItem.attributes == .bottom {
+                            top = top + attributeItem.relatedConstraintRect.origin.y + attributeItem.relatedConstraintRect.size.height
+                        }
+                    }
+                    
+                    
+                    frame.origin.y = top
+                }
+            }
+            
+            if constraintItem.attributes == .bottom {
+                
+                if let relateItem = constraintItem.relateItem {
+                    var bottom:CGFloat = 0
+                    if let view = relateItem.target as? YHAsyncCanvasControl {
+                        bottom = relateItem.amount
+                    }
+                    
+                    if let attributeItem = relateItem.target as? YHAsyncMutableAttributedItem {
+                        
+                        if let _ = self.attributeItemDic[attributeItem.hashValue] {
+                        } else {
+                            self.computeAttributeItemFrame(attributeItem)
+                        }
+                        
+                        if relateItem.attributes == .top {
+                            bottom = attributeItem.relatedConstraintRect.origin.y
+                        }
+                        
+                        if relateItem.attributes == .bottom {
+                            bottom = attributeItem.relatedConstraintRect.origin.y + attributeItem.relatedConstraintRect.size.height
+                        }
+                        
+                        bottom = bottom + relateItem.amount
+                    }
+                    
+                    let height = self.canvasDrawerView.frame.size.height
+                    frame.origin.y = height - bottom - frame.size.height
+                }
+            }
+            
+            if constraintItem.attributes == .left {
+                
+                if let relateItem = constraintItem.relateItem {
+                    var left:CGFloat = 0
+                    if let view = relateItem.target as? YHAsyncCanvasControl {
+                        left = relateItem.amount
+                    }
+                    
+                    if let attributeItem = relateItem.target as? YHAsyncMutableAttributedItem {
+                        
+                        if let _ = self.attributeItemDic[attributeItem.hashValue] {
+                        } else {
+                            self.computeAttributeItemFrame(attributeItem)
+                        }
+                        
+                        if relateItem.attributes == .left {
+                            left = attributeItem.relatedConstraintRect.origin.x
+                        }
+                        
+                        if relateItem.attributes == .right {
+                            left = attributeItem.relatedConstraintRect.origin.y + attributeItem.relatedConstraintRect.size.width
+                        }
+                        
+                        left = left + relateItem.amount
+                    }
+                    frame.origin.x = left
+                }
+            }
+            
+            if constraintItem.attributes == .right {
+                
+                if let relateItem = constraintItem.relateItem {
+                    var right:CGFloat = 0
+                    if let view = relateItem.target as? YHAsyncCanvasControl {
+                        right = relateItem.amount
+                    }
+                    
+                    if let attributeItem = relateItem.target as? YHAsyncMutableAttributedItem {
+                        
+                        if let _ = self.attributeItemDic[attributeItem.hashValue] {
+                        } else {
+                            self.computeAttributeItemFrame(attributeItem)
+                        }
+                        
+                        if relateItem.attributes == .left {
+                            right = attributeItem.relatedConstraintRect.origin.y
+                        }
+                        
+                        if relateItem.attributes == .right {
+                            right = attributeItem.relatedConstraintRect.origin.y + attributeItem.relatedConstraintRect.size.height
+                        }
+                        
+                        right = right + relateItem.amount
+                    }
+                    
+                    let width = self.canvasDrawerView.frame.size.width
+                    frame.origin.x = width - right - frame.size.width
+                }
+            }
+        }
+        self.attributeItemDic[item.hashValue] = item
+        item.relatedConstraintRect = frame
     }
 }

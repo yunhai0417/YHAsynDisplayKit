@@ -59,6 +59,7 @@
 		60C716E7243A2FE90095D8D3 /* YHAsyncTextParagraphStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C716E6243A2FE90095D8D3 /* YHAsyncTextParagraphStyle.swift */; };
 		60C716E9243A30070095D8D3 /* YHAsyncMutableAttributedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C716E8243A30070095D8D3 /* YHAsyncMutableAttributedItem.swift */; };
 		60C716EB243A301E0095D8D3 /* YHAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C716EA243A301E0095D8D3 /* YHAsyncImage.swift */; };
+		60E3E16624657AD100AEFCD3 /* YHAsyncListTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E3E16524657AD100AEFCD3 /* YHAsyncListTextView.swift */; };
 		B707EB9BDA8DD878329A99CA /* libPods-YHAsynDisplayKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A92B8D5CA8D48A9B9578C23 /* libPods-YHAsynDisplayKit.a */; };
 /* End PBXBuildFile section */
 
@@ -131,6 +132,7 @@
 		60C716E6243A2FE90095D8D3 /* YHAsyncTextParagraphStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncTextParagraphStyle.swift; sourceTree = "<group>"; };
 		60C716E8243A30070095D8D3 /* YHAsyncMutableAttributedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncMutableAttributedItem.swift; sourceTree = "<group>"; };
 		60C716EA243A301E0095D8D3 /* YHAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YHAsyncImage.swift; sourceTree = "<group>"; };
+		60E3E16524657AD100AEFCD3 /* YHAsyncListTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YHAsyncListTextView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,6 +224,15 @@
 			path = UIData;
 			sourceTree = "<group>";
 		};
+		603D40FA2464F02F0094F745 /* ContentView */ = {
+			isa = PBXGroup;
+			children = (
+				60E3E16524657AD100AEFCD3 /* YHAsyncListTextView.swift */,
+				60C716DE243A2D2A0095D8D3 /* YHAsyncMixedView.swift */,
+			);
+			path = ContentView;
+			sourceTree = "<group>";
+		};
 		6056F255244C473E00191882 /* extensionUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -302,6 +313,7 @@
 		60C716AB242FA8FB0095D8D3 /* AsyncDrawer */ = {
 			isa = PBXGroup;
 			children = (
+				603D40FA2464F02F0094F745 /* ContentView */,
 				60C716B32431010B0095D8D3 /* Asscessory */,
 				60C716B824324B5A0095D8D3 /* Base */,
 				60C716B924324B660095D8D3 /* Canvas */,
@@ -366,7 +378,6 @@
 			children = (
 				60C716C02434ECE20095D8D3 /* YHAsyncCanvasView.swift */,
 				60C716C22434ED010095D8D3 /* YHAsyncCanvasControl.swift */,
-				60C716DE243A2D2A0095D8D3 /* YHAsyncMixedView.swift */,
 			);
 			path = Canvas;
 			sourceTree = "<group>";
@@ -553,6 +564,7 @@
 				60C716C32434ED010095D8D3 /* YHAsyncCanvasControl.swift in Sources */,
 				603C6E35244FDFFA000B339A /* YHAsyncClientData.swift in Sources */,
 				603C6E3B244FEC08000B339A /* YHAsyncBaseEngine.swift in Sources */,
+				60E3E16624657AD100AEFCD3 /* YHAsyncListTextView.swift in Sources */,
 				603C6E37244FE8A4000B339A /* YHAsyncBusinessModel.swift in Sources */,
 				60C716DF243A2D2A0095D8D3 /* YHAsyncMixedView.swift in Sources */,
 				60C716B2243040690095D8D3 /* YHAsynFontMetrics.swift in Sources */,

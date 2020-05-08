@@ -8,6 +8,7 @@
 
 import UIKit
 import YHAsynDisplayKit
+import Foundation
 
 class DemoOrderListCell: YHAsyncBaseTBCell {
     var orderContentView:YHAsyncListTextView?
@@ -15,7 +16,7 @@ class DemoOrderListCell: YHAsyncBaseTBCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = UIColor.clear
-        let orderContentView = YHAsyncListTextView.init(frame: CGRect.init(x: 10, y: 5, width: 0, height: 0))
+        let orderContentView = YHAsyncListTextView.init(frame: CGRect(x: 10, y: 5, width: 0, height: 0))
         orderContentView.cornerRadius = 5
         orderContentView.backgroundColor = UIColor.yellow
         self.contentView.addSubview(orderContentView)

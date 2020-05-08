@@ -97,7 +97,7 @@ public typealias YHAsyncTextDrawerShouldInterruptBlock = () -> Bool
 
 public class YHAsyncTextDrawer: UIResponder {
 
-    // 绘制原点，一般情况下，经过预排版之后，通过WMGTextDrawer的Frame设置，仅供框架内部使用，请勿直接操作
+    // 绘制原点，一般情况下，经过预排版之后，通过TextDrawer的Frame设置，仅供框架内部使用，请勿直接操作
     var drawOrigin:CGPoint?
     private var drawing:Bool = false
     

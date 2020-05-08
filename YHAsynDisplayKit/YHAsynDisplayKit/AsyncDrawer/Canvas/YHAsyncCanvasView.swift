@@ -214,9 +214,6 @@ open class YHAsyncCanvasView: YHAsyncDawnView {
             
             context?.setFillColor(UIColor.yellow.cgColor)
             
-//            var image2 = UIGraphicsGetImageFromCurrentImageContext()
-
-            
             if let borderWidth = borderWidth , borderWidth > 0 {
                 if let borderColor = borderColor {
                     context?.setStrokeColor(borderColor.cgColor)

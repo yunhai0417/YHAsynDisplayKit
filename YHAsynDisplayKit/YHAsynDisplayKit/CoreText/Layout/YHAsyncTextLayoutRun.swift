@@ -78,20 +78,20 @@ public class YHAsyncTextLayoutRun: NSObject {
 
 
 
-func bridgeObj<T: AnyObject>(_ obj:T, to type:T.Type) -> UnsafeRawPointer {
-//    let point = UnsafeRawPointer.init(OpaquePointer)
-    return UnsafeRawPointer(Unmanaged.passUnretained(obj).toOpaque())
-}
-
-func bridgePoint<T : AnyObject>(ptr fro: UnsafeRawPointer, to type:T.Type) -> T {
-    return Unmanaged<T>.fromOpaque(fro).takeUnretainedValue()
-}
-
-func bridgeRetained<T : AnyObject>(_ obj : T, to type:T.Type) -> UnsafeRawPointer {
-     
-    return UnsafeRawPointer(Unmanaged.passRetained(obj).toOpaque())
-}
-
-func bridgeTransfer<T : AnyObject>(_ ptr : UnsafeRawPointer, to type:T.Type) -> T {
-    return Unmanaged<T>.fromOpaque(ptr).takeRetainedValue()
-}
+//func bridgeObj<T: AnyObject>(_ obj:T, to type:T.Type) -> UnsafeRawPointer {
+////    let point = UnsafeRawPointer.init(OpaquePointer)
+//    return UnsafeRawPointer(Unmanaged.passUnretained(obj).toOpaque())
+//}
+//
+//func bridgePoint<T : AnyObject>(ptr fro: UnsafeRawPointer, to type:T.Type) -> T {
+//    return Unmanaged<T>.fromOpaque(fro).takeUnretainedValue()
+//}
+//
+//func bridgeRetained<T : AnyObject>(_ obj : T, to type:T.Type) -> UnsafeRawPointer {
+//     
+//    return UnsafeRawPointer(Unmanaged.passRetained(obj).toOpaque())
+//}
+//
+//func bridgeTransfer<T : AnyObject>(_ ptr : UnsafeRawPointer, to type:T.Type) -> T {
+//    return Unmanaged<T>.fromOpaque(ptr).takeRetainedValue()
+//}

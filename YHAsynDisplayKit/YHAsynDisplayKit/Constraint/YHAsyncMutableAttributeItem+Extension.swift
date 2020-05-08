@@ -21,14 +21,13 @@ extension YHAsyncMutableAttributedItem {
         set { YHAsyncMutableAttributedItem.associationItems[self] = newValue }
     }
     
-    //依赖结果frame -> 直接放置到 YHAsyncVisionObject.visibleFrame
-    private static let associationRect = YHAsyncObjectAssociation<CGRect>.init(policy: .OBJC_ASSOCIATION_ASSIGN)
-    
-    var relatedConstraintRect:CGRect {
-        get { return YHAsyncMutableAttributedItem.associationRect[self] ?? CGRect.zero }
-        set { YHAsyncMutableAttributedItem.associationRect[self] = newValue }
-    }
     
     //返回一个YHAsyncMutableAttributedItem对应的视图元素
+    func achieveVisionObject() -> YHAsyncVisionObject {
+        let visionObject = YHAsyncVisionObject.init()
+            visionObject.visionValue = self
+        visionObject.visionFrame = self.relatedConstraintRect ?? CGRect.zero
+        return visionObject
+    }
 }
 
