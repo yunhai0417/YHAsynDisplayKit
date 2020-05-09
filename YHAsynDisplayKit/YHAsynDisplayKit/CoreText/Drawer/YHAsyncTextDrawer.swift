@@ -89,12 +89,9 @@ public protocol YHAsyncTextDrawerEventDelegate: NSObjectProtocol {
     func textDrawer(_ textDrawer:YHAsyncTextDrawer, shouldInteract activeRange:YHAsyncTextActiveRange) -> Bool
 }
 
-/*
-文本绘制器类是框架核心类，混排图文的绘制、size计算都依赖文本绘制器实现
-*/
-
 public typealias YHAsyncTextDrawerShouldInterruptBlock = () -> Bool
 
+//MARK: 文本绘制器类是框架核心类，混排图文的绘制、size计算都依赖文本绘制器实现
 public class YHAsyncTextDrawer: UIResponder {
 
     // 绘制原点，一般情况下，经过预排版之后，通过TextDrawer的Frame设置，仅供框架内部使用，请勿直接操作
@@ -102,27 +99,30 @@ public class YHAsyncTextDrawer: UIResponder {
     private var drawing:Bool = false
     
     // 文本绘制器的绘制起点和绘制区域的定义，Frame会被拆解成两部分，origin决定绘制起点，size决定绘制区域大小
-    public func setFrame(_ frame:CGRect) {
-
-        if self.drawing && frame.size.equalTo(self.getTextLayout().size) {
-            debugPrint("draw_error")
+    public var frame:CGRect? {
+        set {
+            guard let frame = newValue else { return }
+            
+            if self.drawing && frame.size.equalTo(self.getTextLayout().size) {
+                debugPrint("draw_error")
+            }
+            
+            self.drawOrigin = frame.origin
+            
+            if self.getTextLayout().heightSensitiveLayout {
+                self.textLayout?.size = frame.size
+            } else {
+                let height = CGFloat(ceilf(Float((frame.size.height * 1.1) / 100000) * 100000))
+                self.textLayout?.size = CGSize.init(width: frame.size.width, height: height)
+            }
         }
-        
-        self.drawOrigin = frame.origin
-        
-        if self.getTextLayout().heightSensitiveLayout {
-            self.textLayout?.size = frame.size
-        } else {
-            let height = CGFloat(ceilf(Float((frame.size.height * 1.1) / 100000) * 100000))
-            self.textLayout?.size = CGSize.init(width: frame.size.width, height: height)
+        get {
+            guard let drawOrigin = self.drawOrigin else { return nil }
+            guard let textLayoutSize = self.textLayout?.size else { return nil }
+            return CGRect.init(x: drawOrigin.x, y: drawOrigin.y, width: textLayoutSize.width, height: textLayoutSize.height)
         }
     }
     
-    public func getFrame() -> CGRect? {
-        guard let drawOrigin = self.drawOrigin else { return nil }
-        guard let textLayoutSize = self.textLayout?.size else { return nil }
-        return CGRect.init(x: drawOrigin.x, y: drawOrigin.y, width: textLayoutSize.width, height: textLayoutSize.height)
-    }
     
     // CoreText排版模型封装
     fileprivate var textLayout:YHAsyncTextLayout?
@@ -137,29 +137,10 @@ public class YHAsyncTextDrawer: UIResponder {
     }
     
     // 文本绘制器的代理
-    fileprivate weak var _delegate:YHAsyncTextDrawerDelegate?
-    public var delegate:YHAsyncTextDrawerDelegate? {
-        set {
-            _delegate = newValue
-//            let selector = #selector(YHAsyncTextDrawerDelegate.textDrawer(_:attachment:rect:_:))
-//            _delegateHas.placeAttachment = _delegate?.responds(to: selector) ?? false
-        }
-        get {
-            return _delegate
-        }
-    }
+    public weak var delegate:YHAsyncTextDrawerDelegate?
     
     // 文本绘制器的事件代理，用以处理混排图文中的可点击响应
-    fileprivate weak var _eventDelegate:YHAsyncTextDrawerEventDelegate?
-    public var eventDelegate:YHAsyncTextDrawerEventDelegate? {
-        set {
-            _eventDelegate = newValue
-        }
-        get {
-            return _eventDelegate
-        }
-    }
-    
+    public weak var eventDelegate:YHAsyncTextDrawerEventDelegate?
     
     //Event
     // 记录上次touch end时候的timestamp，否则调用2次touch ended
@@ -209,12 +190,10 @@ public class YHAsyncTextDrawer: UIResponder {
     /**
     *  将文本绘制器裹挟的内容绘制到指定上下文中，同时通过block控制中断
     *  中断意味着可以终止绘制流程，但不是一定会终止，这是由于多线程并发决定的，可以参考NSOperation的cancel方法的理念理解
-    *
     *  @param ctx                      当前的 CGContext
     *  @param visibleRect              可见区域
     *  @param replaceAttachments       是否替换组件
     *  @param block                    中断block
-    *
     */
     
     public func drawInContext(_ inCtx:CGContext?, visible visibleRect:CGRect?, attachments replace:Bool, shouldInterrupt interruptBlock:YHAsyncTextDrawerShouldInterruptBlock?) {
@@ -222,8 +201,8 @@ public class YHAsyncTextDrawer: UIResponder {
         self.drawing = true
         
         let textLayout = self.getTextLayout()
-        guard let drawingOrigin = self.drawOrigin else { return }
-        let drawingSize = textLayout.size
+        guard let drawingOrigin = self.drawOrigin else { return }   //绘制原点
+        let drawingSize = textLayout.size   //绘制区域大小
         
         let partialDrawing:Bool = visibleRect != nil
         
@@ -248,6 +227,7 @@ public class YHAsyncTextDrawer: UIResponder {
             }
         }
         
+        //开启debug状态
         if YHAsyncTextDrawer.self.debugModeEnabled() {
             self.debugModeDrawLineFramesWithLayoutFrame(layoutFrame, ctx)
         }
@@ -260,6 +240,7 @@ public class YHAsyncTextDrawer: UIResponder {
             }
         }
         
+        //正在响应点击的激活区，每一个可点击区域都被定义成了激活区
         if let pressingActiveRange = self.pressingActiveRange, let characterRange = pressingActiveRange.range {
             
             ctx.saveGState()
@@ -322,12 +303,7 @@ public class YHAsyncTextDrawer: UIResponder {
                 CTLineDraw(lineRef, ctx)
             }
             
-            
-            
-            let strikeColor = UIColor.init(red:  ((CGFloat)((0x999999 & 0xFF0000) >> 16)) / 255.0,
-                                           green: ((CGFloat)((0x999999 & 0xFF00) >> 8)) / 255.0,
-                                           blue: ((CGFloat)(0x999999 & 0xFF)) / 255.0,
-                                           alpha: 1.0)
+            let strikeColor = YHAsyncColorManager.achieveColor(0x999999)
             
             if let strikeThroughFrames = line.strikeThroughFrames {
                 for rectValue in strikeThroughFrames {
@@ -365,7 +341,7 @@ public class YHAsyncTextDrawer: UIResponder {
     }
     
     
-    //绘制附件图片
+    //MARK: -绘制附件图片 
     fileprivate func drawAttachmentsInContext(_ ctx:CGContext, shouldInterruptBlock shouldInterrupt:YHAsyncTextDrawerShouldInterruptBlock?) {
         let scale = UIScreen.main.scale
         guard let offset = self.drawOrigin else { return }
@@ -373,12 +349,20 @@ public class YHAsyncTextDrawer: UIResponder {
         for line in arrayLines {
             line.enumerateRunsUsingBlock { (_, attributes, characterRange) in
                 if let attachment = attributes.object(forKey: YHAsyncMacroConfigKey.TextAttachmentAttributeName) as? YHAsyncTextAttachment {
+                    if attachment.type == .OnlyImage {
+                        guard let drawOrigin = self.drawOrigin else { return }
+                        let drawSize   = self.getTextLayout().size
+                        var drawFrame  = CGRect.init(origin: drawOrigin, size: drawSize)
+                        self.delegate?.textDrawer(self, attachment: attachment, rect: drawFrame, ctx)
+                        return
+                    }
+                    
                     guard let characterOrigin = line.baselineOriginForCharacterAtIndex(characterRange.location) else {
                         return
                     }
                     guard let metrics = attachment.baselineFontMetrics else { return }
                     guard let degeInset = attachment.edgeInsets else { return }
-                    guard let attachmentSize = attachment.size else { return }
+                    let attachmentSize = attachment.size 
                     
                     var frame = CGRect.init(x: characterOrigin.x + degeInset.left,
                                             y: characterOrigin.y + metrics.descent + metrics.leading - degeInset.bottom - attachmentSize.height,
@@ -391,7 +375,7 @@ public class YHAsyncTextDrawer: UIResponder {
                     frame.origin.y = round(frame.origin.y * scale) / scale
                     
                     if self._delegateHas.placeAttachment {
-                        self._delegate?.textDrawer(self, attachment: attachment, rect: frame, ctx)
+                        self.delegate?.textDrawer(self, attachment: attachment, rect: frame, ctx)
                     } else if attachment.type == YHAsyncAttachmentType.StaticImage {
                         if let content = attachment.contents as? String {
                             UIGraphicsPushContext(ctx)
@@ -431,7 +415,7 @@ public class YHAsyncTextDrawer: UIResponder {
         }
         
         if _eventDelegateHas.didHighlightedActiveRange {
-            _eventDelegate?.textDrawer(self, didHighlighted: activeRange, frame: rect)
+            eventDelegate?.textDrawer(self, didHighlighted: activeRange, frame: rect)
         }
     }
     

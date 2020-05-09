@@ -38,6 +38,10 @@ public func YHAsyncFontMetricsCreateMake(_ inascent:CGFloat, indescent descent:C
     return metrics
 }
 
+public func YHAsyncFontMetricsCreateMake(systemFont ofSize:CGFloat) -> YHAsyncFontMetrics {
+    return YHAsyncFontMetricsCreateMake(UIFont.systemFont(ofSize: ofSize))
+}
+
 public func YHAsyncFontMetricsCreateMake(_ uifont:UIFont?) -> YHAsyncFontMetrics {
     var metrics = YHAsyncFontMetricsZero
     

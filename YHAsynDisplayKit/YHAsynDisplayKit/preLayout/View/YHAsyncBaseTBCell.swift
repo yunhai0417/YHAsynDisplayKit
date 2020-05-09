@@ -33,7 +33,7 @@ open class YHAsyncBaseTBCell: UITableViewCell {
     // cell视图分割线定义
     public var separatorLine:UIView = {
         let lineView = UIView.init()
-        lineView.backgroundColor = UIColor(red:((CGFloat)((0xe4e4e4 & 0xFF0000) >> 16)) / 255.0,green: ((CGFloat)((0xe4e4e4 & 0xFF00) >> 8)) / 255.0,blue: ((CGFloat)(0xe4e4e4 & 0xFF)) / 255.0,alpha: 1.0)
+        lineView.backgroundColor = YHAsyncColorManager.achieveColor(0xe4e4e4)
         return lineView
     }()
     

@@ -19,19 +19,19 @@
 
 import UIKit
 
+//MARK: 富文本数据模型
 public class YHAsyncTextAttachment: NSObject, YHAsyncAttachmentProtocol {
+    
     public var callBacks = [attributeCallBack]()
     
-    public var type: YHAsyncAttachmentType?
-    
-    public var size: CGSize?
+    //附件类型
+    public var type: YHAsyncAttachmentType = .None
+    //附件Size
+    public var size: CGSize = CGSize.zero
     
     public var edgeInsets: UIEdgeInsets?
     public func getEdgeInsets() -> UIEdgeInsets? {
         guard let baselineFontMetrics = self.baselineFontMetrics else {
-            return self.edgeInsets
-        }
-        guard let size = self.size else {
             return self.edgeInsets
         }
         
@@ -49,23 +49,26 @@ public class YHAsyncTextAttachment: NSObject, YHAsyncAttachmentProtocol {
     }
     
     public func placeholderSize() -> CGSize? {
-        guard let size = self.size else { return nil }
-        
         guard let edgeInsets = self.edgeInsets else { return nil }
         
-        return CGSize.init(width: size.width + edgeInsets.left + edgeInsets.right,
-                           height: size.height + edgeInsets.top + edgeInsets.bottom)
+        return CGSize.init(width: self.size.width + edgeInsets.left + edgeInsets.right,
+                           height: self.size.height + edgeInsets.top + edgeInsets.bottom)
     }
     
     public var contents: AnyObject!
+    
+    public var contentString: String?
+    public var contentImage: UIImage?
+    public var contentAsyncImage: YHAsyncImage?
     
     public var position: UInt?
     
     public var length: UInt?
     
+    //基线fontMetrics
     public var baselineFontMetrics: YHAsyncFontMetrics?
     
-//MARK event
+//MARK: Touch Event
     // 文本组件触发事件的target
     public weak var target:AnyObject?
     // 文本组件触发的事件回调

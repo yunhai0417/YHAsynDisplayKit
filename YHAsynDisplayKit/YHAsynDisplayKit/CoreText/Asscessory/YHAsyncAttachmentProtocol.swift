@@ -19,10 +19,12 @@
 
 import UIKit
 
-
+//MARK: 附件类型
 public enum YHAsyncAttachmentType:NSInteger {
-    case StaticImage = 0
-    case Placeholder = 1
+    case None        = 0
+    case StaticImage = 1        //附件图片
+    case Placeholder = 2        //附件占位符
+    case OnlyImage   = 3        //单独图片
     case ApplicationReserved = 0xF000
 }
 
@@ -32,19 +34,24 @@ public enum YHAsyncAttachmentType:NSInteger {
 
 public protocol YHAsyncAttachmentProtocol: NSObjectProtocol {
 
-    // 定义组件类型，一般文本中插入的图片被标记为WMGAttachmentTypeStaticImage
-    var type:YHAsyncAttachmentType? { get set }
+    // 定义组件类型，一般文本中插入的图片被标记为StaticImage
+    var type:YHAsyncAttachmentType { get set }
 
-    // 指定组件以size大小展示
-    var size:CGSize? { get set }
-    
-    // 组件和四周的edgeInsets
-    var edgeInsets:UIEdgeInsets? { get set }
+    // 组件展示相关的数据 一般为 NSString*、UIImage、YHAsyncImage
+    // 分别对应图片名称（或者是一组文本）、本地图片、网络下载图片
+    var contentString:String? { get set }
+    var contentImage:UIImage? { get set }
+    var contentAsyncImage:YHAsyncImage? { get set }
     
     // 组件展示相关的数据 一般为 NSString*、UIImage、YHAsyncImage
     // 分别对应图片名称（或者是一组文本）、本地图片、网络下载图片
-    
     var contents:AnyObject! { get set }
+    
+    // 指定组件以size大小展示
+    var size:CGSize { get set }
+    
+    // 组件和四周的edgeInsets
+    var edgeInsets:UIEdgeInsets? { get set }
     
     // 指定组件在AttributedString中的位置和长度，对于图片组件而言，由于是用\u{fffc}表达，所以长度为1。
     var position:UInt? { get set }

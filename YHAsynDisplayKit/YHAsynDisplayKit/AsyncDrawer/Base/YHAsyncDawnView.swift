@@ -21,8 +21,8 @@ import UIKit
 
 typealias YHAsyncDrawCallback = (_ drawInBackground:Bool) -> Void
 
+//MARK: 绘制的目标View
 open class YHAsyncDawnView: UIView {
-
     // 绘制完成后，内容经过此时间的渐变显示出来，默认为 0.0
 //    fileprivate var fadeDuration:TimeInterval = 0.0
     public func fadeDuration() -> TimeInterval {
@@ -48,7 +48,7 @@ open class YHAsyncDawnView: UIView {
     public func setDrawingPolicy(_ fro:YHAsyncDrawingPolicy) {
         self.drawingLayer?.drawingPolicy = fro
     }
-    // 在drawingPolicy 为 WMGViewDrawingPolicyAsynchronouslyDrawWhenContentsChanged 时使用
+    // 在drawingPolicy 为 ViewDrawingPolicyAsynchronouslyDrawWhenContentsChanged 时使用
     // 需要异步绘制时设置一次 YES，默认为NO
 //    public var contentsChangedAfterLastAsyncDrawing:Bool = false
     public func getContentsChangedAfterLastAsyncDrawing() -> Bool {
@@ -93,10 +93,7 @@ open class YHAsyncDawnView: UIView {
     // 绘制次数
 //    private(set) var drawingCount:NSInteger = 0
     public func getDrawingCount() -> NSInteger {
-        if let drawingCount = self.drawingLayer?.drawingCount {
-            return drawingCount
-        }
-        return 0
+        return self.drawingLayer?.drawingCount ?? 0
     }
     
     // 是否永远使用离屏渲染，默认YES。子类如果不希望离屏渲染必须重写此方法并 重写drawingPolicy为WMViewDrawingPolicySynchronouslyDraw
@@ -105,6 +102,7 @@ open class YHAsyncDawnView: UIView {
         return true
     }
     
+    //绘制目标Layer
     fileprivate weak var drawingLayer:YHAsyncDrawLayer?
     /**
      * 设置需要异步显示
@@ -121,15 +119,12 @@ open class YHAsyncDawnView: UIView {
         self.drawingLayer?.increaseDrawingCount()
     }
     
-//    #pragma mark - AsyncDraw Disable Control
+    //MARK: - AsyncDraw Disable Control
     /**
      * 设置异步绘制全局开关
-     *
-     * @param disable YES or NO
-     *
+     * @param disable true or false
      */
     static var globalAsyncDrawDisabled:Bool = false
-    
     public func setGlobalAsyncDrawingDisable(_ disable:Bool) {
         YHAsyncDawnView.globalAsyncDrawDisabled = disable
     }
@@ -139,7 +134,6 @@ open class YHAsyncDawnView: UIView {
      *
      */
     class func globalAsyncDrawingDisabled() -> Bool {
-        
         return YHAsyncDawnView.globalAsyncDrawDisabled
     }
     
@@ -150,15 +144,14 @@ open class YHAsyncDawnView: UIView {
         self.display(self.layer)
     }
     
-//    #pragma mark - Methods for subclass overriding
     
+//    MARK: - Methods for subclass overriding
     /**
      * 子类可以重写，并在此方法中进行绘制，请勿直接调用此方法
      *
      * @param rect 进行绘制的区域，目前只可能是 self.bounds
      * @param context 绘制到的context，目前在调用时此context都会在系统context堆栈栈顶
      * @param asynchronously 当前是否是异步绘制
-     *
      * @return 绘制是否已执行完成。若为 NO，绘制的内容不会被显示
      *
      */
@@ -168,7 +161,6 @@ open class YHAsyncDawnView: UIView {
     
     /**
      * 子类可以重写，并在此方法中进行绘制，请勿直接调用此方法
-     *
      * @param rect 进行绘制的区域，目前只可能是 self.bounds
      * @param context 绘制到的context，目前在调用时此context都会在系统context堆栈栈顶
      * @param asynchronously 当前是否是异步绘制
@@ -185,7 +177,6 @@ open class YHAsyncDawnView: UIView {
     
     /**
      * 子类可以重写，是绘制即将开始前的回调，请勿直接调用此方法
-     *
      * @param asynchronously 当前是否是异步绘制
      */
     
@@ -208,27 +199,30 @@ open class YHAsyncDawnView: UIView {
     
     /**
      * 子类可以重写，用于在主线程生成并传入绘制所需参数
-     *
-     * @discussion 有时在异步线程配置参数可能导致crash，例如在异步线程访问ivar。可以通过此方法将参数放入字典并传入绘制方法。此方法会在displayLayer:的当前线程调用，一般为主线程。
+     * 有时在异步线程配置参数可能导致crash，
+     * 例如在异步线程访问ivar。可以通过此方法将参数放入字典并传入绘制方法。此方法会在displayLayer:的当前线程调用，一般为主线程。
      */
     
     open func currentDrawingUserInfo() -> [String:Any] {
         return [String : Any]()
     }
-//    #pragma mark end - Methods for subclass overriding
     
     fileprivate func displayLayer(_ layer:YHAsyncDrawLayer,
                                   rectToDraw:CGRect,
                                   startCallback:YHAsyncDrawCallback?,
                                   finishCallback:YHAsyncDrawCallback?,
                                   interruptCallback:YHAsyncDrawCallback?) {
+        
         let drawInBackground = layer.isAsyncDrawsCurrentContent() && !YHAsyncDawnView.globalAsyncDrawDisabled
+
         layer.increaseDrawingCount()
+        //当前的绘制次数
         let targetDrawingCount = layer.drawingCount
         let drawingUserInfo = self.currentDrawingUserInfo()
         
         let drawBlock = { [weak self] in
             let failedBlock = {
+                //绘制失败回调 success failed
                 if let interruptCallback = interruptCallback {
                     interruptCallback(drawInBackground)
                 }
@@ -261,13 +255,13 @@ open class YHAsyncDawnView: UIView {
                 if layer.drawingCount != targetDrawingCount {
                     drawingFinished = false
                 } else {
-                    drawingFinished = self?.drawInRect(rectToDraw, context: context, asynchronously: drawingFinished, userInfo: drawingUserInfo) ?? false
+                    drawingFinished = self?.drawInRect(rectToDraw, context: context, asynchronously: drawInBackground, userInfo: drawingUserInfo) ?? false
                 }
                 
                 context?.restoreGState()
             }
-            // 所有耗时的操作都已完成，但仅在绘制过程中未发生重绘时，将结果显示出来
             
+            //MARK: 所有耗时的操作都已完成，但仅在绘制过程中未发生重绘时，将结果显示出来
             if drawingFinished && layer.drawingCount == targetDrawingCount {
                 let CGImage:CGImage? = context?.makeImage()
                 if let cgImage = CGImage {
@@ -313,6 +307,7 @@ open class YHAsyncDawnView: UIView {
             }
         }
         
+        //绘制初始化回调
         if let startCallback = startCallback {
             startCallback(drawInBackground)
         }
@@ -326,17 +321,9 @@ open class YHAsyncDawnView: UIView {
                 drawBlock()
             }
         } else {
-            let mainblock = {
+            self.diapatchMainAsyncSafe {
                 autoreleasepool{
                     drawBlock()
-                }
-            }
-            
-            if Thread.isMainThread {
-                mainblock()
-            } else {
-                DispatchQueue.main.async {
-                    mainblock()
                 }
             }
         }
@@ -358,6 +345,10 @@ open class YHAsyncDawnView: UIView {
         if self.layer.isKind(of: YHAsyncDrawLayer.self) {
             self.drawingLayer = self.layer as? YHAsyncDrawLayer
         }
+        
+        //设置主队列
+        DispatchQueue.main.setSpecific(key: specificKey, value: specificValue)
+
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -420,21 +411,33 @@ open class YHAsyncDawnView: UIView {
     }
     
     override public func display(_ layer: CALayer) {
-        if layer != self.layer { return }
-        
         guard let layer = layer as? YHAsyncDrawLayer else {
             return
         }
         
+        if layer != self.layer { return }
+        
         self.displayLayer(layer, rectToDraw: self.bounds,
                           startCallback: { [weak self] drawInBackground in
                             self?.drawingWillStartAsynchronously(drawInBackground)
-            },
-                          finishCallback: { [weak self] drawInBackground in
+            },finishCallback: { [weak self] drawInBackground in
                             self?.drawingDidFinishAsynchronously(drawInBackground, success: true)
-            },
-                          interruptCallback: { [weak self] drawInBackground in
+            },interruptCallback: { [weak self] drawInBackground in
                             self?.drawingDidFinishAsynchronously(drawInBackground, success: false)
         })
+    }
+    
+    //MARK: 线程安全主队列
+    let specificKey = DispatchSpecificKey<String>()
+    let specificValue = "com.Async.mainQueue.specificValue"
+    fileprivate func diapatchMainAsyncSafe(_ block: @escaping () -> Void ) {
+        if DispatchQueue.getSpecific(key: specificKey) == specificValue {
+            //主队列
+            block()
+        } else {
+            DispatchQueue.main.async {
+                block()
+            }
+        }
     }
 }

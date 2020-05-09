@@ -311,10 +311,7 @@ extension NSMutableAttributedString {
     */
     public func yh_setUnderlineStyle(_ underlineStyle:YHAsyncTextUnderlineStyle, inRange range:NSRange) {
         
-        let underlineColor = UIColor.init(red:((CGFloat)((0x333333 & 0xFF0000) >> 16)) / 255.0,
-                                          green: ((CGFloat)((0x333333 & 0xFF00) >> 8)) / 255.0,
-                                          blue: ((CGFloat)(0x333333 & 0xFF)) / 255.0,
-                                          alpha: 1.0)
+        let underlineColor = YHAsyncColorManager.achieveColor(0x333333)
         
         self.yh_setUnderlineStyle(underlineStyle, inRange: range, inColor:underlineColor)
         
@@ -377,10 +374,7 @@ extension NSMutableAttributedString {
     
     public func yh_setStrikeThroughStyle(_ strikeThroughStyle:YHAsyncTextStrikeThroughStyle, inRange range:NSRange){
         
-        let strikeThroughColor = UIColor(red:((CGFloat)((0x999999 & 0xFF0000) >> 16)) / 255.0,
-                                     green: ((CGFloat)((0x999999 & 0xFF00) >> 8)) / 255.0,
-                                     blue: ((CGFloat)(0x999999 & 0xFF)) / 255.0,
-                                     alpha: 1.0)
+        let strikeThroughColor = YHAsyncColorManager.achieveColor(0x999999)
         
         self.yh_setStrikeThroughStyle(strikeThroughStyle, inColor: strikeThroughColor, inRange: range)
 

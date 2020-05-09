@@ -330,14 +330,15 @@ extension UIImage {
     }
     
     /** Fix
-    * 图片模糊处理
-    *
+    * 图片模糊处理 //TODO 有问题颜色变蓝
     * @param percent  非法值按照0.5模糊处理 percent : 0.0 ~ 1.0
-    *
     * @return UIImage
     */
     
     public func yh_blurImageWithBlurPercent(_ percet:CGFloat) -> UIImage? {
+        
+        guard let imageData = self.jpegData(compressionQuality: 1) else { return self }
+        guard let destImage = UIImage.init(data: imageData) else { return self }
         
         var newPercent:CGFloat = percet
         if percet < 0.0 || percet > 1.0 {
@@ -346,7 +347,7 @@ extension UIImage {
         var boxSize:Int = Int(newPercent * 40)
         boxSize = boxSize - boxSize % 2 + 1
         
-        guard let imgRef = self.cgImage else { return nil}
+        guard let imgRef = destImage.cgImage else { return self }
         
         var inBuffer = vImage_Buffer()
         var outBuffer = vImage_Buffer()
@@ -374,7 +375,31 @@ extension UIImage {
         outBuffer.width = vImagePixelCount(imgRef.width)
         outBuffer.height = vImagePixelCount(imgRef.height)
         outBuffer.rowBytes = imgRef.bytesPerRow
+        
+        var pixelBuffer2: UnsafeMutableRawPointer!
+        var outBuffer2 = vImage_Buffer()
+        pixelBuffer2 = UnsafeMutableRawPointer.allocate(byteCount: imgRef.bytesPerRow * imgRef.height, alignment: 0)
+        if pixelBuffer2 == nil {
+            NSLog("No pixel buffer!")
+        }
 
+        outBuffer2.data = pixelBuffer
+        outBuffer2.width = vImagePixelCount(imgRef.width)
+        outBuffer2.height = vImagePixelCount(imgRef.height)
+        outBuffer2.rowBytes = imgRef.bytesPerRow
+        
+        error = vImageBoxConvolve_ARGB8888(&inBuffer, &outBuffer2, nil, 0, 0, UInt32(boxSize), UInt32(boxSize), nil, UInt32(kvImageEdgeExtend))
+
+        if error != nil {
+            print("error from convolution \(error)")
+        }
+        
+        error = vImageBoxConvolve_ARGB8888(&outBuffer2, &inBuffer, nil, 0, 0, UInt32(boxSize), UInt32(boxSize), nil, UInt32(kvImageEdgeExtend))
+
+        if error != nil {
+            print("error from convolution \(error)")
+        }
+        
         error = vImageBoxConvolve_ARGB8888(&inBuffer, &outBuffer, nil, 0, 0, UInt32(boxSize), UInt32(boxSize), nil, UInt32(kvImageEdgeExtend))
 
         if error != nil {

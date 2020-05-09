@@ -89,14 +89,19 @@ class AdvanceViewController: UIViewController {
         guard let dispalyManager = self.displayManager else { return }
         
         let poiImageAttributeItem = dispalyManager.createAttributeItem()
+        poiImageAttributeItem.attributeType = .StaticImage
         let poiPic = "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3985045178,3448045350&fm=26&gp=0.jpg"
         let imageAttributeItem = poiImageAttributeItem.appendImageWithUrl(poiPic, inSize: CGSize.init(width: 100, height: 100))
         if let imageAttachment = imageAttributeItem.arrayAttachments?.first {
-            imageAttachment.baselineFontMetrics = YHAsyncFontMetricsCreateMakeWithLineHeight(YHAsyncFontMetricsCreateMake(UIFont.systemFont(ofSize: 11)), targetLineHeight: floor(imageAttachment.size?.height ?? 0))
+            imageAttachment.baselineFontMetrics = YHAsyncFontMetricsCreateMakeWithLineHeight(YHAsyncFontMetricsCreateMake(systemFont: 11), targetLineHeight: floor(imageAttachment.size.height))
         }
         
         let canvasView = dispalyManager.achieveCurrentCanvasView()
         canvasView.backgroundColor = UIColor.yellow
+        canvasView.cornerRadius = 5
+        canvasView.borderColor = UIColor.red
+        canvasView.borderWidth = 2
+        
         dispalyManager.insertAttributeItem(poiImageAttributeItem)
         
         poiImageAttributeItem.snp.makeConstraints { maker in

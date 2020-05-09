@@ -87,7 +87,7 @@ extension YHAsyncTextDrawer {
         context.setAlpha(0.1)
         context.setFillColor(UIColor.green.cgColor)
         
-        if let frame = self.getFrame() {
+        if let frame = self.frame {
             context.fill(frame)
         }
         

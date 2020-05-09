@@ -301,7 +301,6 @@ public class YHAsyncTextLayoutLine: NSObject {
         
         let runs = CTLineGetGlyphRuns(lineRef) as NSArray
         for run in runs {
-            
             let attributes = CTRunGetAttributes(run as! CTRun) as NSDictionary
             let range = CTRunGetStringRange(run as! CTRun)
             var nsRange = NSRange.init(location: range.location, length: range.length)

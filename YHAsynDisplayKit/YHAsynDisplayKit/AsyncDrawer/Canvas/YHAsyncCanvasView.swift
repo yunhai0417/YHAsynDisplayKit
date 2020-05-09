@@ -30,6 +30,7 @@ struct YHAsyncCanvasViewKey {
     static let BackgroundImageKey = "canvas-backgroundimage-key"
 }
 
+//MARK: YHAsyncCanvasView 背景画布视图
 open class YHAsyncCanvasView: YHAsyncDawnView {
 
     /* When positive, the background of the layer will be drawn with
@@ -99,19 +100,6 @@ open class YHAsyncCanvasView: YHAsyncDawnView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //
-    func setNewBackgroundColor(_ fro:UIColor) {
-        if fro != self.fillColor {
-            self.fillColor = fro
-            self.setContentsChangedAfterLastAsyncDrawing(true)
-            self.setNeedsDisplay()
-        }
-    }
-    
-    func getBackgroundColor() -> UIColor? {
-        return self.fillColor
-    }
-    
     public override func currentDrawingUserInfo() -> [String:Any] {
         
         var userInfo = [String:Any]()
@@ -154,18 +142,17 @@ open class YHAsyncCanvasView: YHAsyncDawnView {
         return userInfo
     }
     
+    //MARK: YHAsyncCanvasView 核心方法 绘制内容
     open override func drawInRect(_ rect: CGRect, context: CGContext?, asynchronously: Bool, userInfo: [String : Any]?) -> Bool {
         _ = super.drawInRect(rect, context: context, asynchronously: asynchronously, userInfo: userInfo)
         
-        
+        //绘制当前Canvas背景视图
         let cornerRadius = (userInfo?[YHAsyncCanvasViewKey.CornerRadiusKey] as? CGFloat) ?? CGFloat.zero
         
         let backgroundColor = userInfo?[YHAsyncCanvasViewKey.BackgroundColorKey] as? UIColor
         
-        var borderWidth = userInfo?[YHAsyncCanvasViewKey.BorderWidthKey] as? CGFloat
-        if let borderWidth1 = borderWidth {
-            borderWidth = borderWidth1 * UIScreen.main.scale
-        }
+        var borderWidth = (userInfo?[YHAsyncCanvasViewKey.BorderWidthKey] as? CGFloat) ?? CGFloat.zero
+        borderWidth = borderWidth * UIScreen.main.scale
         
         let borderColor = userInfo?[YHAsyncCanvasViewKey.BorderColorKey] as? UIColor
         
@@ -175,13 +162,13 @@ open class YHAsyncCanvasView: YHAsyncDawnView {
                 context?.fill(rect)
             }
             
-            if let borderWidth = borderWidth , borderWidth > 0 {
+            if  borderWidth > 0 {
                 context?.addPath(UIBezierPath.init(rect: rect).cgPath)
             }
             
             context?.setFillColor(UIColor.clear.cgColor)
             
-            if let borderWidth = borderWidth , borderWidth > 0 {
+            if  borderWidth > 0 {
                 if let borderColor = borderColor {
                     context?.setStrokeColor(borderColor.cgColor)
                 }
@@ -189,7 +176,7 @@ open class YHAsyncCanvasView: YHAsyncDawnView {
                 context?.drawPath(using: CGPathDrawingMode.fillStroke)
             }
             
-            if let borderWidth = borderWidth , borderWidth <= 0 {
+            if  borderWidth <= 0 {
                 context?.drawPath(using: CGPathDrawingMode.fill)
             }
             
@@ -202,8 +189,6 @@ open class YHAsyncCanvasView: YHAsyncDawnView {
             path.usesEvenOddFillRule = true
             path.addClip()
             context?.addPath(path.cgPath)
-            
-//            var image1 = UIGraphicsGetImageFromCurrentImageContext()
 
             
             if let backgroundColor = backgroundColor, backgroundColor != UIColor.clear {
@@ -212,9 +197,8 @@ open class YHAsyncCanvasView: YHAsyncDawnView {
                 context?.addPath(path.cgPath)
             }
             
-            context?.setFillColor(UIColor.yellow.cgColor)
             
-            if let borderWidth = borderWidth , borderWidth > 0 {
+            if  borderWidth > 0 {
                 if let borderColor = borderColor {
                     context?.setStrokeColor(borderColor.cgColor)
                 }
@@ -222,26 +206,23 @@ open class YHAsyncCanvasView: YHAsyncDawnView {
                 context?.drawPath(using: CGPathDrawingMode.fillStroke)
             }
             
-//            var image3 = UIGraphicsGetImageFromCurrentImageContext()
-
-            
-            if let borderWidth = borderWidth , borderWidth <= 0 {
+            if  borderWidth <= 0 {
                 context?.drawPath(using: CGPathDrawingMode.fill)
             }
-            
-//            var image4 = UIGraphicsGetImageFromCurrentImageContext()
 
         }
         
         
         // 阴影设置
         let shadowColor = userInfo?[YHAsyncCanvasViewKey.ShadowColorKey] as? UIColor
-        let shadowBlur = userInfo?[YHAsyncCanvasViewKey.ShadowBlurKey] as? CGFloat    ?? 0.0
+        let shadowBlur = userInfo?[YHAsyncCanvasViewKey.ShadowBlurKey] as? CGFloat ?? CGFloat.zero
         let shadowOffset = userInfo?[YHAsyncCanvasViewKey.ShadowOffsetKey] as? UIOffset ?? UIOffset.zero
         
         if let shadowColor = shadowColor {
-            context?.setShadow(offset: CGSize.init(width: shadowOffset.horizontal, height: shadowOffset.vertical), blur: shadowBlur, color: shadowColor.cgColor)
+            context?.setShadow(offset: CGSize(width: shadowOffset.horizontal, height: shadowOffset.vertical), blur: shadowBlur, color: shadowColor.cgColor)
         }
+        
+//        var image4 = UIGraphicsGetImageFromCurrentImageContext()
         
         if let context = context {
             UIGraphicsPushContext(context)

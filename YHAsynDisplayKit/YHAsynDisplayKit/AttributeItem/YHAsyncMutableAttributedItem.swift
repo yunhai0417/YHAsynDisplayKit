@@ -20,13 +20,24 @@
 import UIKit
 import Foundation
 
+//MARK: HAsyncMutableAttributedItemType 富文本类型
+public enum YHAsyncMutableAttributedItemType:NSInteger {
+    case MutableString = 1          //默认富文本类型
+                    
+    case StaticImage = 2            //图片类型
+}
+
+
 public typealias attributeCallBack = () -> Void
 
 public struct YHAsyncMutableAttributedItemFlags {
     var needsRebuild:Bool = true
 }
 
+//MARK: 保存要展示的属性
 public class YHAsyncMutableAttributedItem: NSObject {
+    //属性状态
+    public var attributeType:YHAsyncMutableAttributedItemType = .MutableString
     //依赖结果frame -> 直接放置到 YHAsyncVisionObject.visibleFrame
     public var relatedConstraintRect:CGRect = CGRect.zero
     
@@ -61,7 +72,6 @@ public class YHAsyncMutableAttributedItem: NSObject {
     
     
     //MARK: - func
-    
     /**
     * 根据Text创建一个AttributedItem
     * @param text 文本
@@ -115,11 +125,6 @@ public class YHAsyncMutableAttributedItem: NSObject {
         self.textStorage.yh_setFont(UIFont.systemFont(ofSize: 11))
         
         let attributedColor = YHAsyncColorManager.achieveColor(0x666666)
-            
-//            UIColor(red:((CGFloat)((0x666666 & 0xFF0000) >> 16)) / 255.0,
-//                                         green: ((CGFloat)((0x666666 & 0xFF00) >> 8)) / 255.0,
-//                                         blue: ((CGFloat)(0x666666 & 0xFF)) / 255.0,
-//                                         alpha: 1.0)
         
         self.textStorage.yh_setColor(attributedColor)
         
@@ -367,23 +372,25 @@ public class YHAsyncMutableAttributedItem: NSObject {
     
     /**
     * 拼接指定Url的图片
-    *
     * @param imgUrl 图片Url
     * @param size 图片size 默认size (11, 11)
-    *
     * @return WMMutableAttributedItem
-    *
     */
+    
+    @discardableResult
     public func appendImageWithUrl(_ imgUrl:String, inSize size:CGSize = CGSize(width: 11, height: 11)) -> YHAsyncMutableAttributedItem {
         if imgUrl.isEmpty {
             return self
         }
         let image = YHAsyncImage.imageWithUrl(imgUrl)
         image?.size = size
-        
-        let att = YHAsyncTextAttachment.textAttachmentWithContents(image, inType: YHAsyncAttachmentType.StaticImage, inSize: size)
-        
-        return self.appendAttachment(att)
+        if self.attributeType == .MutableString {
+            let att = YHAsyncTextAttachment.textAttachmentWithContents(image, inType: YHAsyncAttachmentType.StaticImage, inSize: size)
+            return self.appendAttachment(att)
+        } else {
+            let att = YHAsyncTextAttachment.textAttachmentWithContents(image, inType: YHAsyncAttachmentType.OnlyImage, inSize: size)
+            return self.appendAttachment(att)
+        }
     }
     
     /**
@@ -494,11 +501,8 @@ public class YHAsyncMutableAttributedItem: NSObject {
     
     /**
     * 拼接一个文本组件
-    *
     * @param att 文本组件
-    *
     * @return WMMutableAttributedItem
-    *
     */
     @discardableResult
     public func appendAttachment(_ att:YHAsyncTextAttachment) -> YHAsyncMutableAttributedItem {
@@ -515,6 +519,10 @@ public class YHAsyncMutableAttributedItem: NSObject {
         
         if let str = NSAttributedString.yh_attributedStringWithTextAttachment(att) {
             self.textStorage.append(str)
+            if self.attributeType == .StaticImage && self.arrayAttachments?.count == 1 {
+                print("拼接一个文本组件 失败")
+                return self
+            }
             self.arrayAttachments?.append(att)
         }
         return self

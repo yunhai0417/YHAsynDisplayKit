@@ -36,7 +36,7 @@ public class YHAsyncDrawLayer: CALayer {
     // 绘制逻辑，定义同步绘制或异步，详细见枚举定义，默认为
     var drawingPolicy: YHAsyncDrawingPolicy = .asynchronouslyDrawWhenContentsChanged
     
-    // 在drawingPolicy 为 WMGViewDrawingPolicyAsynchronouslyDrawWhenContentsChanged 时使用
+    // 在drawingPolicy 为 ViewDrawingPolicyAsynchronouslyDrawWhenContentsChanged 时使用
     // 需要异步绘制时设置一次 YES，默认为NO
     var contentsChangedAfterLastAsyncDrawing: Bool = false
     
@@ -45,7 +45,6 @@ public class YHAsyncDrawLayer: CALayer {
     
     // 绘制次数
     var drawingCount:NSInteger = 0
-    
     /**
      * 增加异步绘制次数
      */

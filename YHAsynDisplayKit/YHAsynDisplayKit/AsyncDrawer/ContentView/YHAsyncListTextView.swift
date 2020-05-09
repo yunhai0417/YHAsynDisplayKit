@@ -51,16 +51,17 @@ public class YHAsyncListTextView: YHAsyncCanvasControl {
     
     //MARK: - override
     public override func drawInRect(_ rect: CGRect, context: CGContext?, asynchronously: Bool, userInfo: [String : Any]?) -> Bool {
-        print("YHAsyncListTextView drawInRect")
+        
         _ = super.drawInRect(rect, context: context, asynchronously: asynchronously, userInfo: userInfo)
         
         let initialDrawingCount = self.getDrawingCount()
         
-        print("YHAsyncListTextView drawerDates")
-        
         for visiObject in self.drawerDates {
-            self.textDrawer.setFrame(visiObject.visionFrame)
+            //待排版区域
+            self.textDrawer.frame = visiObject.visionFrame
+            //待排版内容
             self.textDrawer.getTextLayout().attributedString = visiObject.visionValue?.resultString
+            
             self.textDrawer.drawInContext(context, visible: nil, attachments: true) { () -> Bool in
                 return initialDrawingCount != self.getDrawingCount()
             }
@@ -80,7 +81,7 @@ public class YHAsyncListTextView: YHAsyncCanvasControl {
         while i < self.arrayAttachMents.count {
             if i >= 0 && i < self.arrayAttachMents.count {
                 let attachment = self.arrayAttachMents[i]
-                if attachment.type == YHAsyncAttachmentType.StaticImage {
+                if attachment.type == YHAsyncAttachmentType.StaticImage || attachment.type == YHAsyncAttachmentType.OnlyImage {
                     guard let asyncImage = attachment.contents as? YHAsyncImage else { continue }
                     // TODO: 图片下载流程
                     guard let downLoadUrl = asyncImage.downloadUrl else { continue }
@@ -106,7 +107,7 @@ public class YHAsyncListTextView: YHAsyncCanvasControl {
                 let visionFrame = objc.visionFrame
                 if frame.contains(location) {
                     self.clickItem = objc.visionValue
-                    self.textDrawer.setFrame(visionFrame)
+                    self.textDrawer.frame = visionFrame
                     self.textDrawer.getTextLayout().attributedString = objc.visionValue?.resultString
                 }
             }
@@ -143,7 +144,7 @@ public class YHAsyncListTextView: YHAsyncCanvasControl {
 //MARK:- YHAsyncTextDrawerDelegate
 extension YHAsyncListTextView: YHAsyncTextDrawerDelegate {
     public func textDrawer(_ textDrawer: YHAsyncTextDrawer, attachment replace: YHAsyncTextAttachment, rect frame: CGRect, _ context: CGContext) {
-        if replace.type == YHAsyncAttachmentType.StaticImage {
+        if replace.type == YHAsyncAttachmentType.StaticImage || replace.type == YHAsyncAttachmentType.OnlyImage {
             if let content = replace.contents as? String {
                 UIGraphicsPushContext(context)
                 let image = UIImage(named: content)
@@ -168,9 +169,11 @@ extension YHAsyncListTextView: YHAsyncTextDrawerDelegate {
                     image.draw(in: frame)
                     UIGraphicsPopContext()
                 } else if let image = cachedImage {
-                    content.image = image
+                    let image1 = cachedImage?.yh_blurImageWithBlurPercent(0.5)
+                    content.image = image1
                     UIGraphicsPushContext(context)
                     image.draw(in: frame)
+//                    image1?.draw(in: CGRect.init(x: 50, y: 50, width: 100, height: 100))
                     content.downloadUrl = nil
                     UIGraphicsPopContext()
                 } else {

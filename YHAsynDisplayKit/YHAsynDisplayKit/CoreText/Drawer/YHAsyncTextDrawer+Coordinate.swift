@@ -50,9 +50,7 @@ extension YHAsyncTextDrawer {
     
     /**
     *  将一个 rect 从文字布局中转换到 TextDrawer 的绘制区域中
-    *
     *  @param rect 需要转换的 rect
-    *
     *  @return 转换后的 rect
     */
     

@@ -15,9 +15,7 @@ public class YHAsyncMutableAttributedImage: YHAsyncMutableAttributedItem {
         att.edgeInsets = UIEdgeInsets.zero
         att.position = 0
         att.length = 1
-        
-        guard let height = att.size?.height else { return self }
-        
+        let height = att.size.height
         let metricFont = YHAsyncFontMetricsCreateMake(UIFont.systemFont(ofSize: 11))
         let metric = YHAsyncFontMetricsCreateMakeWithLineHeight(metricFont, targetLineHeight: floor(height))
         att.baselineFontMetrics = metric

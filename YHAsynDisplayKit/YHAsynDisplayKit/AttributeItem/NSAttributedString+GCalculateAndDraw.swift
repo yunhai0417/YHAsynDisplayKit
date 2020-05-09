@@ -238,7 +238,7 @@ extension NSAttributedString {
         drawer.getTextLayout().maximumNumberOfLines = UInt(lines)
         drawer.getTextLayout().baselineFontMetrics = metrics
         drawer.getTextLayout().attributedString = self
-        drawer.setFrame(rect)
+        drawer.frame = rect
         
         drawer.drawInContext(context)
         
@@ -271,7 +271,7 @@ extension NSAttributedString {
         
         textDrawer?.getTextLayout().attributedString = self
         
-        textDrawer?.setFrame(rect)
+        textDrawer?.frame = rect
         
         textDrawer?.drawInContext(context)
         
@@ -314,11 +314,11 @@ extension NSAttributedString {
         
         drawer.getTextLayout().attributedString = self
         
-        drawer.setFrame(CGRect.init(x: 0, y: 0, width: width, height: 1))
+        drawer.frame = CGRect(x: 0, y: 0, width: width, height: 1)
         
         if let size = drawer.getTextLayout().layoutFrame?.layoutSize {
             let frame = frameBlock(size)
-            drawer.setFrame(frame)
+            drawer.frame = frame
         }
         drawer.drawInContext(context)
         

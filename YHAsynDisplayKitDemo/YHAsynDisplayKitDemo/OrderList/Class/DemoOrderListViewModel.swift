@@ -29,7 +29,7 @@ class DemoOrderListViewModel: YHAsyncBaseViewModel {
         if let poiPic = orderItem.poiPic {
             let imageAttributeItem = poiImageAttributeItem.appendImageWithUrl(poiPic, inSize: CGSize.init(width: 70, height: 70))
             if let imageAttachment = imageAttributeItem.arrayAttachments?.first {
-                imageAttachment.baselineFontMetrics = YHAsyncFontMetricsCreateMakeWithLineHeight(YHAsyncFontMetricsCreateMake(UIFont.systemFont(ofSize: 11)), targetLineHeight: floor(imageAttachment.size?.height ?? 0))
+                imageAttachment.baselineFontMetrics = YHAsyncFontMetricsCreateMakeWithLineHeight(YHAsyncFontMetricsCreateMake(UIFont.systemFont(ofSize: 11)), targetLineHeight: floor(imageAttachment.size.height))
             }
         }
 

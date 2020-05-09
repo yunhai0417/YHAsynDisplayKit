@@ -137,7 +137,7 @@ public class YHAsyncMixedView: YHAsyncCanvasControl {
     
     fileprivate lazy var textDrawer:YHAsyncTextDrawer = {
         let drawer = YHAsyncTextDrawer.init()
-            drawer.setFrame(CGRect.zero)
+            drawer.frame = CGRect.zero
             drawer.delegate = self
             drawer.eventDelegate = self
         return drawer
@@ -185,7 +185,7 @@ public class YHAsyncMixedView: YHAsyncCanvasControl {
             return true
         }
         
-        self.textDrawer.setFrame(rect)
+        self.textDrawer.frame = rect
         self.textDrawer.getTextLayout().attributedString = resultString
         
         guard let layoutFrame = self.textDrawer.getTextLayout().layoutFrame else {
