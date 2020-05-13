@@ -179,7 +179,7 @@ public class YHAsyncMixedView: YHAsyncCanvasControl {
     
     public override func drawInRect(_ rect: CGRect, context: CGContext?, asynchronously: Bool, userInfo: [String : Any]?) -> Bool {
         super.drawInRect(rect, context: context, asynchronously: asynchronously, userInfo: userInfo)
-        let initialDrawingCount = self.getDrawingCount()
+        let initialDrawingCount = self.drawingCount
         
         guard let resultString = userInfo?[YHAsyncMixedViewKey.attributedItem] as? NSAttributedString else {
             return true
@@ -235,7 +235,7 @@ public class YHAsyncMixedView: YHAsyncCanvasControl {
 
         if let ctx = context {
             self.textDrawer.drawInContext(ctx, visible: visibleRect, attachments: self.pendingAttachmentUpdates) { () -> Bool in
-                if initialDrawingCount != self.getDrawingCount() {
+                if initialDrawingCount != self.drawingCount {
                     return true
                 }
                 return false

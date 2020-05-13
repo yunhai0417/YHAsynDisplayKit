@@ -10,6 +10,7 @@ import UIKit
 import YHAsynDisplayKit
 
 public class YHAsyncListTextView: YHAsyncCanvasControl {
+    
     fileprivate var _drawerDates:[YHAsyncVisionObject] = [YHAsyncVisionObject]()
     public var drawerDates:[YHAsyncVisionObject] {
         set {
@@ -49,12 +50,13 @@ public class YHAsyncListTextView: YHAsyncCanvasControl {
         }
     }
     
-    //MARK: - override
+    //MARK: - 重写父类绘制的方法
     public override func drawInRect(_ rect: CGRect, context: CGContext?, asynchronously: Bool, userInfo: [String : Any]?) -> Bool {
         
+        // 调用父类的绘制方法 绘制背景图
         _ = super.drawInRect(rect, context: context, asynchronously: asynchronously, userInfo: userInfo)
         
-        let initialDrawingCount = self.getDrawingCount()
+        let initialDrawingCount = self.drawingCount
         
         for visiObject in self.drawerDates {
             //待排版区域
@@ -63,7 +65,7 @@ public class YHAsyncListTextView: YHAsyncCanvasControl {
             self.textDrawer.getTextLayout().attributedString = visiObject.visionValue?.resultString
             
             self.textDrawer.drawInContext(context, visible: nil, attachments: true) { () -> Bool in
-                return initialDrawingCount != self.getDrawingCount()
+                return initialDrawingCount != self.drawingCount
             }
         }
         
@@ -100,6 +102,7 @@ public class YHAsyncListTextView: YHAsyncCanvasControl {
         }
         self.lock.unlock()
     }
+    
     //MARK: - Event Handling
     override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let location = touches.first?.location(in: self) {

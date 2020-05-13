@@ -32,32 +32,31 @@ public class YHAsyncCanvasControlTargetAction: NSObject {
     }
 }
 
-//@objcMembers
 open class YHAsyncCanvasControl: YHAsyncCanvasView {
     // how to position content vertically inside control. default is center
     public var contentHorizontalAlignment:UIControl.ContentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center
     // how to position content horizontally inside control. default is center
     public var contentVerticalAlignment:UIControl.ContentVerticalAlignment = UIControl.ContentVerticalAlignment.center
     // could be more than one state (e.g. disabled|selected). synthesized from other flags.
-    public var state:[UIControl.State] {
+    public var state:UIControl.State {
         get {
-            var states = [UIControl.State]()
-            states.append(UIControl.State.normal)
+            var state = UIControl.State.normal
             if self.highlighted {
-                states.append(UIControl.State.highlighted)
+                state = UIControl.State.init(rawValue: state.rawValue | UIControl.State.highlighted.rawValue)
             }
             
             if !self.enable {
-                states.append(UIControl.State.disabled)
+                state = UIControl.State.init(rawValue: state.rawValue | UIControl.State.disabled.rawValue)
             }
             
             if self.selected {
-                states.append(UIControl.State.selected)
+                state = UIControl.State.init(rawValue: state.rawValue | UIControl.State.selected.rawValue)
             }
             
-            return states
+            return state
         }
     }
+    
     // default is YES. if NO, ignores touch events and subclasses may draw differently
     fileprivate var _enable:Bool = true
     public var enable:Bool {
@@ -73,6 +72,7 @@ open class YHAsyncCanvasControl: YHAsyncCanvasView {
             return _enable
         }
     }
+    
     // default is NO may be used by some subclasses or by application
     fileprivate var _selected:Bool = false
     public var selected:Bool {
@@ -87,6 +87,7 @@ open class YHAsyncCanvasControl: YHAsyncCanvasView {
             return _selected
         }
     }
+    
     // default is NO. this gets set/cleared automatically when touch enters/exits during tracking and cleared on up
     fileprivate var _highlighted:Bool = false
     public var highlighted:Bool {
@@ -101,6 +102,7 @@ open class YHAsyncCanvasControl: YHAsyncCanvasView {
             return _highlighted
         }
     }
+    
     // is tracking
     fileprivate var _tracking:Bool = false
     public var isTracking:Bool {
@@ -111,6 +113,7 @@ open class YHAsyncCanvasControl: YHAsyncCanvasView {
             return _tracking
         }
     }
+    
     // valid during tracking only
     fileprivate var _touchInside:Bool = false
     public var isTouchInside:Bool {
@@ -121,6 +124,7 @@ open class YHAsyncCanvasControl: YHAsyncCanvasView {
             return _touchInside
         }
     }
+    
     // auto redraws when state changed
     fileprivate var _redrawsAutomaticallyWhenStateChange:Bool = false
     public var redrawsAutomaticallyWhenStateChange:Bool {
@@ -138,7 +142,7 @@ open class YHAsyncCanvasControl: YHAsyncCanvasView {
     
     fileprivate var _targetActions:[YHAsyncCanvasControlTargetAction]?
     
-    fileprivate var targetActions:[YHAsyncCanvasControlTargetAction]? {
+    public var targetActions:[YHAsyncCanvasControlTargetAction]? {
         set {
             _targetActions = newValue
         }
@@ -150,7 +154,6 @@ open class YHAsyncCanvasControl: YHAsyncCanvasView {
             return _targetActions
         }
     }
-    
     
     fileprivate var touchStartPoint:CGPoint?
     
@@ -174,7 +177,7 @@ open class YHAsyncCanvasControl: YHAsyncCanvasView {
     
     fileprivate func stateDidChage() {
         if self.redrawsAutomaticallyWhenStateChange {
-            self.setNeedsLayout()
+            self.setNeedsDisplay()
             self.setNeedsLayout()
         }
     }
@@ -224,6 +227,7 @@ open class YHAsyncCanvasControl: YHAsyncCanvasView {
         
         return nil
     }
+    
     // set may include NSNull to indicate at least one nil target
     public func allTargets() -> Set<YHAsyncCanvasControlTargetAction>? {
         guard let targetActions = self.targetActions else { return nil }

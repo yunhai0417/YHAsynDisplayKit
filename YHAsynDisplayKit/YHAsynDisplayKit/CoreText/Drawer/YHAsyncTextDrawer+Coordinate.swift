@@ -22,9 +22,7 @@ import UIKit
 extension YHAsyncTextDrawer {
     /**
     *  将坐标点从文字布局中转换到 TextDrawer 的绘制区域中
-    *
     *  @param point 需要转换的坐标点
-    *
     *  @return 转换过的坐标点
     */
     func convertPointFromLayout(_ point:CGPoint, _ offsetPoint:CGPoint ) -> CGPoint {
@@ -36,9 +34,7 @@ extension YHAsyncTextDrawer {
     
     /**
     *  将坐标点从 TextDrawer 的绘制区域转换到文字布局中
-    *
     *  @param point 需要转换的坐标点
-    *
     *  @return 转换过的坐标点
     */
     func convertPointToLayout(_ point:CGPoint, _ offsetPoint:CGPoint ) -> CGPoint {
@@ -70,9 +66,7 @@ extension YHAsyncTextDrawer {
     
     /**
     *  将一个 rect 从 TextDrawer 的绘制区域转换到文字布局中
-    *
     *  @param rect 需要转换的 rect
-    *
     *  @return 转换后的 rect
     */
     func convertRectToLayout(_ rect:CGRect, _ offsetPoint:CGPoint) -> CGRect {

@@ -28,7 +28,6 @@ public protocol YHAsyncTextDrawerDelegate: NSObjectProtocol {
     /**
     *  textAttachment 渲染的回调方法，
     *  delegate 可以通过此方法定义 Attachment 的样式，具体显示的方式可以是绘制到 context 或者添加一个自定义 View
-    *
     *  @param textDrawer   执行文字渲染的 textDrawer
     *  @param att          需要渲染的 TextAttachment
     *  @param frame        建议渲染到的 frame
@@ -54,7 +53,7 @@ public protocol YHAsyncTextDrawerEventDelegate: NSObjectProtocol {
     *
     *  @param textDrawer 查询的 textDrawer
     *
-    *  @return 由 (id<WMGTextActiveRange>) 对象组成的数组
+    *  @return 由 YHAsyncTextActiveRange 对象组成的数组
     */
     
     func activeRangesForTextDrawer(_ textDrawer:YHAsyncTextDrawer) -> [YHAsyncTextActiveRange]?
@@ -96,6 +95,8 @@ public class YHAsyncTextDrawer: UIResponder {
 
     // 绘制原点，一般情况下，经过预排版之后，通过TextDrawer的Frame设置，仅供框架内部使用，请勿直接操作
     var drawOrigin:CGPoint?
+    
+    // 是否正在绘制视图
     private var drawing:Bool = false
     
     // 文本绘制器的绘制起点和绘制区域的定义，Frame会被拆解成两部分，origin决定绘制起点，size决定绘制区域大小

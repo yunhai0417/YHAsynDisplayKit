@@ -40,9 +40,8 @@ public protocol YHAsyncTextLayoutDelegate: NSObjectProtocol {
     func textLayout(_ textLayout:YHAsyncTextLayout?, truncatedLine:CTLine?, atIndex:UInt) -> CGFloat
 }
 
-/*
- YHAsyncTextLayout 是对CoreText排版的封装、入口类
- */
+
+//MARK: YHAsyncTextLayout 是对CoreText排版的封装、入口类
 public class YHAsyncTextLayout: NSObject {
     // 待排版的AttributedString
     fileprivate var _attributedString:NSAttributedString?

@@ -29,15 +29,18 @@ public enum YHAsyncDrawingPolicy: NSInteger {
     case asynchronouslyDraw                    = 3
 }
 
+//MARK: YHAsyncDrawLayer绘制的目标Layer
 public class YHAsyncDrawLayer: CALayer {
     // 绘制完成后，内容经过此时间的渐变显示出来，默认为 0.0
     var fadeDuration: TimeInterval = 0.0
     
-    // 绘制逻辑，定义同步绘制或异步，详细见枚举定义，默认为
+    //: 绘制逻辑，定义同步绘制或异步，详细见枚举定义，默认为
     var drawingPolicy: YHAsyncDrawingPolicy = .asynchronouslyDrawWhenContentsChanged
     
-    // 在drawingPolicy 为 ViewDrawingPolicyAsynchronouslyDrawWhenContentsChanged 时使用
-    // 需要异步绘制时设置一次 YES，默认为NO
+    /*
+     *  在drawingPolicy 为 ViewDrawingPolicyAsynchronouslyDrawWhenContentsChanged 时使用
+     *  需要异步绘制时设置一次 YES，默认为NO
+     */
     var contentsChangedAfterLastAsyncDrawing: Bool = false
     
     // 下次AsyncDrawing完成前保留当前的contents

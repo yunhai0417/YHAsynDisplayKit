@@ -37,7 +37,6 @@ open class YHAsyncDawnView: UIView {
     }
     
     // 绘制逻辑，定义同步绘制或异步，详细见枚举定义，默认为
-//    public var drawingPolicy:YHAsyncDrawingPolicy = .asynchronouslyDrawWhenContentsChanged
     public func drawingPolicy() -> YHAsyncDrawingPolicy {
         if let drawingPolicy = self.drawingLayer?.drawingPolicy {
             return drawingPolicy
@@ -48,9 +47,8 @@ open class YHAsyncDawnView: UIView {
     public func setDrawingPolicy(_ fro:YHAsyncDrawingPolicy) {
         self.drawingLayer?.drawingPolicy = fro
     }
-    // 在drawingPolicy 为 ViewDrawingPolicyAsynchronouslyDrawWhenContentsChanged 时使用
+    
     // 需要异步绘制时设置一次 YES，默认为NO
-//    public var contentsChangedAfterLastAsyncDrawing:Bool = false
     public func getContentsChangedAfterLastAsyncDrawing() -> Bool {
         return self.drawingLayer?.contentsChangedAfterLastAsyncDrawing ?? false
     }
@@ -60,7 +58,6 @@ open class YHAsyncDawnView: UIView {
     }
     
     // 下次AsyncDrawing完成前保留当前的contents
-//    public var reserveContentsBeforeNextDrawingComplete:Bool = false
     public func reserveContentsBeforeNextDrawingComplete() -> Bool {
         return self.drawingLayer?.reserveContentsBeforeNextDrawingComplete ?? false
     }
@@ -91,14 +88,14 @@ open class YHAsyncDawnView: UIView {
     public var dispatchPriority:DispatchQoS = DispatchQoS.default
     
     // 绘制次数
-//    private(set) var drawingCount:NSInteger = 0
-    public func getDrawingCount() -> NSInteger {
-        return self.drawingLayer?.drawingCount ?? 0
+    public var drawingCount:NSInteger {
+        get {
+            return self.drawingLayer?.drawingCount ?? 0
+        }
     }
     
-    // 是否永远使用离屏渲染，默认YES。子类如果不希望离屏渲染必须重写此方法并 重写drawingPolicy为WMViewDrawingPolicySynchronouslyDraw
-//    private(set) var alwaysUsesOffscreenRendering:Bool = true
-    func alwaysUsesOffscreenRendering() -> Bool {
+    // 是否永远使用离屏渲染，默认YES。子类如果不希望离屏渲染必须重写此方法并 重写drawingPolicy为ViewDrawingPolicySynchronouslyDraw
+    open func alwaysUsesOffscreenRendering() -> Bool {
         return true
     }
     
@@ -125,15 +122,11 @@ open class YHAsyncDawnView: UIView {
      * @param disable true or false
      */
     static var globalAsyncDrawDisabled:Bool = false
-    public func setGlobalAsyncDrawingDisable(_ disable:Bool) {
+    public class func setGlobalAsyncDrawingDisable(_ disable:Bool) {
         YHAsyncDawnView.globalAsyncDrawDisabled = disable
     }
     
-    /**
-     * 是否全局禁用了异步绘制
-     *
-     */
-    class func globalAsyncDrawingDisabled() -> Bool {
+    public class func globalAsyncDrawingDisabled() -> Bool {
         return YHAsyncDawnView.globalAsyncDrawDisabled
     }
     
@@ -165,7 +158,6 @@ open class YHAsyncDawnView: UIView {
      * @param context 绘制到的context，目前在调用时此context都会在系统context堆栈栈顶
      * @param asynchronously 当前是否是异步绘制
      * @param userInfo 由currentDrawingUserInfo传入的字典，供绘制传参使用
-     *
      * @return 绘制是否已执行完成。若为 NO，绘制的内容不会被显示
      */
     
@@ -200,7 +192,8 @@ open class YHAsyncDawnView: UIView {
     /**
      * 子类可以重写，用于在主线程生成并传入绘制所需参数
      * 有时在异步线程配置参数可能导致crash，
-     * 例如在异步线程访问ivar。可以通过此方法将参数放入字典并传入绘制方法。此方法会在displayLayer:的当前线程调用，一般为主线程。
+     * 例如在异步线程访问ivar。可以通过此方法将参数放入字典并传入绘制方法。
+     * 此方法会在displayLayer:的当前线程调用，一般为主线程。
      */
     
     open func currentDrawingUserInfo() -> [String:Any] {
@@ -238,6 +231,7 @@ open class YHAsyncDawnView: UIView {
             var context:CGContext? = nil
             var drawingFinished:Bool = true
             
+            //MARK: 验证绘制区域是否大于 1*1 不绘制内容
             if contextSizeValid {
                 UIGraphicsBeginImageContextWithOptions(contextSize, layer.isOpaque, layer.contentsScale)
                 context = UIGraphicsGetCurrentContext()
@@ -278,6 +272,7 @@ open class YHAsyncDawnView: UIView {
                         layer.contentsChangedAfterLastAsyncDrawing = false
                         layer.reserveContentsBeforeNextDrawingComplete = false
                         
+                        //MARK: 绘制完成回调
                         if let finishedCallback = finishCallback {
                             finishedCallback(drawInBackground)
                         }
@@ -307,11 +302,12 @@ open class YHAsyncDawnView: UIView {
             }
         }
         
-        //绘制初始化回调
+        //MARK: 绘制初始化回调
         if let startCallback = startCallback {
             startCallback(drawInBackground)
         }
         
+        //MARK: 开始绘制内容
         if drawInBackground {
             // 清空 layer 的显示
             if layer.reserveContentsBeforeNextDrawingComplete == false {
