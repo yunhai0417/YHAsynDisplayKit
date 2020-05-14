@@ -126,7 +126,7 @@ public struct YHAsynContextAssiant {
      *
      * @return CGContextRef 上下文
      */
-    static func currentCreateGraphicsContext(_ size:CGSize,isOpaque:Bool) -> CGContext? {
+    static func currentCreateGraphicsContext(_ size: CGSize, isOpaque: Bool) -> CGContext? {
         let width = Int(size.width)
         let height = Int(size.height)
         let bitsPerComponent = 8
@@ -163,9 +163,7 @@ public struct YHAsynContextAssiant {
     
     /**
      * 获取位图上下文的Size
-     *
      * @param ctx  上下文
-     *
      * @return size
      */
     

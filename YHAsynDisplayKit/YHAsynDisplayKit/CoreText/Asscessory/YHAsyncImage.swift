@@ -56,9 +56,7 @@ public class YHAsyncImage: NSObject {
     
     /**
     * 根据指定图片名称创建YHAsyncImage
-    *
     * @param imgname 图片名称
-    *
     */
     
     public class func imageWithNamed(_ imgName:String) -> YHAsyncImage? {
@@ -74,9 +72,7 @@ public class YHAsyncImage: NSObject {
     
     /**
     * 根据指定图片创建YHAsyncImage
-    *
     * @param image 图片
-    *
     */
     public class func imageWithImage(_ image:UIImage?) -> YHAsyncImage? {
         if let image = image {
@@ -89,9 +85,7 @@ public class YHAsyncImage: NSObject {
     
     /**
     * 根据指定图片url创建YHAsyncImage
-    *
     * @param imgUrl 图片url
-    *
     */
     
     public class func imageWithUrl(_ imgUrl:String) -> YHAsyncImage? {
@@ -105,13 +99,12 @@ public class YHAsyncImage: NSObject {
     
     /**
     * 根据图片的url下载图片
-    *
     * @param urlStr 图片url
     * @param options 详见SDWebImage
     * @param progressBlock 详见SDWebImage
     * @param completion 详见SDWebImage
-    *
     */
+    
     public func loadImageWithUrl(_ urlStr:String, inoptions options:SDWebImageOptions, inprogress progress:SDWebImageDownloaderProgressBlock?, inCompleted completed:SDExternalCompletionBlock?) {
         guard let url = URL.init(string: urlStr) else {
             self.downloadUrl = nil
@@ -170,6 +163,7 @@ public class YHAsyncImage: NSObject {
     * @param url 图片的url
     * @return 缓存结果，没有就返回 nil
     */
+    
     public func queryCacheImageWithUrl(_ str:String) -> UIImage? {
         guard let url = URL.init(string: str) else { return nil }
         let key = SDWebImageManager.shared.cacheKey(for: url)

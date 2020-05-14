@@ -118,7 +118,7 @@ extension NSAttributedString {
         size1.width = min(YHAsyncTextLayoutSizeKey.maximumWidth, size1.width)
         size1.height = min(YHAsyncTextLayoutSizeKey.maximumHeight, size1.height)
         
-        let layout = NSAttributedString.attributedSharedTextDrawer().getTextLayout()
+        let layout = NSAttributedString.attributedSharedTextDrawer().textLayout
         layout.attributedString = self
         layout.size = size1
         layout.maximumNumberOfLines = UInt(lines)
@@ -165,7 +165,7 @@ extension NSAttributedString {
     */
     
     public func attributedHeightConstrained(_ inWidth:CGFloat) -> CGFloat {
-        let layout = NSAttributedString.attributedSharedTextDrawer().getTextLayout()
+        let layout = NSAttributedString.attributedSharedTextDrawer().textLayout
         layout.maximumNumberOfLines = 0
         layout.attributedString = self
         layout.size = CGSize(width: inWidth, height: YHAsyncTextLayoutSizeKey.maximumHeight)
@@ -235,14 +235,14 @@ extension NSAttributedString {
     public func yh_drawInRect(_ rect:CGRect, numberOflines lines:NSInteger, baselineMetrics metrics:YHAsyncFontMetrics , context ctx:CGContext?) -> CGSize? {
         guard let context = ctx else { return nil }
         let drawer:YHAsyncTextDrawer = NSAttributedString.attributedSharedTextDrawer()
-        drawer.getTextLayout().maximumNumberOfLines = UInt(lines)
-        drawer.getTextLayout().baselineFontMetrics = metrics
-        drawer.getTextLayout().attributedString = self
+        drawer.textLayout.maximumNumberOfLines = UInt(lines)
+        drawer.textLayout.baselineFontMetrics = metrics
+        drawer.textLayout.attributedString = self
         drawer.frame = rect
         
         drawer.drawInContext(context)
         
-        let layoutSize = drawer.getTextLayout().layoutFrame?.layoutSize
+        let layoutSize = drawer.textLayout.layoutFrame?.layoutSize
         return layoutSize
     }
     
@@ -266,16 +266,16 @@ extension NSAttributedString {
         } else {
             textDrawer = NSAttributedString.attributedSharedTextDrawer()
         }
-        textDrawer?.getTextLayout().maximumNumberOfLines = UInt(lines)
-        textDrawer?.getTextLayout().baselineFontMetrics = metrics
+        textDrawer?.textLayout.maximumNumberOfLines = UInt(lines)
+        textDrawer?.textLayout.baselineFontMetrics = metrics
         
-        textDrawer?.getTextLayout().attributedString = self
+        textDrawer?.textLayout.attributedString = self
         
         textDrawer?.frame = rect
         
         textDrawer?.drawInContext(context)
         
-        let layoutSize = textDrawer?.getTextLayout().layoutFrame?.layoutSize
+        let layoutSize = textDrawer?.textLayout.layoutFrame?.layoutSize
         
         return layoutSize
     }
@@ -309,21 +309,21 @@ extension NSAttributedString {
         
         var drawer:YHAsyncTextDrawer = NSAttributedString.attributedSharedTextDrawer()
         
-        drawer.getTextLayout().maximumNumberOfLines = UInt(lines)
-        drawer.getTextLayout().heightSensitiveLayout = false
+        drawer.textLayout.maximumNumberOfLines = UInt(lines)
+        drawer.textLayout.heightSensitiveLayout = false
         
-        drawer.getTextLayout().attributedString = self
+        drawer.textLayout.attributedString = self
         
         drawer.frame = CGRect(x: 0, y: 0, width: width, height: 1)
         
-        if let size = drawer.getTextLayout().layoutFrame?.layoutSize {
+        if let size = drawer.textLayout.layoutFrame?.layoutSize {
             let frame = frameBlock(size)
             drawer.frame = frame
         }
         drawer.drawInContext(context)
         
-        drawer.getTextLayout().heightSensitiveLayout = true
-        drawer.getTextLayout().maximumNumberOfLines = 0
+        drawer.textLayout.heightSensitiveLayout = true
+        drawer.textLayout.maximumNumberOfLines = 0
         
         
     }
@@ -350,7 +350,7 @@ extension NSAttributedString {
     * @return WMGTextLayout
     */
     public func layoutToWidth(_ width:CGFloat, maxNumberOfLines lines:NSInteger, layoutSize size:CGSize) -> YHAsyncTextLayout {
-        let layout = NSAttributedString.attributedSharedTextDrawer().getTextLayout()
+        let layout = NSAttributedString.attributedSharedTextDrawer().textLayout
         layout.maximumNumberOfLines = UInt(lines)
         layout.attributedString = self
         

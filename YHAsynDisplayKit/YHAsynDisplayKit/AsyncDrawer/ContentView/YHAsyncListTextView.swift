@@ -32,7 +32,7 @@ public class YHAsyncListTextView: YHAsyncCanvasControl {
         let text = YHAsyncTextDrawer()
         text.delegate = self
         text.eventDelegate = self
-        text.getTextLayout().delegate = self
+        text.textLayout.delegate = self
         return text
     }()
     
@@ -62,7 +62,7 @@ public class YHAsyncListTextView: YHAsyncCanvasControl {
             //待排版区域
             self.textDrawer.frame = visiObject.visionFrame
             //待排版内容
-            self.textDrawer.getTextLayout().attributedString = visiObject.visionValue?.resultString
+            self.textDrawer.textLayout.attributedString = visiObject.visionValue?.resultString
             
             self.textDrawer.drawInContext(context, visible: nil, attachments: true) { () -> Bool in
                 return initialDrawingCount != self.drawingCount
@@ -111,7 +111,7 @@ public class YHAsyncListTextView: YHAsyncCanvasControl {
                 if frame.contains(location) {
                     self.clickItem = objc.visionValue
                     self.textDrawer.frame = visionFrame
-                    self.textDrawer.getTextLayout().attributedString = objc.visionValue?.resultString
+                    self.textDrawer.textLayout.attributedString = objc.visionValue?.resultString
                 }
             }
         }

@@ -28,6 +28,6 @@ open class YHAsyncVisionObject: NSObject {
     //视觉元素的位置，大小
     public var visionFrame:CGRect = CGRect.zero
     
-    // 视觉元素的展示内容，多数情况下，value即是WMMutableAttributedItem
+    // 视觉元素的展示内容，多数情况下，value即是YHAsyncMutableAttributedItem
     public var visionValue:YHAsyncMutableAttributedItem?
 }

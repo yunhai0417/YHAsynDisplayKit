@@ -104,37 +104,41 @@ public class YHAsyncTextDrawer: UIResponder {
         set {
             guard let frame = newValue else { return }
             
-            if self.drawing && frame.size.equalTo(self.getTextLayout().size) {
+            if self.drawing && frame.size.equalTo(self.textLayout.size) {
                 debugPrint("draw_error")
             }
             
             self.drawOrigin = frame.origin
             
-            if self.getTextLayout().heightSensitiveLayout {
-                self.textLayout?.size = frame.size
+            if self.textLayout.heightSensitiveLayout {
+                self.textLayout.size = frame.size
             } else {
                 let height = CGFloat(ceilf(Float((frame.size.height * 1.1) / 100000) * 100000))
-                self.textLayout?.size = CGSize.init(width: frame.size.width, height: height)
+                self.textLayout.size = CGSize.init(width: frame.size.width, height: height)
             }
         }
         get {
             guard let drawOrigin = self.drawOrigin else { return nil }
-            guard let textLayoutSize = self.textLayout?.size else { return nil }
+            let textLayoutSize = self.textLayout.size
             return CGRect.init(x: drawOrigin.x, y: drawOrigin.y, width: textLayoutSize.width, height: textLayoutSize.height)
         }
     }
     
     
-    // CoreText排版模型封装
-    fileprivate var textLayout:YHAsyncTextLayout?
-    public func getTextLayout() -> YHAsyncTextLayout {
-        if let textLayout = self.textLayout {
+    //MARK: CoreText排版模型封装
+    fileprivate var privateTextLayout:YHAsyncTextLayout?
+    public var textLayout: YHAsyncTextLayout {
+        get {
+            if let textLayout = self.privateTextLayout {
+                return textLayout
+            }
+            
+            let textLayout = YHAsyncTextLayout.init()
+                textLayout.heightSensitiveLayout = true
+            self.privateTextLayout = textLayout
+            
             return textLayout
         }
-        let textLayout = YHAsyncTextLayout.init()
-            textLayout.heightSensitiveLayout = true
-        self.textLayout = textLayout
-        return textLayout
     }
     
     // 文本绘制器的代理
@@ -201,7 +205,7 @@ public class YHAsyncTextDrawer: UIResponder {
         guard let ctx = inCtx else { return }
         self.drawing = true
         
-        let textLayout = self.getTextLayout()
+        let textLayout = self.textLayout
         guard let drawingOrigin = self.drawOrigin else { return }   //绘制原点
         let drawingSize = textLayout.size   //绘制区域大小
         
@@ -346,13 +350,13 @@ public class YHAsyncTextDrawer: UIResponder {
     fileprivate func drawAttachmentsInContext(_ ctx:CGContext, shouldInterruptBlock shouldInterrupt:YHAsyncTextDrawerShouldInterruptBlock?) {
         let scale = UIScreen.main.scale
         guard let offset = self.drawOrigin else { return }
-        guard let arrayLines = self.getTextLayout().layoutFrame?.arrayLines else { return }
+        guard let arrayLines = self.textLayout.layoutFrame?.arrayLines else { return }
         for line in arrayLines {
             line.enumerateRunsUsingBlock { (_, attributes, characterRange) in
                 if let attachment = attributes.object(forKey: YHAsyncMacroConfigKey.TextAttachmentAttributeName) as? YHAsyncTextAttachment {
                     if attachment.type == .OnlyImage {
                         guard let drawOrigin = self.drawOrigin else { return }
-                        let drawSize   = self.getTextLayout().size
+                        let drawSize   = self.textLayout.size
                         var drawFrame  = CGRect.init(origin: drawOrigin, size: drawSize)
                         self.delegate?.textDrawer(self, attachment: attachment, rect: drawFrame, ctx)
                         return

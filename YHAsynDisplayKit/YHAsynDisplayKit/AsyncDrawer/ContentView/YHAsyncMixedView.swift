@@ -89,7 +89,7 @@ public class YHAsyncMixedView: YHAsyncCanvasControl {
         set {
             if _numberOfLines != newValue {
                 _numberOfLines = newValue
-                self.textDrawer.getTextLayout().maximumNumberOfLines = UInt(newValue)
+                self.textDrawer.textLayout.maximumNumberOfLines = UInt(newValue)
                 self.pendingAttachmentUpdates = true
                 self.setNeedsDisplay()
             }
@@ -186,9 +186,9 @@ public class YHAsyncMixedView: YHAsyncCanvasControl {
         }
         
         self.textDrawer.frame = rect
-        self.textDrawer.getTextLayout().attributedString = resultString
+        self.textDrawer.textLayout.attributedString = resultString
         
-        guard let layoutFrame = self.textDrawer.getTextLayout().layoutFrame else {
+        guard let layoutFrame = self.textDrawer.textLayout.layoutFrame else {
             return true
         }
         

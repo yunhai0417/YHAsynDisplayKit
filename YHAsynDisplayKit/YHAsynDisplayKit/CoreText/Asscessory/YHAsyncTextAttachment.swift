@@ -87,11 +87,9 @@ public class YHAsyncTextAttachment: NSObject, YHAsyncAttachmentProtocol {
     
     /**
     *  构建一个文本组件的类方法
-    *
     * @param contents  文本组件表达的内容、样式
     * @param type 文本组件类型
     * @param size  该组件占用大小
-    *
     */
     
     public class func textAttachmentWithContents(_ contents:AnyObject?, inType type:YHAsyncAttachmentType, inSize size:CGSize) -> YHAsyncTextAttachment {
@@ -133,12 +131,11 @@ public class YHAsyncTextAttachment: NSObject, YHAsyncAttachmentProtocol {
     
     /**
     *  给一个文本组件添加事件
-    *
     * @param target 事件执行者
     * @param action 事件行为
     * @param controlEvents 事件类型
-    *
     */
+    
     public func addTarget(_ target:AnyObject?, inAction action:Selector?, forControlEvents controlEvents:UIControl.Event) {
         self.target = target
         self.selector = action
@@ -151,10 +148,9 @@ public class YHAsyncTextAttachment: NSObject, YHAsyncAttachmentProtocol {
     
     /**
     *  给一个文本组件添加点击回调
-    *
     * @param callBack 点击事件执行回调
-    *
     */
+    
     public func registerClickBlock(_ incallBack:attributeCallBack?) {
         if let callBack = incallBack {
             self.callBacks.append(callBack)

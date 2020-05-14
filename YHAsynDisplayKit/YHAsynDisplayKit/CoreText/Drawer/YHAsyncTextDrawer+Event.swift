@@ -38,7 +38,7 @@ extension YHAsyncTextDrawer {
         for activeRange in ranges {
             var hit = false
             guard let range = activeRange.range else { continue }
-            self.getTextLayout().layoutFrame?.enumerateEnclosingRectsForCharacterRange(range, { (rect, characterRange, stop) in
+            self.textLayout.layoutFrame?.enumerateEnclosingRectsForCharacterRange(range, { (rect, characterRange, stop) in
                 if let rect = rect {
                     if rect.contains(location) {
                         hit = true
