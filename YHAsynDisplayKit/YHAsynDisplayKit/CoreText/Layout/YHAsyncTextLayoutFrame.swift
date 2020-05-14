@@ -24,8 +24,10 @@ import CoreGraphics
 typealias lineBlock = (_ index:UInt, _ rect:CGRect?, _ range:NSRange?, _ stop:inout Bool)->Void
 typealias frameBlock = (_ rect:CGRect?, _ range:NSRange, _ stop: inout Bool) -> Void
 
+//MARK: CTFrame对象的方法封装
 public class YHAsyncTextLayoutFrame: NSObject{
     fileprivate weak var textLayout:YHAsyncTextLayout?
+    
     var arrayLines:[YHAsyncTextLayoutLine]?
     var layoutSize:CGSize?
     
@@ -36,25 +38,28 @@ public class YHAsyncTextLayoutFrame: NSObject{
     
     /**
      *  根据一个CTFrameRef进行初始化
-     *
      *  @param frameRef    CTFrameRef
      *  @param textLayout  WMGTextLayout
-     *
      *  @return YHAsyncTextLayoutFrame
      */
+    
     init(_ frameRef:CTFrame?, inTextLayout:YHAsyncTextLayout) {
         super.init()
         self.textLayout = inTextLayout
         self.setupWithCTFrame(frameRef)
     }
     
-    func setupWithCTFrame(_ frameRef:CTFrame?) {
-        guard let maximumNumberOfLines:UInt = self.textLayout?.maximumNumberOfLines else { return }
+    //设置CTFrame
+    fileprivate func setupWithCTFrame(_ frameRef:CTFrame?) {
+        guard let maximumNumberOfLines: UInt = self.textLayout?.maximumNumberOfLines else { return }
         guard let frameRef = frameRef else { return }
+        //
         let lines = CTFrameGetLines(frameRef) as NSArray
         let lineCount = lines.count
         
         var originsArray = [CGPoint](repeating: CGPoint.zero, count: lineCount)
+        
+        //获取line.Origins
         CTFrameGetLineOrigins(frameRef, CFRange.init(location: 0, length: lineCount), &originsArray)
         
         self.arrayLines = [YHAsyncTextLayoutLine]()
@@ -64,7 +69,7 @@ public class YHAsyncTextLayoutFrame: NSObject{
             var truncatedLineRef:CTLine?
             
             if maximumNumberOfLines > 0 {
-                if index  == maximumNumberOfLines - 1 {
+                if index == maximumNumberOfLines - 1 {
                     var truncated:Bool = false
                     truncatedLineRef = self.textLayout(self.textLayout, lineRef: lineRef, index: UInt(index), truncated: &truncated)
                     if !truncated {
@@ -439,6 +444,7 @@ public class YHAsyncTextLayoutFrame: NSObject{
         return 0
     }
 
+    //绘制一个CTLine
     fileprivate func textLayout(_ textLayout:YHAsyncTextLayout?, lineRef:CTLine?, index:UInt, truncated:inout Bool) -> CTLine? {
         guard let textLayout = textLayout else {
             truncated = false
@@ -550,9 +556,7 @@ public class YHAsyncTextLayoutFrame: NSObject{
             truncatedLine = truncationToken
         }
         
-//        if truncated {
-            truncated = true
-//        }
+        truncated = true
         
         return truncatedLine
     }

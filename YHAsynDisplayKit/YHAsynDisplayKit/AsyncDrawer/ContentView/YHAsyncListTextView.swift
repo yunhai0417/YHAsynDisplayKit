@@ -63,7 +63,7 @@ public class YHAsyncListTextView: YHAsyncCanvasControl {
             self.textDrawer.frame = visiObject.visionFrame
             //待排版内容
             self.textDrawer.textLayout.attributedString = visiObject.visionValue?.resultString
-            
+            //绘制内容到指定上下文
             self.textDrawer.drawInContext(context, visible: nil, attachments: true) { () -> Bool in
                 return initialDrawingCount != self.drawingCount
             }

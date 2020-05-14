@@ -23,6 +23,7 @@ import CoreGraphics
 
 typealias runsUsingBlock = (_ run:CTRun, _ attribute:NSDictionary, _ characterRange:NSRange) -> Void
 
+//MARK: CTLine 功能封装
 public class YHAsyncTextLayoutLine: NSObject {
     required override init() {
         super.init()
@@ -288,7 +289,6 @@ public class YHAsyncTextLayoutLine: NSObject {
     
     /**
      * 遍历当前行中的所有Runs，Runs即当前行中插入的所有文本组件
-     *
      * @param block 以block方式回调每个CTRun对应的索引，附加属性参数，对应的字符Range
      *
      */

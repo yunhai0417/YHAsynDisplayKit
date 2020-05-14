@@ -20,6 +20,7 @@
 import Foundation
 import CoreText
 
+//MARK: CTRun 功能封装
 public class YHAsyncTextLayoutRun: NSObject {
 
     /**

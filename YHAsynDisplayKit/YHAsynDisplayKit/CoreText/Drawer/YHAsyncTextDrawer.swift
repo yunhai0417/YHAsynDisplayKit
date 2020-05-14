@@ -172,7 +172,6 @@ public class YHAsyncTextDrawer: UIResponder {
     
     /**
     *  将文本绘制器裹挟的内容绘制到指定上下文中
-    *
     *  @param ctx      当前的 CGContext
     */
     func drawInContext(_ ctx:CGContext) {
@@ -182,10 +181,8 @@ public class YHAsyncTextDrawer: UIResponder {
     /**
     *  将文本绘制器裹挟的内容绘制到指定上下文中，同时通过block控制中断
     *  中断意味着可以终止绘制流程，但不是一定会终止，这是由于多线程并发决定的，可以参考NSOperation的cancel方法的理念理解
-    *
     *  @param ctx        当前的 CGContext
     *  @param block      中断block
-    *
     */
     
     func drawInContext(_ ctx:CGContext, shouldInterrupt block:YHAsyncTextDrawerShouldInterruptBlock?) {
@@ -195,10 +192,10 @@ public class YHAsyncTextDrawer: UIResponder {
     /**
     *  将文本绘制器裹挟的内容绘制到指定上下文中，同时通过block控制中断
     *  中断意味着可以终止绘制流程，但不是一定会终止，这是由于多线程并发决定的，可以参考NSOperation的cancel方法的理念理解
-    *  @param ctx                      当前的 CGContext
-    *  @param visibleRect              可见区域
-    *  @param replaceAttachments       是否替换组件
-    *  @param block                    中断block
+    *  @param ctx                                   当前的 CGContext
+    *  @param visibleRect                       可见区域
+    *  @param replaceAttachments        是否替换组件
+    *  @param block                               中断block
     */
     
     public func drawInContext(_ inCtx:CGContext?, visible visibleRect:CGRect?, attachments replace:Bool, shouldInterrupt interruptBlock:YHAsyncTextDrawerShouldInterruptBlock?) {
