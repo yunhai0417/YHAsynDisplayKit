@@ -15,7 +15,6 @@
 		6056F262245D409700191882 /* icon_arrow_store@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6056F260245D409700191882 /* icon_arrow_store@3x.png */; };
 		6056F263245D409700191882 /* icon_arrow_store@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6056F261245D409700191882 /* icon_arrow_store@2x.png */; };
 		6056F2722461527A00191882 /* AdvanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6056F2712461527A00191882 /* AdvanceViewController.swift */; };
-		60B7EA6224626A6200B43318 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60B7EA6124626A6200B43318 /* Media.xcassets */; };
 		60C30D352452E6620083B248 /* DemoOrderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C30D342452E6620083B248 /* DemoOrderListCell.swift */; };
 		60C30D372452E6780083B248 /* DemoOrderListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C30D362452E6780083B248 /* DemoOrderListViewController.swift */; };
 		60C30D392452E6980083B248 /* DemoOrderCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C30D382452E6980083B248 /* DemoOrderCellData.swift */; };
@@ -57,7 +56,6 @@
 		6056F260245D409700191882 /* icon_arrow_store@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_arrow_store@3x.png"; sourceTree = "<group>"; };
 		6056F261245D409700191882 /* icon_arrow_store@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_arrow_store@2x.png"; sourceTree = "<group>"; };
 		6056F2712461527A00191882 /* AdvanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvanceViewController.swift; sourceTree = "<group>"; };
-		60B7EA6124626A6200B43318 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		60C30D342452E6620083B248 /* DemoOrderListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoOrderListCell.swift; sourceTree = "<group>"; };
 		60C30D362452E6780083B248 /* DemoOrderListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoOrderListViewController.swift; sourceTree = "<group>"; };
 		60C30D382452E6980083B248 /* DemoOrderCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoOrderCellData.swift; sourceTree = "<group>"; };
@@ -211,7 +209,6 @@
 				60C30D482455995D0083B248 /* YHAsyncObject.h */,
 				60C30D492455995D0083B248 /* YHAsyncObject.m */,
 				60C30D472455995C0083B248 /* YHAsynDisplayKitDemo-Bridging-Header.h */,
-				60B7EA6124626A6200B43318 /* Media.xcassets */,
 			);
 			path = YHAsynDisplayKitDemo;
 			sourceTree = "<group>";
@@ -359,7 +356,6 @@
 			files = (
 				6056F262245D409700191882 /* icon_arrow_store@3x.png in Resources */,
 				60C71688242FA68D0095D8D3 /* LaunchScreen.storyboard in Resources */,
-				60B7EA6224626A6200B43318 /* Media.xcassets in Resources */,
 				6056F25F245D402500191882 /* assert.xcassets in Resources */,
 				6056F263245D409700191882 /* icon_arrow_store@2x.png in Resources */,
 				603C6E4D24516971000B339A /* orderlist.json in Resources */,
@@ -606,6 +602,7 @@
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = CQ44W28Q5W;
 				INFOPLIST_FILE = YHAsynDisplayKitDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -630,6 +627,7 @@
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = CQ44W28Q5W;
 				INFOPLIST_FILE = YHAsynDisplayKitDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
