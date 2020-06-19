@@ -71,6 +71,7 @@ public class YHAsyncAttributeManager<T:YHAsyncCanvasControl>: NSObject {
         return item
     }
     
+    //MARK: 添加AttributedItem到Manager中，如果不加入将使用frame做展示逻辑ß
     public func insertAttributeItem(_ newItem:YHAsyncMutableAttributedItem) {
         self.attributeItemList.append(newItem)
     }
@@ -109,6 +110,7 @@ public class YHAsyncAttributeManager<T:YHAsyncCanvasControl>: NSObject {
     }
     
     fileprivate var attributeItemDic = [Int:YHAsyncMutableAttributedItem]()
+    
     //MARK: 计算AttributeItem 相对约束
     fileprivate func computeAttributeItemListFrame() {
         for item in self.attributeItemList {
@@ -119,6 +121,14 @@ public class YHAsyncAttributeManager<T:YHAsyncCanvasControl>: NSObject {
             self.computeAttributeItemFrame(item)
         }
     }
+    
+    /*
+     *  AttributeContraints 转换到frame
+     *  YHAsyncMutableAttributedItem 分为2部分
+     *  YHAsyncConstraintItem :相对于 canvasView + width + height
+     *                        :相对于YHAsyncConstraintItem的位置
+     *  计算生成实际的frame
+     */
     
     fileprivate func computeAttributeItemFrame(_ item:YHAsyncMutableAttributedItem) {
         guard var relatedConstraintItems = item.relatedConstraintItems else { return }
