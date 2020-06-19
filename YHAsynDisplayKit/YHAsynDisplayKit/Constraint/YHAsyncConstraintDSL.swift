@@ -72,8 +72,16 @@ extension YHAsyncConstraintBasicAttributeDSL {
         return YHAsyncConstraintItem(inRelateTarget: self.target, inAttributes: YHAsyncConstraintAttributes.centerY)
     }
     
+    public var edges: YHAsyncConstraintItem {
+        return YHAsyncConstraintItem(inRelateTarget: self.target, inAttributes: YHAsyncConstraintAttributes.edges)
+    }
+    
     public var size: YHAsyncConstraintItem {
         return YHAsyncConstraintItem(inRelateTarget: self.target, inAttributes: YHAsyncConstraintAttributes.size)
+    }
+    
+    public var center: YHAsyncConstraintItem {
+        return YHAsyncConstraintItem(inRelateTarget: self.target, inAttributes: YHAsyncConstraintAttributes.center)
     }
     
 }
@@ -82,7 +90,32 @@ public protocol YHAsyncConstraintAttributeDSL: YHAsyncConstraintBasicAttributeDS
 }
 
 extension YHAsyncConstraintAttributeDSL {
-    //MARK: BaseLines
+    //MARK: BaseLines 不支持
+    
+    //MARK: Margins
+    public var leftMargin: YHAsyncConstraintItem {
+        return YHAsyncConstraintItem(inRelateTarget: self.target, inAttributes: YHAsyncConstraintAttributes.leftMargin)
+    }
+    
+    public var topMargin: YHAsyncConstraintItem {
+        return YHAsyncConstraintItem(inRelateTarget: self.target, inAttributes: YHAsyncConstraintAttributes.topMargin)
+    }
+    
+    public var rightMargin: YHAsyncConstraintItem {
+        return YHAsyncConstraintItem(inRelateTarget: self.target, inAttributes: YHAsyncConstraintAttributes.rightMargin)
+    }
+    
+    public var bottomMargin: YHAsyncConstraintItem {
+        return YHAsyncConstraintItem(inRelateTarget: self.target, inAttributes: YHAsyncConstraintAttributes.bottomMargin)
+    }
+    
+    public var leadingMargin: YHAsyncConstraintItem {
+        return YHAsyncConstraintItem(inRelateTarget: self.target, inAttributes: YHAsyncConstraintAttributes.leadingMargin)
+    }
+    
+    public var trailingMargin: YHAsyncConstraintItem {
+        return YHAsyncConstraintItem(inRelateTarget: self.target, inAttributes: YHAsyncConstraintAttributes.trailingMargin)
+    }
 }
 
 public struct YHAsyncConstraintAttributeItemDSL: YHAsyncConstraintAttributeDSL {
@@ -98,7 +131,7 @@ public struct YHAsyncConstraintAttributeItemDSL: YHAsyncConstraintAttributeDSL {
     }
     
     //MARK: 添加约束
-    public func makeConstraints(_ clouse: (_ make:YHAsyncConstraintMaker) -> Void) {
+    public func makeAttributedConstraints(_ clouse: (_ make:YHAsyncConstraintMaker) -> Void) {
         YHAsyncConstraintMaker.makeConstraints(self.targetItem, clouse: clouse)
     }
 }

@@ -23,20 +23,20 @@ class ViewController: UIViewController {
         self.reloaditems()
         
         
-        //初始化一个指定尺寸的字体对象
-        let font = UIFont.systemFont(ofSize: 24)
-        //输出字体对象的上行高度，即基线与字形最高点之间的距离。
-        print("font.ascender: \(font.ascender)")
-        //输出字体对象的下行高度，即基线与字形最低点之间的距离。
-        print("font.descender: \(font.descender)")
-        //输出基线到大写字母最高点的距离。
-        print("font.capHeight: \(font.capHeight)")
-        //输出基线至非突出的小写字母最高点的距离。
-        print("font.xHeight: \(font.xHeight)")
-        //输出一行字形的最大高度，等于前三个属性值的和。
-        print("font.lineHeight: \(font.lineHeight)")
-        //输出行距的数值，即上方一行的最低点，与下方一行的最高点的距离
-        print("font.leading: \(font.leading)")
+//        //初始化一个指定尺寸的字体对象
+//        let font = UIFont.systemFont(ofSize: 24)
+//        //输出字体对象的上行高度，即基线与字形最高点之间的距离。
+//        print("font.ascender: \(font.ascender)")
+//        //输出字体对象的下行高度，即基线与字形最低点之间的距离。
+//        print("font.descender: \(font.descender)")
+//        //输出基线到大写字母最高点的距离。
+//        print("font.capHeight: \(font.capHeight)")
+//        //输出基线至非突出的小写字母最高点的距离。
+//        print("font.xHeight: \(font.xHeight)")
+//        //输出一行字形的最大高度，等于前三个属性值的和。
+//        print("font.lineHeight: \(font.lineHeight)")
+//        //输出行距的数值，即上方一行的最低点，与下方一行的最高点的距离
+//        print("font.leading: \(font.leading)")
         
     }
     

@@ -9,8 +9,7 @@
 import UIKit
 
 class YHAsyncConstraintAttributes: OptionSet, ExpressibleByIntegerLiteral {
-    
-    
+    // 整数字面量协议 ExpressibleByIntegerLiteral
     typealias IntegerLiteralType = UInt
     
     required internal init(rawValue: UInt) {
@@ -40,7 +39,6 @@ class YHAsyncConstraintAttributes: OptionSet, ExpressibleByIntegerLiteral {
     }
     
     // normal
-    
     internal static var none: YHAsyncConstraintAttributes { return 0 }
     internal static var left: YHAsyncConstraintAttributes { return 1 }
     internal static var top: YHAsyncConstraintAttributes {  return 2 }
@@ -52,13 +50,24 @@ class YHAsyncConstraintAttributes: OptionSet, ExpressibleByIntegerLiteral {
     internal static var height: YHAsyncConstraintAttributes { return 128 }
     internal static var centerX: YHAsyncConstraintAttributes { return 256 }
     internal static var centerY: YHAsyncConstraintAttributes { return 512 }
-    // aggregates
-    internal static var size: YHAsyncConstraintAttributes { return 192 }
     
+    internal static var leftMargin: YHAsyncConstraintAttributes { return 4096 }
+    internal static var rightMargin: YHAsyncConstraintAttributes { return 8192 }
+    internal static var topMargin: YHAsyncConstraintAttributes { return 16384 }
+    internal static var bottomMargin: YHAsyncConstraintAttributes { return 32768 }
+    internal static var leadingMargin: YHAsyncConstraintAttributes { return 65536 }
+    internal static var trailingMargin: YHAsyncConstraintAttributes { return 131072 }
+
+
+    // aggregates
+    internal static var edges: YHAsyncConstraintAttributes { return 15 }
+    internal static var size: YHAsyncConstraintAttributes { return 192 }
+    internal static var center: YHAsyncConstraintAttributes { return 768 }
+
     
 }
 
-func + (left:YHAsyncConstraintAttributes, right:YHAsyncConstraintAttributes) -> YHAsyncConstraintAttributes {
+internal func + (left:YHAsyncConstraintAttributes, right:YHAsyncConstraintAttributes) -> YHAsyncConstraintAttributes {
     return left.union(right)
 }
 

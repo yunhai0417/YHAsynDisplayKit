@@ -65,7 +65,7 @@ class AdvanceViewController: UIViewController {
         
         let canvasView = dispalyManager.achieveCurrentCanvasView()
         
-        text.snp.makeConstraints { maker in
+        text.snp.makeAttributedConstraints { maker in
             maker.top.equalTo(canvasView).offset(10)
             maker.left.equalTo(canvasView).offset(10)
             maker.height.equalTo(CGFloat(20))
@@ -91,7 +91,7 @@ class AdvanceViewController: UIViewController {
         let poiImageAttributeItem = dispalyManager.createAttributeItem()
         poiImageAttributeItem.attributeType = .StaticImage
         let poiPic = "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3985045178,3448045350&fm=26&gp=0.jpg"
-        let imageAttributeItem = poiImageAttributeItem.appendImageWithUrl(poiPic, inSize: CGSize.init(width: 50, height: 50))
+        let imageAttributeItem = poiImageAttributeItem.appendImageWithUrl(poiPic, inSize: CGSize.init(width: 20, height: 20))
         if let imageAttachment = imageAttributeItem.arrayAttachments?.first {
             imageAttachment.baselineFontMetrics = YHAsyncFontMetricsCreateMakeWithLineHeight(YHAsyncFontMetricsCreateMake(systemFont: 11), targetLineHeight: floor(imageAttachment.size.height))
         }
@@ -104,11 +104,11 @@ class AdvanceViewController: UIViewController {
         
         dispalyManager.insertAttributeItem(poiImageAttributeItem)
         
-        poiImageAttributeItem.snp.makeConstraints { maker in
+        poiImageAttributeItem.snp.makeAttributedConstraints { maker in
             maker.top.equalTo(canvasView).offset(0)
             maker.left.equalTo(canvasView).offset(0)
-            maker.width.equalTo(50)
-            maker.height.equalTo(50)
+            maker.width.equalTo(100)
+            maker.height.equalTo(100)
         }
         
 //        dispalyManager.bindAttributeWithCanvasView()

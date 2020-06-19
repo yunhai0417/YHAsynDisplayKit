@@ -22,6 +22,7 @@ import UIKit
 //MARK: AttributeItem 视觉元素 约束组件
 public class YHAsyncConstraintMaker: NSObject {
     
+    //MARK: Base AttributeConstraintItem
     public var left:YHAsyncConstraintItem {
         return self.makeExtendableWithAttributes(.left)
     }
@@ -38,6 +39,14 @@ public class YHAsyncConstraintMaker: NSObject {
         return self.makeExtendableWithAttributes(.right)
     }
     
+    public var leading: YHAsyncConstraintItem {
+        return self.makeExtendableWithAttributes(.leading)
+    }
+    
+    public var trailing: YHAsyncConstraintItem {
+        return self.makeExtendableWithAttributes(.trailing)
+    }
+    
     public var height:YHAsyncConstraintItem {
         return self.makeExtendableWithAttributes(.height)
     }
@@ -45,6 +54,52 @@ public class YHAsyncConstraintMaker: NSObject {
     public var width:YHAsyncConstraintItem {
         return self.makeExtendableWithAttributes(.width)
     }
+    
+    public var centerX: YHAsyncConstraintItem {
+        return self.makeExtendableWithAttributes(.centerX)
+    }
+    
+    public var centerY: YHAsyncConstraintItem {
+        return self.makeExtendableWithAttributes(.centerY)
+    }
+    
+    //MARK: Margins AttributeConstraintItem
+    public var leftMargin: YHAsyncConstraintItem {
+        return self.makeExtendableWithAttributes(.leftMargin)
+    }
+    
+    public var rightMargin: YHAsyncConstraintItem {
+        return self.makeExtendableWithAttributes(.rightMargin)
+    }
+    
+    public var topMargin: YHAsyncConstraintItem {
+        return self.makeExtendableWithAttributes(.topMargin)
+    }
+    
+    public var bottomMargin: YHAsyncConstraintItem {
+        return self.makeExtendableWithAttributes(.bottomMargin)
+    }
+    
+    public var leadingMargin: YHAsyncConstraintItem {
+        return self.makeExtendableWithAttributes(.leadingMargin)
+    }
+    
+    public var trailingMargin: YHAsyncConstraintItem {
+        return self.makeExtendableWithAttributes(.trailingMargin)
+    }
+    
+    //MARK: Basic AttributeConstraintItem
+    public var edges: YHAsyncConstraintItem {
+        return self.makeExtendableWithAttributes(.edges)
+    }
+    public var size: YHAsyncConstraintItem {
+        return self.makeExtendableWithAttributes(.size)
+    }
+    public var center: YHAsyncConstraintItem {
+        return self.makeExtendableWithAttributes(.center)
+    }
+    
+    
     
     var constraintItems = [YHAsyncConstraintItem]()
     //添加内容

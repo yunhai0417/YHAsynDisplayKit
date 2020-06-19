@@ -35,14 +35,13 @@ public class YHAsyncAttributeManager<T:YHAsyncCanvasControl>: NSObject {
         }
     }
     
-    //创建管理类 非单例
+    //MARK: 创建管理类 非单例
     public class func sharedInstance() -> YHAsyncAttributeManager {
         return self.instanced
     }
     
     
     //MARK: 成员属性
-    
     //文本视觉属性list
     //只有当前attributeItemList 视觉元素才能生效，元素之间的UI管理
     fileprivate lazy var attributeItemList: [YHAsyncMutableAttributedItem] = {
@@ -108,7 +107,6 @@ public class YHAsyncAttributeManager<T:YHAsyncCanvasControl>: NSObject {
         }
         return self.attributeItemList[0].resultString?.attributedSize() ?? CGSize.zero
     }
-    
     
     fileprivate var attributeItemDic = [Int:YHAsyncMutableAttributedItem]()
     //MARK: 计算AttributeItem 相对约束
